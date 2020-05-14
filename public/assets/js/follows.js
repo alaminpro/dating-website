@@ -72,13 +72,13 @@ $(document).ready(function() {
                     $.map(res.datas, function(data) {
                         if(data.avatar){
                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                <a href="/u/'+data.username +'" target="_blank">\
+                                <a href="/u/'+data.username +'" >\
                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                         <img src="/'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                     </div>\
                                 </a>\
                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
                                     <button type="button" class="follow__btn" data-id="'+ data.id +'">\
                                             <div class="btn_text">'+ data.follow +'</div>\
                                             <div class="loading"></div>\
@@ -87,13 +87,13 @@ $(document).ready(function() {
                             </div>').appendTo(contents);
                         }else{
                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                <a href="/u/'+data.username +'" target="_blank">\
+                                <a href="/u/'+data.username +'" >\
                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                         <img src="assets/images/1.jpg" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                     </div>\
                                 </a>\
                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
                                     <button type="button" class="follow__btn" data-id="'+ data.id +'">\
                                             <div class="btn_text">'+ data.follow +'</div>\
                                             <div class="loading"></div>\
@@ -160,13 +160,13 @@ $(document).ready(function() {
                                     $.map(res.datas, function(data) {
                                         if(data.avatar){
                                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                                <a href="/u/'+data.username +'" target="_blank">\
+                                                <a href="/u/'+data.username +'" >\
                                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                                         <img src="/'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                                     </div>\
                                                 </a>\
                                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
                                                     <button type="button" class="follow__btn" data-id="'+ data.id +'">\
                                                             <div class="btn_text">'+ data.follow +'</div>\
                                                             <div class="loading"></div>\
@@ -175,13 +175,13 @@ $(document).ready(function() {
                                             </div>').appendTo(contents);
                                         }else{
                                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                                <a href="/u/'+data.username +'" target="_blank">\
+                                                <a href="/u/'+data.username +'" >\
                                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                                         <img src="assets/images/1.jpg" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                                     </div>\
                                                 </a>\
                                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
                                                     <button type="button" class="follow__btn" data-id="'+ data.id +'">\
                                                             <div class="btn_text">'+ data.follow +'</div>\
                                                             <div class="loading"></div>\
@@ -225,13 +225,13 @@ $(document).ready(function() {
                     $.map(res.datas, function(data) {
                         if(data.avatar){
                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                <a href="/u/'+data.username +'" target="_blank">\
+                                <a href="/u/'+data.username +'" >\
                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                         <img src="'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                     </div>\
                                 </a>\
                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
                                     <button type="button" class="following__btn" data-id="'+ data.id +'">\
                                             <div class="btn_text">'+ data.follow +'</div>\
                                             <div class="loading"></div>\
@@ -240,13 +240,13 @@ $(document).ready(function() {
                             </div>').appendTo(contents);
                         }else{
                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                <a href="/u/'+data.username +'" target="_blank">\
+                                <a href="/u/'+data.username +'" >\
                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                         <img src="assets/images/1.jpg" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                     </div>\
                                 </a>\
                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
                                     <button type="button" class="following__btn" data-id="'+ data.id +'">\
                                             <div class="btn_text">'+ data.follow +'</div>\
                                             <div class="loading"></div>\
@@ -314,13 +314,13 @@ $(document).ready(function() {
                                     $.map(res.datas, function(data) {
                                         if(data.avatar){
                                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                                <a href="/u/'+data.username +'" target="_blank">\
+                                                <a href="/u/'+data.username +'" >\
                                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                                         <img src="/'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                                     </div>\
                                                 </a>\
                                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
                                                     <button type="button" class="following__btn" data-id="'+ data.id +'">\
                                                             <div class="btn_text">'+ data.follow +'</div>\
                                                             <div class="loading"></div>\
@@ -329,13 +329,13 @@ $(document).ready(function() {
                                             </div>').appendTo(contents);
                                         }else{
                                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                                <a href="/u/'+data.username +'" target="_blank">\
+                                                <a href="/u/'+data.username +'" >\
                                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                                         <img src="assets/images/1.jpg" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                                     </div>\
                                                 </a>\
                                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
                                                     <button type="button" class="following__btn" data-id="'+ data.id +'">\
                                                             <div class="btn_text">'+ data.follow +'</div>\
                                                             <div class="loading"></div>\

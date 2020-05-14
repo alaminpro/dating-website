@@ -16,153 +16,131 @@ $seo_website_description = setting('website_description');
 @section('social_image')
     {!! isset($seo_image) ? $seo_image : url($seo_social_image) !!}
 @endsection
-<style>
-.welcome {
-min-height:480px;
-}
-.form-group label {
-color:#ffffff;
-}
-.set-image {
-width:100%;
-height:100%;
-margin:auto;
-}
-.btn-register {
-background:#f478c4;
-color:#ffffff;
-}
-.set-login {
-margin-top:5%;
-}
-.section-h1 {
-padding-top:40px;
-padding-bottom:10px;
-font-weight:700;
-}
-.section-summary {
-text-align:center;
-font-weight:bolder;
-margin-bottom:50px;
-}
-h2 {
-font-size:24px;
-font-weight:bolder;
-}
-.intro {
-background:white;
-padding-bottom:25px;
-}
-.pt-20 {
- padding-top:20px;
-}
-.hidden {
-display:none;
-}
-@media screen and (max-width:760px) {
-.welcome {
-min-height:550px;
-}
-}
-</style>
-    <div class="welcome overflow-hidden">
-        <div class="container h-100 position-relative">
-          <!--  <span class="position-absolute circle-1"></span>
-            <span class="position-absolute circle-2"></span> -->
-            <div class="row h-100">
-                <div class="col-md-6 d-sm-block  pt-5"><!-- d-sm-block  pt-5 -->
+ 
+    <div class="overflow-hidden bg-white">
+        <div class="container-fluid m-0 p-0">
+            <div class="row">
+                <div class="col-md-6 d-none d-md-block"> 
                     <?php
-                        $home_background = setting('home_background');
-                        $home_background = $home_background ? url($home_background) : url('assets/images/couple.png');
-                    ?>
-                    <img class="set-image" src="{!! $home_background !!}">
+                    $home_background = setting('home_background');
+                    $home_background = $home_background ? url($home_background) : url('uploads/static/background.jpg');
+                ?>
+                   <div class="login__sidebar__main" style="background: url('{{ $home_background }}')">
+                    <?php
+                        $logo = setting('website_logo');
+                        $logo = $logo ? url($logo) : url('assets/images/logo.png');
+                    ?>  
+                    <a href="/" class="logo__login_register"><img class="set-welcome-logo" src="{!! $logo !!}"></a>
+                   </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="row" class="set-login">
-                        <div class="col-md-12 mx-auto pt-5">
-                            @if(session()->has('fail_login'))
-                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                <strong>Warning!</strong> {!! session()->get('fail_login') !!}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                                {{ session()->forget('fail_login') }}
-                            @endif
-                            @if(Session::has('passwordSuccess'))
-                              <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                   {!! session()->get('passwordSuccess') !!}
-                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                  </button>
-                              </div>
-                                  {{ session()->forget('passwordSuccess') }}
-                              @endif
-                            @if($errors->any())
-                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                        <ul class="mb-0">
-                                        @foreach($errors->all() as $error)
-                                            @foreach($error as $item)
-                                                <li>{!! $item !!}</li>
-                                            @endforeach
-                                        @endforeach
-                                        </ul>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                            @endif
-                            <form method="post" class="login_form" action="">
-                                {!! csrf_field() !!}
-                                <div class="form-group">
-                                    <label>Username</label>
-                                    <input class="form-control custom_btn" type="text" required name="username">
-                                </div>
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input class="form-control custom_btn" type="password" required name="password">
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-primary btn-block custom_btn" type="submit">Login</button>
-                                </div>
-                            </form>
-                            <a href="{{url('forget-password')}}" style="color:white;" class="mb-3 d-block">Forget password ?</a>
-                             
-                            @if(setting('social_login'))
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <a href="{!! route('loginfacebook') !!}" class="btn btn-block  btn-facebook btn-sm mb-2 custom_btn"><i class="fab fa-facebook-f"></i> Login with Facebook</a>
-                                </div>
-                                <div class="col-md-6">
-                                    <a href="{!! route('logintwitter') !!}" class="btn btn-block btn-twitter btn-sm mb-2 custom_btn"><i class="fab fa-twitter"></i> Login with Twitter</a>
-                                </div>
-                            </div>
-                            @endif
+                <div class="col-md-6">  
+                    <div class="d-md-none">
+                        <?php
+                            $logo = setting('website_logo');
+                            $logo = $logo ? url($logo) : url('assets/images/logo.png');
+                        ?>  
+                        <a href="/" class="logo__login"><img class="set-welcome-logo" src="{!! $logo !!}"></a>
+                    </div>
+                    <div class="login__register_wrapper">
+                        <h1 class="login__register_heading">Live stream and video chat with singles nearby</h1>
+                        <h3 class="login__register_sub_heading">Why stay signle when you can find the perfect date on DateV2</h3>
+                        <a href="{{ route('register') }}" class="login__register_btn register__margin">Register</a> 
+                        <hr>
+                        @if(session()->has('fail_login'))
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>Warning!</strong> {!! session()->get('fail_login') !!}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
+                            {{ session()->forget('fail_login') }}
+                        @endif
+                        @if(Session::has('passwordSuccess'))
+                          <div class="alert alert-success alert-dismissible fade show" role="alert">
+                               {!! session()->get('passwordSuccess') !!}
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                              {{ session()->forget('passwordSuccess') }}
+                          @endif
+                        @if($errors->any())
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <ul class="mb-0">
+                                    @foreach($errors->all() as $error)
+                                        @foreach($error as $item)
+                                            <li>{!! $item !!}</li>
+                                        @endforeach
+                                    @endforeach
+                                    </ul>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                        @endif
+                        <form method="post" class="login_form" action="">
+                            {!! csrf_field() !!}
+                            <div class="form-group">
+                                <label class="font-weight-bold">Username</label>
+                                <input class="login__register_form_control" type="text" required name="username" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold">Password</label>
+                                <input class="login__register_form_control" type="password" required name="password" placeholder="Password">
+                                <div class="remember__forgot">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                                          <label class="form-check-label" for="remember">
+                                            {{ __('Remember Me') }}
+                                        </label>
+                                    </div>
+                                    <a href="{{url('forget-password')}}" class="forget__password">Forget password ?</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="login__register_btn mt-3" type="submit">Login</button>
+                            </div>
+                        </form>
+                     
+                         
+                        @if(setting('social_login'))
+                        <div class="social__login_main"> 
+                            <p>Register with</p>
+                            <div class="social__login">
+                                <a href="{!! route('loginfacebook') !!}" class="btn-facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="{!! route('logintwitter') !!}" class="btn-twitter"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <section style="margin-top: 70px;"> 
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 d-flex flex-column justify-content-center">
+                        <h2 class="pb-3">Your solution to online dating</h2>
+                        <p>Looking for the love of your life with no strings attached? At DATEV2, your search will be over. Enjoy the benefits of online dating with the help of DATEV2 in a hassle-free way. With our free video chat feature, you can instantly connect with thousands of people online from all around the globe. And all at your fingertips from the ease of your home. Our interactive approach to online dating allow the users to meet new people one-on-one. So while you find the perfect partner onine, you can maintain your anonymity and privacy.</p>
+                    </div>
+                    <div class="col-lg-6  d-flex justify-content-end">
+                         <img src="{{ asset('uploads/static/landing_1.jpg') }}" width="350" alt="landing image one">
+                    </div>
+                </div>
+                <div class="row mt-5 mb-5">
+                    <div class="col-lg-6">
+                        <img src="{{ asset('uploads/static/landing_2.jpg') }}" width="350" alt="landing image one"> 
+                    </div>
+                    <div class="col-lg-6  d-flex flex-column justify-content-center">
+                        <h2 class="pb-3">Your solution to online dating</h2>
+                        <p>Looking for the love of your life with no strings attached? At DATEV2, your search will be over. Enjoy the benefits of online dating with the help of DATEV2 in a hassle-free way. With our free video chat feature, you can instantly connect with thousands of people online from all around the globe. And all at your fingertips from the ease of your home. Our interactive approach to online dating allow the users to meet new people one-on-one. So while you find the perfect partner onine, you can maintain your anonymity and privacy.</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 @endsection
 
 @section('intro')
-
-
-<div class="intro">
-<div class="text-center section-h1">
-<h1>Fun, free online dating website and app</h1>
-</div>
-<p class="section-summary">For everyone! modi tempora incidunt ut labore et dolore magnam aliquam quaerat</p>
-<div class="container pt-20">
-<h2>The standard Lorem Ipsum passage, used since the 1500s</h2>
-
-<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</p>
-
-<h2>The standard Lorem Ipsum passage, used since the 1500s</h2>
-
-<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut </p>
-</div>
-</div>
+ 
 @endsection

@@ -10,12 +10,8 @@ width:25% !important;
     <?php
     $logo = setting('logo_second');
     $logo = $logo ? url($logo) : url('assets/images/logo_white.png');
-    ?>
-    <!-- <p class="text-center logo mb-4">
-        <a href="{!! url('/') !!}"><img src="{!! $logo !!}" class="img-fluid"></a>
-    </p> -->
-        <a href="/" class="navbar-brand d-block text-center ml-2" style="min-height: 70px; overflow: hidden;" >
-            <!-- <img src="https://demo.myclouddate.com/uploads/sites/n52fiuUta9o8rUR5seeb.png" height="28" alt="CoolBrand"> -->
+    ?> 
+        <a href="/" class="navbar-brand d-block text-center ml-2" style="min-height: 70px; overflow: hidden;" > 
             <img src="{{$logo}}" height="70" alt="CoolBrand" >
         </a>
     @if(auth()->check())
@@ -25,7 +21,12 @@ width:25% !important;
         ?>
         <div class="p-3">
             <div class="text-center user-block text-black mb-3">
-                <a href="{!! route('profile',['username'=>$user->username]) !!}"><img src="{!! avatar($user->avatar, $user->gender) !!}" class="w-25 rounded-circle mb-2"></a>
+                <a href="{!! route('profile',['username'=>$user->username]) !!}" class="profile__photo">
+                    @if($user->isOnline())
+                    <span class="online-class-auth"></span>
+                   @endif
+                    <img src="{!! avatar($user->avatar, $user->gender) !!}" class="w-25 rounded-circle mb-2">
+                </a>
                 <a href="{!! route('profile',['username'=>$user->username]) !!}"> <p style="font-size: 1.2rem;margin:5px;" class="font-weight-bold text-capitalize mb-0">{!! fullname($user->firstname, $user->lastname, $user->username) !!}</p></a>
                 @if($user->address !=null && $user->country)
                 <p style="font-size: 14px; font-weight:400;margin:5px;"><i class="fas fa-users"></i> Popularity - Very Low</p>

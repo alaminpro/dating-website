@@ -128,8 +128,8 @@ $seo_website_description = setting('website_description');
                     <a href="{!! route('profile',['username'=>strtolower($user->username)]) !!}">
                         <div class="user-item shadow-sm rounded effect" style="background-image: url('{!! avatar($user->avatar, $user->gender) !!}') ">
                             <span class="photos"><i class="fas fa-camera"></i> {!! $user->photos()->count() !!}</span>
-                            @if($user->status == 'Online')
-                            <span class="online"><div class="badge__video_online">Live</div></span>
+                            @if($user->isOnline())
+                                <span class="online"><div class="badge__video_online">Live</div></span> 
                             @endif
                             <span class="fullname">{!! fullname($user->firstname, $user->lastname, $user->username) !!}</span>
                             <span class="address">{!! fulladdress($user->address, $user->country) !!}</span>

@@ -61,67 +61,11 @@ if ($avatar2 == 'localhost') {
     100% {
         transform: translate3d(0, -20px, 0) scale(0.9, 1.1);
     }
-}.abt-spc {
-    min-height: 88px;
-    padding-top: 10px;
-    padding-bottom: 10px;
 }
 
-.padd-top-10 {
-    padding-top: 10px;
-}
 
-.padd-top-20 {
-    padding-top: 20px;
-}
 
-.padd-bottom-20 {
-    padding-bottom: 20px;
-}
-
-@media (min-device-width: 1900px) and (max-device-width: 2000px) {
-    .foo_container {
-        margin-left: 16rem !important;
-    }
-}
-
-@media (min-device-width: 765px) and (max-device-width: 1025px) {
-    .online-class {
-        left: 40% !important;
-    }
-}
-
-@media (max-device-width: 576px) {
-    .online-class {
-        left: 10% !important;
-    }
-}
-
-@media (min-device-width: 576px) and (max-device-width: 760px) {
-    .user-info {
-        font-size: 0.75rem !important;
-    }
-
-    .online-class
-    /* {
-        left:55% !important;
-    } */
-}
-
-.online-class {
-    color: #03bf20;
-    position: relative;
-    top: 47%;
-    left: 30px;
-    font-weight: 600;
-}
-
-.online {
-    position: absolute;
-    left: 5%;
-    color: #02e75c;
-}
-
+ 
 .profile-min-height {
     min-height: 950px;
 }
@@ -136,57 +80,47 @@ if ($avatar2 == 'localhost') {
     <div class="container-fluid main_container ">
         @include('partials.sidebar')
     <div class="main" id="main__user_id" data-id="{{$user->id}}"> 
-            <div class="main-content profile-min-height"> 
-                <nav class="navbar navbar-expand navbar-expand-md navbar-expand-lg navbar-light bg-white shadow-sm "
-                    id="profile-header">
-                    <div class="container">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-                            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse">
-                            <ul class="navbar-nav mr-auto">
-                                @if((auth()->check() && auth()->user()->id != $user->id) || !auth()->check())
-                                <li class="nav-item love-760">
-                                    <a class="nav-link" href="javascript:void(0)">
-                                        <button data-id="{!! $user->id !!}" data-type="like"
-                                            class="btn-love<?php echo auth()->check() && auth()->user()->likes()->where('id', $user->id)->first() && auth()->user()->likes()->where('id', $user->id)->first()->pivot->type == 'like' ? ' active' : ''; ?>"><i
-                                                class="fas fa-heart"></i></button>
-                                    </a>
-                                </li>
-                                <li class="nav-item hate-760">
-                                    <a class="nav-link"
-                                        href="{!! $nextuser ? route('profile',['username'=>$nextuser->username]) : route('landing') !!}">
-                                        <button class="btn-unlove"><i class="fas fa-times"></i></button>
-                                    </a>
-                                </li>
-                                @endif
-                                <li class="nav-item">
-                                    <div class="mb-1 pl-2 padd-top-10 col-md-8">
-                                        <span class="text-capitalize font-weight-bold pr-3 bold">{!!
-                                            fullname($user->firstname, $user->lastname, strtolower($user->username)) !!}</span>
-                                        <span class="user-info">Age <strong> {!!
-                                                Carbon\Carbon::parse($user->birthday)->age !!}</strong>. &nbsp; {!!
-                                            $user->gender == 1 ? 'Male' : 'Female' !!}&nbsp; Seeking&nbsp; {!!
-                                            $user->preference == 1 ? 'Male' : ($user->preference == 2 ? 'Female': 'Male
-                                            and Female') !!} 
-                                            @if($user->isOnline())
-                                            <span class="online-class">Online Now</span>
-                                            @endif
-                                        </span>
-                                    </div>
-                                </li>
-                            </ul>
-                            @if(auth()->check() && auth()->user()->isFollowEach($user->id))
-                            <span class="navbar-text">
-                                <a href="{!! route('chat',['id'=>$user->id]) !!}"
-                                    class="btn btn-chatter btn-sm border rounded-pill">Chat&nbsp;&nbsp;&nbsp;<i
-                                        class="fas fa-comment"></i></a>
-                            </span>
-                            @endif
+        <nav class="navbar navbar-expand navbar-expand-md navbar-expand-lg navbar-light bg-white shadow-sm "
+        id="profile-header">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto"> 
+                    <li class="nav-item">
+                        <div class="mb-1 pl-2">
+                            <h1 class="user__username">{!! fullname($user->firstname, $user->lastname, $user->username) !!}, {!! Carbon\Carbon::parse($user->birthday)->age !!}</h1> 
                         </div>
-                    </div>
-                </nav>  
+                    </li>
+                </ul>
+                @if((auth()->check() && auth()->user()->id != $user->id) || !auth()->check())
+                <div class="nav-item hate-760">
+                    <a class="nav-link"
+                        href="{!! $nextuser ? route('profile',['username'=>$nextuser->username]) : route('landing') !!}">
+                        <button class="btn-unlove"><i class="fas fa-times"></i></button>
+                    </a>
+                </div>
+                <div class="nav-item love-760">
+                    <a class="nav-link" href="javascript:void(0)">
+                        <button data-id="{!! $user->id !!}" data-type="like"
+                            class="btn-love<?php echo auth()->check() && auth()->user()->likes()->where('id', $user->id)->first() && auth()->user()->likes()->where('id', $user->id)->first()->pivot->type == 'like' ? ' active' : ''; ?>"><i
+                                class="fas fa-heart"></i></button>
+                    </a>
+                </div> 
+            @endif
+                @if(auth()->check() && auth()->user()->isFollowEach($user->id))
+                    <span class="navbar-text">
+                        <a href="{!! route('chat',['id'=>$user->id]) !!}"
+                            class="btn-chatter"><i class="fas fa-comment-dots"></i></a>
+                    </span> 
+                @endif
+               
+            </div>
+        </div>
+    </nav>
+            <div class="main-content profile-min-height">  
                 <div class="top-photo pb-3 pl-3">
                     <div class="custom__photo_middle">
                       <?php
@@ -198,15 +132,27 @@ if ($avatar2 == 'localhost') {
                       }
                        ?>
                          <div class="img-div">
-                             <a href="{!! route('profile',['username'=>$user->username]) !!}">
+                             <a href="{!! route('profile',['username'=>$user->username]) !!}" class="profile__photo">
+                                @if($user->isOnline())
+                                 <span class="online-class"></span>
+                                @endif
                                 <img width="200" src="{!! $avatar !!}" class="border rounded-circle img-responsive">
                             </a>
                         </div>
                          <div class="user__info">
-                            <h1 class="user__username">{!! fullname($user->firstname, $user->lastname, $user->username) !!}</h1>
-                            <p class="font-weight-bold m-0 py-1">
-                                @<a href="{!! route('profile',['username'=>$user->username]) !!}">{!! $user->username !!} </a>
+                            
+                            <p class="font-weight-bold m-0 profile__username">
+                                @<span>{!! $user->username !!} </span>
                             </p>
+                            <span class="seeking">
+                                {!!
+                                    $user->gender == 1 ? 'Male' : 'Female' !!} Seeking {!!
+                                    $user->preference == 1 ? ' Male' : ($user->preference == 2 ? ' Female': ' Male
+                                    and Female') !!} 
+                            </span>
+                            <div class="profile__location py-1">
+                                <i class="fas fa-map-marker-alt"></i> {{ $user->address }}
+                            </div>
                             @if(auth()->check() && auth()->user()->id === $user->id)
                             <a href="{{ route('setting') }}"  class="follow__btn_user btn-follow font-weight-bold">Edit Profile</a>
                             @else

@@ -50,6 +50,9 @@ $(document).ready(function() {
     } 
 
     about_us.off('click').on('click',function(){
+        contents.empty();
+        loader.empty();
+        $('.custom__load_more_btn').remove();
         $(this).addClass('active'); 
         posts.removeClass('active');
         followers.removeClass('active');
@@ -58,6 +61,9 @@ $(document).ready(function() {
         ajax_about() 
     })
     posts.off('click').on('click',function(){
+        contents.empty();
+        $('.custom__load_more_btn').remove();
+        loader.empty();
         $(this).addClass('active'); 
         about_us.removeClass('active'); 
         followers.removeClass('active');
@@ -67,6 +73,9 @@ $(document).ready(function() {
     })
 
     followers.off('click').on('click',function(){
+        contents.empty();
+        $('.custom__load_more_btn').remove();
+        loader.empty();
         $(this).addClass('active'); 
         about_us.removeClass('active'); 
         posts.removeClass('active'); 
@@ -75,6 +84,9 @@ $(document).ready(function() {
         ajax_followers() 
     })
     following.off('click').on('click',function(){
+        contents.empty();
+        $('.custom__load_more_btn').remove();
+        loader.empty();
         $(this).addClass('active'); 
         about_us.removeClass('active'); 
         posts.removeClass('active'); 
@@ -142,10 +154,119 @@ $(document).ready(function() {
                             icon: 'warning',
                             position: 'bottom-right',
                         })
-                       
+                      
                     }  
                     $(' <div class="pl-3" style="width: 98%;"> </div>').html(res.html).appendTo(contents);
 
+                    $('.add-photo').click(function(){ 
+                        $("#formUpload").trigger('reset');
+                        $('#result').empty(); 
+                        $('#upload-photo').click(); 
+                        $('#upload-image').attr('value', '')
+                        $('.custom-alert').remove(); 
+                    }); 
+                 var uploadProgress = $('.upload-progress');
+                    $(document).on('click', '#upload-btn', function(e) {
+                        const crop_img = $('#upload-image').val();
+                        if(crop_img != ''){
+                            $('#formUpload').ajaxForm({
+                                beforeSend: function () {
+                                    uploadProgress.css({opacity:1});
+                                    uploadProgress.find('.progress-bar').css({width: 0});
+                                    uploadProgress.find('.progress-bar').attr('aria-valuenow', 0);
+                                },
+                                uploadProgress: function(event, position, total, percentComplete) {
+                                    var percentVal = percentComplete + '%';
+                                    uploadProgress.find('.progress-bar').css({width: percentVal});
+                                    uploadProgress.find('.progress-bar').attr('aria-valuenow', percentComplete);
+                                },
+                                complete: function(xhr) {
+                                    var result = JSON.parse(xhr.responseText);
+                                    if(result.status === 'success'){
+                                        var html = '<div class="col-md-3 ipad-photo-img content__each">';
+                                        html += '<div class="photo-item view-photo" data-id="'+result.id+'" data-url="'+result.file+'" style="background-image: url('+result.thumb+')"></div>';
+                                        html += '</div>';
+                                        var count = $('.users-photo .col-md-3').length;
+                                        if(count > 1){
+                                            if(count === 6){
+                                                $('.users-photo .col-md-3').each(function(idx,val){
+                                                    if(idx == 4){
+                                                        val.remove();
+                                                    }
+                                                })
+                                            }
+                                            $('.content__each:first').after(html);
+                                        }
+                                    }
+                                    $('#modalUpload').find('textarea').val('');
+                                    $('#modalUpload').modal('hide');
+                                    uploadProgress.find('.progress-bar').css({width: 0});
+                                    uploadProgress.find('.progress-bar').attr('aria-valuenow', 0);
+                                    uploadProgress.css({opacity:0});
+                                }
+                            });
+                        } else{
+                            e.preventDefault() 
+                           $(".alert-image").append('<p class="custom-alert m-0 p-0 ">Crop this image first</p>');
+                        }
+                      }); 
+                      var canvas  = $("#canvas"), 
+                        $result = $('#result'),
+                        cropper = '';
+                        $('#upload-photo').on('change', function (e) {
+                            if($(this).get(0).files.length){
+                                $('#modalUpload').modal('show');
+                                $('#canvas').empty()
+                                if (this.files && this.files[0]) {
+                                    if ( this.files[0].type.match(/^image\//) ) {
+                                    var reader = new FileReader();
+                                    reader.onload = function(evt) { 
+                                        if(evt.target.result){ 
+                                            let img = document.createElement('img');
+                                            img.id = 'image';
+                                            img.src = evt.target.result 
+                                            canvas.innerHTML = ''; 
+                                            canvas.append(img); 
+                                            cropper = new Cropper(img, {
+                                                viewMode: 1,
+                                                aspectRatio: 4/3, 
+                                                minContainerWidth: 500, 
+                                                minContainerHeight: 375, 
+                                                movable: true, 
+                                            });
+                                            
+                                        }
+                                        $('#btnCrop').click(function() {
+                                                $result.empty();
+                                                var croppedImageDataURL = cropper.getCroppedCanvas().toDataURL("image/jpeg", 0.5); 
+                                                $result.append( $('<img>').attr('src', croppedImageDataURL) );
+                                                $('#upload-image').attr('value', croppedImageDataURL)
+                                                $('.custom-alert').remove();
+                                                $('.btn__description').addClass('d-block');
+                                                $('.cropper-wrapper').addClass('d-none');
+                                                $(this).addClass('d-none');
+                                                $('#btnRestore').addClass('d-none');
+                                        });
+                                        $('#btnRestore').click(function() {
+                                            $('#upload-image').attr('value', '')
+                                                cropper.reset();
+                                                $result.empty();
+                                                $('.custom-alert').remove();
+                                            });
+                                    
+                                    };
+                                    reader.readAsDataURL(this.files[0]);
+                                    }
+                                    else {
+                                    alert("Invalid file type! Please select an image file.");
+                                    }
+                                }
+                                else {
+                                    alert('No file(s) selected.');
+                                }
+                            }
+
+                        });
                        /**
                      *  load more hide and show
                      * */
@@ -244,25 +365,25 @@ $(document).ready(function() {
                         }
                         if(data.avatar){
                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                <a href="/u/'+data.username +'" target="_blank">\
+                                <a href="/u/'+data.username +'">\
                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                         <img src="/'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                     </div>\
                                 </a>\
                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                    <a href="/u/'+data.username +'"><p class="follo__user_name">'+data.username+'</p></a>\
                                     '+follows+'\
                                 </div>\
                             </div>').appendTo(contents);
                         }else{
                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                <a href="/u/'+data.username +'" target="_blank">\
+                                <a href="/u/'+data.username +'">\
                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                         <img src="/assets/images/1.jpg" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                     </div>\
                                 </a>\
                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                    <a href="/u/'+data.username +'"><p class="follo__user_name">'+data.username+'</p></a>\
                                     <button type="button" class="follow__btn" data-id="'+ data.id +'">\
                                             <div class="btn_text">'+ data.follow +'</div>\
                                             <div class="loading"></div>\
@@ -320,11 +441,9 @@ $(document).ready(function() {
                             dataType: 'JSON',
                             type: 'POST',
                             context: this,
-                            success: function (res) {
-                                not_found.empty();
+                            success: function (res) { 
                                 if(res.status === 'success'){ 
-                                    if($.isEmptyObject(res.datas)){
-                                        $('<div class="text-center text-danger my-5"></div>').html('Data not found!').appendTo(not_found);
+                                    if($.isEmptyObject(res.datas)){ 
                                         $.toast({
                                             heading: 'Warning',
                                             text: 'Data not found!', 
@@ -344,25 +463,25 @@ $(document).ready(function() {
                                         }
                                         if(data.avatar){
                                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                                <a href="/u/'+data.username +'" target="_blank">\
+                                                <a href="/u/'+data.username +'">\
                                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
-                                                        <img src="'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
+                                                        <img src="/'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                                     </div>\
                                                 </a>\
                                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                                    <a href="/u/'+data.username +'"><p class="follo__user_name">'+data.username+'</p></a>\
                                                     '+follows+'\
                                                 </div>\
                                             </div>').appendTo(contents);
                                         }else{
                                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                                <a href="/u/'+data.username +'" target="_blank">\
+                                                <a href="/u/'+data.username +'">\
                                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                                         <img src="/assets/images/1.jpg" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                                     </div>\
                                                 </a>\
                                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                                    <a href="/u/'+data.username +'"><p class="follo__user_name">'+data.username+'</p></a>\
                                                     '+follows+'\
                                                 </div>\
                                             </div>').appendTo(contents);
@@ -424,25 +543,25 @@ $(document).ready(function() {
                             }
                         if(data.avatar){
                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                <a href="/u/'+data.username +'" target="_blank">\
+                                <a href="/u/'+data.username +'">\
                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                         <img src="/'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                     </div>\
                                 </a>\
                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                    <a href="/u/'+data.username +'"><p class="follo__user_name">'+data.username+'</p></a>\
                                    '+following+'\
                                 </div>\
                             </div>').appendTo(contents);
                         }else{
                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                <a href="/u/'+data.username +'" target="_blank">\
+                                <a href="/u/'+data.username +'">\
                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                         <img src="/assets/images/1.jpg" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                     </div>\
                                 </a>\
                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                    <a href="/u/'+data.username +'"><p class="follo__user_name">'+data.username+'</p></a>\
                                     '+following+'\
                                 </div>\
                             </div>').appendTo(contents);
@@ -514,11 +633,9 @@ $(document).ready(function() {
                             dataType: 'JSON',
                             type: 'POST',
                             context: this,
-                            success: function (res) {
-                                not_found.empty();
+                            success: function (res) { 
                                 if(res.status === 'success'){ 
                                     if($.isEmptyObject(res.datas)){
-                                        $('<div class="text-center text-danger my-5"></div>').html('Data not found!').appendTo(not_found);
                                         $.toast({
                                             heading: 'Warning',
                                             text: 'Data not found!', 
@@ -545,25 +662,25 @@ $(document).ready(function() {
                                             }
                                         if(data.avatar){
                                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                                <a href="/u/'+data.username +'" target="_blank">\
+                                                <a href="/u/'+data.username +'">\
                                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
-                                                        <img src="'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
+                                                        <img src="/'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                                     </div>\
                                                 </a>\
                                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                                    <a href="/u/'+data.username +'"><p class="follo__user_name">'+data.username+'</p></a>\
                                                     '+following+'\
                                                 </div>\
                                             </div>').appendTo(contents);
                                         }else{
                                             $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
-                                                <a href="/u/'+data.username +'" target="_blank">\
+                                                <a href="/u/'+data.username +'">\
                                                     <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
                                                         <img src="/assets/images/1.jpg" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
                                                     </div>\
                                                 </a>\
                                                 <div class="d-flex justify-content-center align-items-center flex-column">\
-                                                    <a href="/u/'+data.username +'" target="_blank"><p class="follo__user_name">'+data.username+'</p></a>\
+                                                    <a href="/u/'+data.username +'"><p class="follo__user_name">'+data.username+'</p></a>\
                                                     '+following+'\
                                                 </div>\
                                             </div>').appendTo(contents);

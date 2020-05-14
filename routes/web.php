@@ -11,12 +11,11 @@
 Route::get('/','HomeController@main')->name('home')->middleware('logged');
 Route::post('/','HomeController@postHome');
 Route::get('/u/{username}','UserController@profile')->name('profile')->where('username','[a-z0-9-_]+');
-// Route::get('/photos/{username}','PhotoController@photos')->name('userphoto')->where('username','[a-z0-9-_]+');
-Route::get('follow','FollowController@index')->name('follow');
+// Route::get('/photos/{username}','PhotoController@photos')->name('userphoto')->where('username','[a-z0-9-_]+'); 
 Route::post('follow','FollowController@main')->name('ajax_follow');
 Route::get('/page/{slug}','WelcomeController@dynamicPage')->name('page')->where('slug','[a-z-]+');
 Route::get('/blog','WelcomeController@BlogPost')->name('blogPost');
-Route::get('/blog/{slug}','WelcomeController@SingleBlogPost')->name('singelBlogPost')->where('slug','[a-z-]+');
+Route::get('/blog/{slug}','WelcomeController@SingleBlogPost')->name('singleBlogPost')->where('slug','[a-z-]+');
 Route::get('login/facebook', 'UserController@facebook')->name('loginfacebook')->middleware('logged');
 Route::post('login', 'HomeController@postHome')->name('login');
 Route::get('login/facebook/callback', 'UserController@facebookcallback')->name('loginfacebookcallback')->middleware('logged');
@@ -51,7 +50,7 @@ Route::middleware(['auth','complete'])->prefix('/')->group(function(){
     Route::get('chat/{id}','MessageController@startChat')->name('chat');  
     Route::get('videos','VideoController@videos')->name('videos'); 
     Route::get('video/{id}','VideoController@video')->name('video');
-  
+    Route::get('follow','FollowController@index')->name('follow');
 });
 
 /**

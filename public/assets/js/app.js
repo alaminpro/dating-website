@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
         window.location.href = window.location.href;
     });
     var token = $('meta[name=csrf_token]').attr('content');
-    var uploadProgress = $('.upload-progress');
+
     $(document).on('click','.conversations .message-box .list-messages ul li.message .view-chat-photo', function (event) {
         var el = $(event.currentTarget);
         var url = el.attr('data-view');
@@ -126,112 +126,11 @@ jQuery(document).ready(function ($) {
             return false;
         }
     });
-    $('.photo-item.add-photo').click(function(){
-        $("#formUpload").trigger('reset');
-        $('#result').empty(); 
-        $('#upload-photo').click(); 
-        $('#upload-image').attr('value', '')
-        $('.custom-alert').remove();
-    }); 
+   
     // Event listeners 
-$(document).on('click', '#upload-btn', function(e) {
-    const crop_img = $('#upload-image').val();
-    if(crop_img != ''){
-        $('#formUpload').ajaxForm({
-            beforeSend: function () {
-                uploadProgress.css({opacity:1});
-                uploadProgress.find('.progress-bar').css({width: 0});
-                uploadProgress.find('.progress-bar').attr('aria-valuenow', 0);
-            },
-            uploadProgress: function(event, position, total, percentComplete) {
-                var percentVal = percentComplete + '%';
-                uploadProgress.find('.progress-bar').css({width: percentVal});
-                uploadProgress.find('.progress-bar').attr('aria-valuenow', percentComplete);
-            },
-            complete: function(xhr) {
-                var result = JSON.parse(xhr.responseText);
-                if(result.status === 'success'){
-                    var html = '<div class="col-md-2">';
-                    html += '<div class="photo-item view-photo border" data-id="'+result.id+'" data-url="'+result.file+'" style="background-image: url('+result.thumb+')"></div>';
-                    html += '</div>';
-                    var count = $('.users-photo .col-md-2').length;
-                    if(count > 1){
-                        if(count === 6){
-                            $('.users-photo .col-md-2').each(function(idx,val){
-                                if(idx == 4){
-                                    val.remove();
-                                }
-                            })
-                        }
-                        $('.users-photo').prepend(html);
-                    }
-                }
-                $('#modalUpload').find('textarea').val('');
-                $('#modalUpload').modal('hide');
-                uploadProgress.find('.progress-bar').css({width: 0});
-                uploadProgress.find('.progress-bar').attr('aria-valuenow', 0);
-                uploadProgress.css({opacity:0});
-            }
-        });
-    } else{
-        e.preventDefault() 
-       $(".alert-image").append('<p class="custom-alert m-0 p-0 ">Crop this image first</p>');
-    }
-  }); 
-  
-    var canvas  = $("#canvas"), 
-    $result = $('#result'),
-    cropper = '';
-    $('#upload-photo').on('change', function (e) {
-        if($(this).get(0).files.length){
-            $('#modalUpload').modal('show');
-            $('#canvas').empty()
-            if (this.files && this.files[0]) {
-                if ( this.files[0].type.match(/^image\//) ) {
-                  var reader = new FileReader();
-                  reader.onload = function(evt) { 
-                    if(evt.target.result){ 
-                        let img = document.createElement('img');
-                        img.id = 'image';
-                        img.src = evt.target.result 
-                        canvas.innerHTML = ''; 
-                        canvas.append(img); 
-                        cropper = new Cropper(img, {
-                            viewMode: 1,
-                            aspectRatio: 4/3, 
-                            minContainerWidth: 500, 
-                            minContainerHeight: 375, 
-                            movable: true, 
-                        });
-                        
-                    }
-                       $('#btnCrop').click(function() {
-                            $result.empty();
-                            var croppedImageDataURL = cropper.getCroppedCanvas().toDataURL("image/jpeg", 0.5); 
-                            $result.append( $('<img>').attr('src', croppedImageDataURL) );
-                            $('#upload-image').attr('value', croppedImageDataURL)
-                            $('.custom-alert').remove();
-                       });
-                       $('#btnRestore').click(function() {
-                        $('#upload-image').attr('value', '')
-                            cropper.reset();
-                            $result.empty();
-                            $('.custom-alert').remove();
-                        });
-                   
-                 };
-                  reader.readAsDataURL(this.files[0]);
-                }
-                else {
-                  alert("Invalid file type! Please select an image file.");
-                }
-              }
-              else {
-                alert('No file(s) selected.');
-              }
-        }
 
-    });
+  
+    
     $(document).on('click','.close-view-photo',function () {
         $('#modalPhoto').modal('hide');
     });
@@ -643,7 +542,7 @@ $(document).on('keyup','.edit-comment-text', function (event) {
                         }
                         else{
                             $('#step-btn-1').attr('disabled', false);
-                            $('<div style="color: #66eaff !important"></div>').html('Great! You\'r Choose good username. please goahead').appendTo(alert);
+                            $('<div style="color: green !important"></div>').html('Great! You\'r Choose good username. please goahead').appendTo(alert);
                         }
                     },
                     complete: function(){
@@ -651,7 +550,7 @@ $(document).on('keyup','.edit-comment-text', function (event) {
                     }
                 });
             }else{
-                $('<div class="text-light"></div>').html('Please enter at least 6 charecter!').appendTo(alert);
+                $('<div class="text-danger"></div>').html('Please enter at least 6 charecter!').appendTo(alert);
             }
         }else{
             loader.empty() 
@@ -668,11 +567,11 @@ $(document).on('keyup','.edit-comment-text', function (event) {
         var email = $(this).val();
         if(email != ''){
             if(isValidEmail(email)){
-                loader.empty();
+                $('.loader-email').empty();
                 $.ajax({
                     url: ajax_url,
                     beforeSend: function(){ 
-                        $('<div class="lds-ellipsis" style="height: 40px; margin-top: -20px;"></div>').html('<div></div><div></div><div></div><div></div>').appendTo(loader);
+                        $('<div class="lds-ellipsis" style="height: 40px; margin-top: -20px;"></div>').html('<div></div><div></div><div></div><div></div>').appendTo($('.loader-email'));
                         email_error.empty()  
                     },
                     data: {action: 'check_email', email: email, _token: token},
@@ -686,16 +585,16 @@ $(document).on('keyup','.edit-comment-text', function (event) {
                         }
                         else{
                             $('#step-btn-1').attr('disabled', false);
-                            $('<div style="color: #66eaff !important"></div>').html('Great! Email is correct!').appendTo(email_error);
+                            $('<div style="color: green !important"></div>').html('Great! Email is correct!').appendTo(email_error);
                         }
                     },
                     complete: function(){
-                        loader.empty();
+                        $('.loader-email').empty();
                     }
                 });
             }else{
                 email_error.empty();
-                $('<div class="text-light"></div>').html('Please enter valid email address!').appendTo(email_error); 
+                $('<div class="text-danger"></div>').html('Please enter valid email address!').appendTo(email_error); 
             }
         }else{
             email_error.empty();

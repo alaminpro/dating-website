@@ -90,7 +90,7 @@
                             </div>
                         </div> 
                         <div class="col-lg-4">
-                            <div class="card custom-card position-sticky" style="top: 60px" >
+                            <div class="card custom-card position-sticky" style="top: 85px" >
                                 <div class="card-title">
                                    <h3 class="page-title">Recent Post's</h3>
                                 </div>
