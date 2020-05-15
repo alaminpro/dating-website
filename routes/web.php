@@ -26,7 +26,7 @@ Route::post('register', 'UserController@postRegister')->name('register')->middle
 Route::get('logout','UserController@logout')->name('logout');
 Route::get('browse','HomeController@landing')->name('landing')->middleware('complete');
 Route::post('register/quick','UserController@quickRegister')->name('quick_reg');
-Route::get('/forget-password', 'HomeController@forgetPassword');
+Route::get('/forget-password', 'HomeController@forgetPassword')->name('forget');
 Route::match(['get','post'],'/checkEmail','HomeController@checkEmail');
 Route::get('/check-token/{token}','HomeController@checkToken');
 Route::match(['get','post'],'/reset-passwrod','HomeController@ResetPassword');

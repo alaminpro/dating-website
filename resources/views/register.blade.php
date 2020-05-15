@@ -203,8 +203,21 @@ $seo_website_description = setting('website_description');
                     </div>
                     <div class="tab__area_main">
                         @if($errors->any())
-                            <div class="alert alert-danger text-center mt-2">{{$errors->first('errors')}}</div>
+                            @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger text-center mt-2">{{$error}}</div>     
+                            @endforeach
+                           
+                        @endif  
+                        @if(session()->has('minimum_age'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Error!</strong> {!! session()->get('minimum_age') !!}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                {!! session()->forget('minimum_age') !!}
+                            </div>
                         @endif
+
                         <form id="step-form" autocomplete="off" action="{{route('register')}}" method="post" enctype="multipart/form-data">
                             {!! csrf_field() !!}
                             <div  class="step step-1 active-step">

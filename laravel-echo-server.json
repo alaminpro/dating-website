@@ -1,5 +1,5 @@
 {
-	"authHost": "http://demo.myclouddate.com",
+	"authHost": "http://datev2.com",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [],
 	"database": "redis",

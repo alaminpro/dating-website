@@ -5,17 +5,14 @@
     @yield('stylesheet') 
 </head>
 <body>
-    @if((Route::current()->getName() != 'home') && (Route::current()->getName() != 'register'))
+    @if((Route::current()->getName() != 'home') && (Route::current()->getName() != 'register') && (Route::current()->getName() != 'forget'))
 <div class="header text-center p-2">
     <?php
         $logo = setting('website_logo');
         $logo = $logo ? url($logo) : url('assets/images/logo.png');
     ?> 
 
-        <a href="/"><img class="set-welcome-logo" src="{!! $logo !!}"></a>
- 
-    
-    
+        <a href="/"><img class="set-welcome-logo" src="{!! $logo !!}"></a> 
    
 </div>
        

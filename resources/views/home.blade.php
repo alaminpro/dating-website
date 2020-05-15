@@ -132,8 +132,8 @@ $seo_website_description = setting('website_description');
                         <img src="{{ asset('uploads/static/landing_2.jpg') }}" width="350" alt="landing image one"> 
                     </div>
                     <div class="col-lg-6  d-flex flex-column justify-content-center">
-                        <h2 class="pb-3">Your solution to online dating</h2>
-                        <p>Looking for the love of your life with no strings attached? At DATEV2, your search will be over. Enjoy the benefits of online dating with the help of DATEV2 in a hassle-free way. With our free video chat feature, you can instantly connect with thousands of people online from all around the globe. And all at your fingertips from the ease of your home. Our interactive approach to online dating allow the users to meet new people one-on-one. So while you find the perfect partner onine, you can maintain your anonymity and privacy.</p>
+                        <h2 class="pb-3">Find the perfect match without any upfront cost</h2>
+                        <p>Whether you want to make new friends, get a date, or even find the love of your life, DATEV2 can trun everything around for you. Finding the right partner can be very detrimental and difficult. With video chat, you won't have to worry about spending your resources on a person you are not compatible with. Instead, you can first talk with the man or woman to ensure that the person suits you.</p>
                     </div>
                 </div>
             </div>

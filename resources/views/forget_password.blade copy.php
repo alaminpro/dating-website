@@ -16,36 +16,79 @@
 <?php
 $seo_social_image = setting('social_image');
 ?>
- 
-<div class="overflow-hidden bg-white">
-    <div class="container-fluid m-0 p-0">
-        <div class="row" style="height: 82vh">
-            <div class="col-md-6 d-none d-md-block"> 
-                <?php
-                $home_background = setting('home_background');
-                $home_background = $home_background ? url($home_background) : url('uploads/static/background.jpg');
-            ?>
-               <div class="login__sidebar__main" style="background: url('{{ $home_background }}')">
-                <?php
-                    $logo = setting('website_logo');
-                    $logo = $logo ? url($logo) : url('assets/images/logo.png');
-                ?>  
-                <a href="/" class="logo__login_register"><img class="set-welcome-logo" src="{!! $logo !!}"></a>
-               </div>
-            </div>
-            <div class="col-md-6 d-flex align-items-center flex-column justify-content-center">  
-                <div class="d-md-none w-100">
-                    <?php
-                        $logo = setting('website_logo');
-                        $logo = $logo ? url($logo) : url('assets/images/logo.png');
-                    ?>  
-                    <a href="/" class="logo__login "><img class="set-welcome-logo" src="{!! $logo !!}"></a>
+<style>
+.welcome {
+min-height:480px;
+}
+.set-image {
+width:100%;
+height:100%;
+margin:auto;
+}
+.forgot-pass > p {
+font-size:14px;
+color:#ffffff;
+}
+.set-login {
+margin-top:5%;
+}
+h2 {
+font-size:24px;
+font-weight:bolder;
+}
+.pt-20 {
+ padding-top:20px;
+}
+@media screen and (max-width:760px) {
+.welcome {
+min-height:550px;
+}
+}
+.forgot-pass, h1 {
+color: whitesmoke;
+font-size: 33px;
+}
+.form-group label {
+color:#ffffff;
+}
+.btn-register {
+background:#f478c4;
+color:#ffffff;
+}
+.set-login {
+margin-top:5%;
+}
+.intro {
+background:white;
+padding-bottom:25px;
+}
+.pt-20 {
+ padding-top:20px;
+}
+.login_forms .form-control {
+    min-height: calc(1.9em + .75rem + 5px);
+    box-shadow: inset 0px -1px 1px -2px rgb(149, 149, 149);
+    border-radius: 6px;
+    font-size: 16px;
+}
+</style>
+    <div class="register overflow-hidden">
+        <div class="container h-100 position-relative">
+          <!--  <span class="position-absolute circle-1"></span>
+            <span class="position-absolute circle-2"></span> -->
+            <div class="row h-100">
+                <div class="col-md-6 d-none d-sm-block"><!--  pt-5 -->
+                 <!--   <?php
+                        $home_background = setting('home_background');
+                        $home_background = $home_background ? url($home_background) : url('assets/images/couple.png');
+                    ?>
+                    <img class="set-image" src="{!! $home_background !!}"> -->
                 </div>
-                <div class="login__register_wrapper">
-                    <h1 class="login__register_heading">Forgot your password?</h1>
-                    <h3 class="login__register_sub_heading">No worries! Simply enter your email below and we will send you instructions to help you setup a new password</h3>
-                      <hr>
-                      @if(Session::has('resetAlert'))
+                <div class="col-md-6">
+                    <div class="row" class="set-login">
+                        <div class="col-md-9 mx-auto pt-5"><span class="forgot-pass"><h1>Forgot your password?</h1>
+<p>No worries! Simply enter your email below and we will send you instructions to help you setup a new password</p></span>
+                          @if(Session::has('resetAlert'))
                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                 <strong>Oops!</strong> {!! session()->get('resetAlert') !!}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -82,15 +125,17 @@ $seo_social_image = setting('social_image');
                                 {!! csrf_field() !!}
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" class="login__register_form_control" placeholder="Enter email" id="email" name="email">
+                                    <input type="email" class="form-control" placeholder="Enter email" id="email" name="email">
                                 </div>
                                 <div class="form-group">
-                                    <button class="login__register_btn d-block" type="submit">Submit</button>
+                                    <button class="btn btn-primary btn-block" type="submit">Submit</button>
                                 </div>
-                            </form>  
+                            </form>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div> 
-    </div> 
-</div>
+        </div>
+    </div>
 @endsection

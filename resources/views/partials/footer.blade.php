@@ -46,8 +46,12 @@
                     </div>
                 </form>
                 <p class="text-center">OR</p>
-                <a href="{!! route('loginfacebook') !!}" class="btn btn-block btn-facebook btn-sm"><i class="fab fa-facebook-f"></i> Login with Facebook</a>
-                <a href="{!! route('logintwitter') !!}" class="btn btn-block btn-twitter btn-sm"><i class="fab fa-facebook-f"></i> Login with Twitter</a>
+                <div class="d-flex justify-content-center">
+                    <div class="social__login">
+                        <a href="{!! route('loginfacebook') !!}" class="btn-facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="{!! route('logintwitter') !!}" class="btn-twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
