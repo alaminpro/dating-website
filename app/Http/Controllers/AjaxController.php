@@ -555,17 +555,21 @@ class AjaxController extends Controller
         $Q1->save();
         return response()->json(['status' => 'success']);
     }
+
     public function get_user_video_call()
     {
-        $users = User::where('id', '!=', auth()->user()->id)->where('status', 'Online')->where('video_chat', 1)->get();
+        $users = User::where('id', '!=', auth()->user()->id)->where('video_chat', 1)->get();
         $newUser = [];
-        foreach ($users as $user) {
-            $newUser[] = [
-                'id' => $user->id,
-                'username' => $user->username,
-                'avatar' => $user->avatar,
-                'online' => $user->isOnline(),
-            ];
+        foreach ($users as $user) { 
+            if(auth()->user()->isFollowEach($user->id)){
+                $newUser[] = [
+                    'id' => $user->id,
+                    'username' => $user->username,
+                    'avatar' => $user->avatar,
+                    'online' => $user->isOnline(),
+                ];
+            }
+            
         }
 
         return response()->json(['status' => 'success', 'data' => $newUser]);
@@ -573,19 +577,20 @@ class AjaxController extends Controller
     public function get_user_by_search()
     {
         $users = User::where('id', '!=', auth()->user()->id)
-            ->where('status', 'Online')
             ->where('video_chat', 1)
             ->where('username', 'like', '%' . $this->request->username . '%')
             ->get();
 
         $newUser = [];
         foreach ($users as $user) {
-            $newUser[] = [
-                'id' => $user->id,
-                'username' => $user->username,
-                'avatar' => $user->avatar,
-                'online' => $user->isOnline(),
-            ];
+            if(auth()->user()->isFollowEach($user->id)){
+                $newUser[] = [
+                    'id' => $user->id,
+                    'username' => $user->username,
+                    'avatar' => $user->avatar,
+                    'online' => $user->isOnline(),
+                ];
+            }
         }
 
         return response()->json(['status' => 'success', 'data' => $newUser]);
@@ -593,12 +598,22 @@ class AjaxController extends Controller
 
     public function load_user_by_id()
     {
-        $user = User::where('id', $this->request->id)
-            ->where('status', 'Online')
+        $user = User::where('id', $this->request->id) 
             ->where('video_chat', 1)
             ->first();
 
         return response()->json(['status' => 'success', 'data' => $user]);
+    }
+    public function permission()
+    {
+        if($this->request->id){
+            $user = User::find($this->request->id);
+            $user->video_chat =  1;
+            $user->save(); 
+            if($user){ 
+                return $this->startcall();
+            } 
+        } 
     }
 
     public function startcall()

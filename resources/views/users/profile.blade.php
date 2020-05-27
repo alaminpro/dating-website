@@ -116,6 +116,13 @@ if ($avatar2 == 'localhost') {
                             class="btn-chatter"><i class="fas fa-comment-dots"></i></a>
                     </span> 
                 @endif
+                @if(auth()->check() && auth()->user()->isFollowEach($user->id))
+                    <span class="navbar-text">
+                        <p class="video__icon p-0 m-0" data-id="{{ $user->id }}" style="cursor: pointer">
+                            <i class="fas fa-video" style="font-size: 21px;background: white;border: 1px solid;padding: 14px;border-radius: 50%;color: #0f8e64;margin-left: 2px;"></i>
+                        </p>
+                    </span>  
+                @endif
                
             </div>
         </div>
@@ -220,4 +227,25 @@ if ($avatar2 == 'localhost') {
 
 @section('javascript') 
 <script src="{!! url('assets/js/profile.js') !!}"></script>
+<script>
+     $(document).ready(function(){
+      var token = $('meta[name=csrf_token]').attr('content');   
+
+      $(document).on('click', '.video__icon', function (event) {
+        var el = $(event.currentTarget);
+        var id = el.attr('data-id');
+        $.ajax({
+            url:ajax_url,
+            data: {action: 'permission', id: id, _token: token},
+            dataType: 'JSON',
+            type: 'POST', 
+            success: function (res) { 
+                if(res.status === 'success'){ 
+                  window.location.href = res.url
+                }
+            }
+        })
+    });
+     });
+</script>
 @endsection

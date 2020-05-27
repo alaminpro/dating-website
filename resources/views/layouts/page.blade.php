@@ -23,8 +23,8 @@
     </div>
 </div>
 <script>
-    var ajax_url = '{!! route('ajax') !!}';
-  var socket_url = 'http://127.0.0.1:2888';
+    var ajax_url = '{!! route('ajax') !!}'; 
+    var socket_url = 'https://datev2.com/'; 
     var logged_id = {!! auth()->check() ? auth()->id() : 'false' !!};
 </script>
 <script src="{!! url('assets/js/app.js') !!}"></script>

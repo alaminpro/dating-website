@@ -18,12 +18,14 @@
 </div>
 <script>
     var ajax_url = '{!! route('ajax') !!}';
-    var ajax_url_follow = '{!! route('ajax_follow') !!}';
-    var socket_url = 'http://127.0.0.1:2888';
+    var ajax_url_follow = '{!! route('ajax_follow') !!}'; 
+    var socket_url = 'https://datev2.com/'; 
+
     var logged_id = {!! auth()->check() ? auth()->id() : 'false' !!};
 </script>
 <script src="{!! url('assets/js/app.js') !!}"></script>
 <script src="{!! url('assets/js/socket.js') !!}"></script>
+<script src="{!! url('assets/js/jquery.toast.min.js') !!}"></script>
 @if(auth()->user()) 
 <script>
 
@@ -72,9 +74,9 @@
  })
  
 </script>
-@endif
- <!-- <script src="http://localhost/dating/assets/js/app.js"></script>
-<script src="http://localhost/dating/assets/js/socket.js"></script> -->
+@endif 
+
 @yield('javascript')
+
 </body>
 </html>

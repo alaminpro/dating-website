@@ -100,9 +100,19 @@ class HomeController extends Controller
         }else{ 
             $this->guestUserDistance($users, $distance);
         }
-        if ($this->request->has('country') && $this->request->country != '') {
-            $users->where('country', $this->request->country);
-        } 
+
+        if ($this->request->has('keywords') && $this->request->keywords != '') { 
+            $keywords = explode(',',  $this->request->keywords);  
+              $terms= array_map('trim', $keywords);
+            foreach($keywords  as $keyword){        
+                $users->where(function($query) use ($terms){
+                    foreach($terms as $term){
+                        $query->where('address', 'LIKE', '%'.$term.'%');
+                        $query->orWhere('country', 'LIKE', '%'.$term.'%');  
+                    }
+                }); 
+            } 
+        }  
          $users = $users->get();
          $collection = collect($users);
         if(Auth::check()){ 

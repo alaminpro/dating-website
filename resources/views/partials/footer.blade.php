@@ -65,7 +65,8 @@
     </div>
 </div>
 <audio src="{!! url('assets/message.mp3') !!}" id="message_audio"></audio> 
-<audio id="calling_audio" loop controls style="display:none">
-  <source src="{!! url('assets/tone.mp3') !!}" type="audio/mpeg"> 
-</audio> 
-<div class="notifications"> </div>
+<input type="hidden" value="{!! url('assets/tone.mp3') !!}" id="audio_source"/>
+<div class="notifications"></div>
+ 
+
+ 

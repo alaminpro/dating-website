@@ -13,7 +13,9 @@
            display: block;
         }
     }
-
+#filter__container{
+    display: none;
+}
 </style>
 @endsection
 @section('content') 
@@ -30,7 +32,7 @@ $seo_website_description = setting('website_description');
 @endsection
 <div class="main-content">
 
-    <div class="page-title text-capitalize search__filter">
+    <div class="page-title text-capitalize search__filter border-bottom" >
        <div class="w-100"> Search Filter</div>
        <div class="filter__btn"> 
         <span class="btn__icon" >  <svg id="generic-filter" viewBox="0 0 32 32"><path fill="currentColor" fill-rule="evenodd" d="M21 18a7 7 0 016.93 6h3.57c.28 0 .5.22.5.5v1a.5.5 0 01-.5.5h-3.57a7 7 0 01-13.86 0H.5a.5.5 0 01-.5-.5v-1c0-.28.22-.5.5-.5h13.57A7 7 0 0121 18zm0 2a5 5 0 00-4.92 4.12l-.05.3v.08l-.03.31v.43l.01.12.02.21.03.21a5 5 0 009.86.1l.05-.31.01-.12.02-.27-.01-.51-.01-.13-.02-.2-.03-.16A5 5 0 0021 20zM11 0a7 7 0 016.93 6H31.5c.28 0 .5.22.5.5v1a.5.5 0 01-.5.5H17.93A7 7 0 014.07 8H.5a.5.5 0 01-.5-.5v-1c0-.28.22-.5.5-.5h3.57A7 7 0 0111 0zm0 2a5 5 0 00-4.92 4.12l-.05.3v.08L6 6.81v.43l.01.12.02.21.03.21a5 5 0 009.86.1l.05-.31.01-.12.02-.27-.01-.51-.01-.13-.02-.2-.03-.16A5 5 0 0011 2z"></path></svg> </span>
@@ -45,7 +47,7 @@ $seo_website_description = setting('website_description');
         {!! session()->forget('success_register') !!}
     </div>
     @endif
-    <div class="filter shadow-sm p-3 border bg-white" id="filter__container">
+    <div class="filter shadow-sm p-3 border-bottom bg-white" id="filter__container" >
         <form class="row" action="" id="formFilter">
             <div class=" col-lg-4 border-right">
                 <div class="filter">
@@ -94,24 +96,19 @@ $seo_website_description = setting('website_description');
             </div>
             <div class="col-lg-4">
                 <div class="filter"> 
-                        <label for="filter-country" class="country__label">Where</label>
-                        <select class="search_search custom-select custom-select-sm" name="country" id="filter-country">
-                            <option value="">Country</option>
-                            @foreach(countries() as $key=>$country)
-                                <option{!! request()->get('country') == $key ? ' selected':'' !!} value="{!! $key !!}">{!! $country !!}</option>
-                            @endforeach
-                        </select> 
+                        <label for="filter-country" class="country__label">Where</label> 
+                        <input class="search__address" name="keywords" id="search__address"> 
                     
                 </div> 
                 <div class="filter mt-4">
                     <div class="location__filter">
                         <div class="location__main">
-                            Location <i class="fa fa-location-arrow" id="location__icon" aria-hidden="true"></i> 
+                            Distance <i class="fa fa-location-arrow" id="location__icon" aria-hidden="true"></i> 
                         </div>
                         <div class="location__search">
                             <div class="w-100 h-100 d-flex justify-content-between align-items-center p-2">
-                            <input class="range" type="range" min="0" max="10000" value="{{ auth()->user() ? auth()->user()->distance : 1000 }}" step="1" onmousemove="rangevalue1.value=value" /> 
-                             <div class="output"><output id="rangevalue1"></output> Miles</div>
+                            <input class="range" type="range" min="0" max="10000" value="{{ auth()->user() ? auth()->user()->distance : 1000 }}" step="1"/> 
+                             <div class="output"><output id="rangevalue1">{{ auth()->user() ? auth()->user()->distance : 1000 }}</output> Miles</div>
                              <input type="hidden" name="distance" id="distance" value="{{ auth()->user() ? auth()->user()->distance : 1000 }}">
                             </div>
                         </div>
@@ -153,6 +150,7 @@ $seo_website_description = setting('website_description');
 @endsection
 
 @section('javascript')
+<script src="https://maps.googleapis.com/maps/api/js?key={!! env('GOOGLE_PLACE_API','AIzaSyBjVRkL8MOLaVd-fjloQguTIQDLAAzA4w0') !!}&libraries=places&callback=startMap" async defer></script>
 <script src="{!! url('assets/js/no-uislider.js') !!}"></script>
     <script>
          $(document).ready(function() {
@@ -227,9 +225,20 @@ $seo_website_description = setting('website_description');
                 $('#rangevalue1').val(queries.distance)
                 $('#distance').val(queries.distance)
             }
+
+
+            var elem = document.querySelector('input[type="range"]');
+
+            var rangeValue = function(){
+            var newValue = elem.value;
+            var target = document.querySelector('#rangevalue1');
+            target.innerHTML = newValue;
+            }
+
+            elem.addEventListener("input", rangeValue);
             
         });
 
-       
+        
     </script>
 @endsection

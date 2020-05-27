@@ -1,7 +1,6 @@
- 
-var user_id = $('#main__user_id').data('id');
-var token = $('meta[name=csrf_token]').attr('content');
-$(document).ready(function() { 
+$(document).ready(function() {  
+    var user_id = $('#main__user_id').data('id');
+    var token = $('meta[name=csrf_token]').attr('content');
     var loader = $('.loader')
     var about_us = $('.about__us');
     var posts = $('.posts');
@@ -147,7 +146,6 @@ $(document).ready(function() {
                 if(res.status === 'success'){   
                     if($.isEmptyObject(res.user.photos)){
                         loader.empty()
-                        $('<div class="text-center text-danger w-100 my-5"></div>').html('Data not found!').appendTo(contents);
                         $.toast({
                             heading: 'Warning',
                             text: 'Data not found!', 
@@ -156,15 +154,20 @@ $(document).ready(function() {
                         })
                       
                     }  
-                    $(' <div class="pl-3" style="width: 98%;"> </div>').html(res.html).appendTo(contents);
-
+                    $('<div class="pl-3" style="width: 98%;"></div>').html(res.html).appendTo(contents);
                     $('.add-photo').click(function(){ 
                         $("#formUpload").trigger('reset');
                         $('#result').empty(); 
                         $('#upload-photo').click(); 
                         $('#upload-image').attr('value', '')
                         $('.custom-alert').remove(); 
-                    }); 
+                        $('.btn__description').removeClass('d-block');
+                        $('.cropper-wrapper').removeClass('d-none');
+                        $('.btn__description').addClass('d-none');
+                        $('.cropper-wrapper').addClass('d-block');
+                        $('#btnCrop').removeClass('d-none');
+                        $('#btnRestore').removeClass('d-none');
+                    });  
                  var uploadProgress = $('.upload-progress');
                     $(document).on('click', '#upload-btn', function(e) {
                         const crop_img = $('#upload-image').val();
@@ -186,17 +189,13 @@ $(document).ready(function() {
                                         var html = '<div class="col-md-3 ipad-photo-img content__each">';
                                         html += '<div class="photo-item view-photo" data-id="'+result.id+'" data-url="'+result.file+'" style="background-image: url('+result.thumb+')"></div>';
                                         html += '</div>';
-                                        var count = $('.users-photo .col-md-3').length;
-                                        if(count > 1){
-                                            if(count === 6){
-                                                $('.users-photo .col-md-3').each(function(idx,val){
-                                                    if(idx == 4){
-                                                        val.remove();
-                                                    }
-                                                })
-                                            }
-                                            $('.content__each:first').after(html);
-                                        }
+
+                                        var content_first =  $('.content__each:first'); 
+                                       if(content_first){
+                                            content_first.after(html);
+                                       }else{
+                                            $('.content__each').appendTo(html); 
+                                       }
                                     }
                                     $('#modalUpload').find('textarea').val('');
                                     $('#modalUpload').modal('hide');
@@ -242,6 +241,8 @@ $(document).ready(function() {
                                                 $result.append( $('<img>').attr('src', croppedImageDataURL) );
                                                 $('#upload-image').attr('value', croppedImageDataURL)
                                                 $('.custom-alert').remove();
+                                                $('.btn__description').removeClass('d-none');
+                                                $('.cropper-wrapper').removeClass('d-block');
                                                 $('.btn__description').addClass('d-block');
                                                 $('.cropper-wrapper').addClass('d-none');
                                                 $(this).addClass('d-none');
@@ -267,6 +268,7 @@ $(document).ready(function() {
                             }
 
                         });
+                       
                        /**
                      *  load more hide and show
                      * */

@@ -300,8 +300,7 @@
                                 <div class="col-md-6 col-sm-12 col-12">
                                     <div class="form-group">
                                         <label>Preference</label>
-                                        <select class="form-control second bg-white" name="preference" id="preference" >
-                                            <option value="">Select preference</option>
+                                        <select class="form-control second bg-white" name="preference" id="preference" > 
                                             <option value="1" {!! $user->preference === 1?' selected':'' !!}>Male</option>
                                             <option value="2"{!! $user->preference === 2?' selected':'' !!}>Female</option>
                                             <option value="3"{!! $user->preference === 3?' selected':'' !!}>Male & Female</option>
@@ -418,7 +417,7 @@
                                     <div class="location__main">
                                         Location <i class="fa fa-location-arrow" id="location__icon" aria-hidden="true"></i> 
                                     </div>
-                                    <div class="location__search">
+                                    <div class="location__search" style="width: 50%">
                                         <div class="w-100 h-100 d-flex justify-content-between align-items-center p-2">
                                         <input class="range" type="range" min="0" max="10000" value="{{$user->distance ? $user->distance : 0}}" step="2" onmousemove="rangevalue1.value=value" /> 
                                         <div class="output"><output id="rangevalue1"></output> Miles</div>

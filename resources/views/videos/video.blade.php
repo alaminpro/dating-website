@@ -1,6 +1,11 @@
-@extends('layouts.page')
+@extends('layouts.default')
 @section('content')
-    <div class="conversations clearfix">
+    <style>
+        .audiojs{
+            display: none;
+        }
+    </style>
+    <div class="clearfix">
       <div class="main-contents">
       <div class="page-title text-capitalize custom-h1">
           <h1>Video Lobby</h1>
@@ -34,8 +39,8 @@
                 <img class="rounded-circle" src="{!! avatar($video->sender->avatar, $video->sender->gender) !!}" alt="" width="135"/>
             </div>
            @endif 
-           <audio id="audioFrenata"  controls="controls"  autoplay loop style="display:none" > 
-                <source src="{!! url('assets/waiting.mp3') !!}" type="audio/mpeg">
+           <audio class="d-none" id="audioFrenata" controls="controls"  autoplay loop style="display:none" > 
+                <source class="d-none" src="{!! url('assets/waiting.mp3') !!}" type="audio/mpeg">
             </audio> 
         </div>
         <div id="controls">
@@ -58,14 +63,18 @@
 </div>
 @endsection
 @section('javascript') 
- 
+    <script src="{!! url('assets/js/audio.min.js') !!}"></script>
     <script> 
             
         $(function () {  
             var token = $('meta[name=csrf_token]').attr('content'); 
             var socket = io(socket_url, {
-                transports: [ 'websocket' ]
-            });  
+                path: '/node/socket.io',
+                transports: ['polling','websocket']
+            });
+            audiojs.events.ready(function() {
+                var as = audiojs.createAll();
+            });
              navigator.getUserMedia = (
                         navigator.getUserMedia ||
                         navigator.webkitGetUserMedia ||
@@ -147,15 +156,14 @@
                                 $('#remote-media').html(div); 
                                 $('.end_vdo_call').removeClass('d-none');  
                                 $('.end_vdo_call_before').addClass('d-none');
-                                soundEffect.pause();  
+                                $('.audiojs').empty();
                             }
                            
-                            function participantDisconnected(participant) {
-                                //console.log('Participant "%s" disconnected', participant.identity);
-
+                            function participantDisconnected(participant) { 
                                 participant.tracks.forEach(trackRemoved);
                                 document.getElementById(participant.sid).remove();
                                 window.location.href = '{!! route('videos') !!}';
+                                $('.audiojs').empty();
                             }
 
                             function trackAdded(div, track) {

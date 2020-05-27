@@ -1,11 +1,10 @@
-
 $(function () {
     var token = $('meta[name=csrf_token]').attr('content');
     var typing=false;
     var timeout=undefined;
     var socket = io(socket_url, {
-        allowUpgrades: true,
-        transports: ['websocket', 'polling'], 
+        path: '/node/socket.io',
+        transports: ['polling','websocket']
     });
     function typingTimeout(id,receive_id){
         typing = false;
@@ -293,7 +292,7 @@ $(function () {
     socket.on('receive-stop-typing' ,function (data) {
         var boxMessage = $('#message-box-'+data.id);
         if(data.receive_id === logged_id && boxMessage.length){
-            boxMessage.find('.write-message .typing').hide();;
+            boxMessage.find('.write-message .typing').hide();
         }
     });
 
@@ -312,9 +311,18 @@ $(function () {
         </div>\
     </div>';
         $('.notifications').prepend(html);
-        var audio = document.getElementById('calling_audio');
-        audio.load();
-        audio.play(); 
+        var source = $('#audio_source').val();
+        
+        var sound      = document.createElement('audio');
+        sound.id       = 'audio-player';
+        sound.class = 'd-none';
+        sound.src      = source;
+        sound.type     = 'audio/mpeg';
+        sound.autoplay     = true;
+        $('.notifications').appendChild(sound);
+        audiojs.events.ready(function() {
+           audiojs.createAll();
+        });
     }
         // if(data.receive_id === logged_id){
         //     var html = '<div class="imcoming"><a href="'+data.url+'"><img src="'+data.avatar+'">Video call<strong>'+data.name+'</strong></a><span><i class="fa fa-phone"></i></span></div>';

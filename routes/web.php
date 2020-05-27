@@ -48,7 +48,7 @@ Route::middleware(['auth','complete'])->prefix('/')->group(function(){
     Route::get('message/{id}','MessageController@message')->name('message'); 
     Route::get('delete_message/{id}','MessageController@delete_message')->name('delete_message');
     Route::get('chat/{id}','MessageController@startChat')->name('chat');  
-    Route::get('videos','VideoController@videos')->name('videos'); 
+    Route::get('videos','VideoController@videos')->name('videos');  
     Route::get('video/{id}','VideoController@video')->name('video');
     Route::get('follow','FollowController@index')->name('follow');
 });

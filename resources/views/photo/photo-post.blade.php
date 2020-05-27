@@ -1,4 +1,4 @@
-@if($user->photos()->count())
+
 <!-- page-title pl-3 -->
     <div class="row load__more_append users-photo"><!-- pl-2 -->
         @if((auth()->check() && auth()->user()->id == $user->id)) 
@@ -8,7 +8,7 @@
             </div>
         </div>
         @endif
-     
+    @if($user->photos()->count())
         @foreach($user->photos()->orderBy('created_at','DESC')->get()->take(15) as $photo)
 
         <?php
@@ -25,8 +25,9 @@
                         background-size: cover; background-position: center; background-image: url('{!! url($cover) !!}');"> 
                 </div>
             </div>
-        @endforeach
-        <div class="modal fade" id="modalUpload" tabindex="-1" role="dialog"
+        @endforeach 
+     @endif
+     <div class="modal fade" id="modalUpload" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
@@ -80,4 +81,3 @@
     </div>
    
      
-@endif

@@ -1,7 +1,7 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var port = process.env.PORT || 2888;
+// var port = process.env.PORT || 2888;
 
 io.on('connection', function(socket){ 
     socket.on('send-message', function(data){
@@ -35,7 +35,7 @@ io.on('connection', function(socket){
         socket.broadcast.emit('cancel-call', data);
     });
 });
-
-http.listen(port, function(){
-    console.log('listening on *:' + port);
+ 
+http.listen(8000, '127.0.0.1', function(){
+    console.log('listening on *:' + 8000);
 });

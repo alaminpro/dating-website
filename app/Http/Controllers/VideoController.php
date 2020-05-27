@@ -25,7 +25,7 @@ class VideoController extends Controller
 
     public function videos()
     {  
-        $users  = User::where('status','Online')->where('video_chat', 1)->get();
+        $users  = User::where('video_chat', 1)->get();
         return view('videos.all', compact('users'));
     }
   
@@ -41,4 +41,5 @@ class VideoController extends Controller
             return redirect()->route('videos');
         }
     }
+   
 }

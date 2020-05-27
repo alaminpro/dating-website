@@ -2990,7 +2990,7 @@ textarea.edit-comment {
     border: none;
     padding: 0;
     background: none;
-    width: 68%;
+    width: 60%;
 }
 
 .range::-webkit-slider-runnable-track {
@@ -3100,7 +3100,7 @@ textarea.edit-comment {
     position: absolute;
     background: #f8f8f8;
     box-shadow: 0px 3px 15px -5px #dfdfdf;
-    width: 320px;
+    width: 100%;
     height: 50px;
     z-index: 99;
     top: 34px;
@@ -3672,4 +3672,34 @@ textarea.edit-comment {
     font-size: 42px;
     margin-bottom: 0px;
     line-height: 1.1;
+}
+.search__address{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    padding: 5px;
+    color: #555;
+}
+
+
+@media (max-width: 540px){
+    .username_intecator h2{
+        font-size: 22px;
+    }
+    .typing {
+        font-size: 15px;
+    }
+}
+@media (max-width: 992px){
+    .main .video-con #remote-media {
+        position: relative;
+        width: 100%; 
+        background: #242424; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        overflow: hidden;
+        height: 100%;
+    }
 }

@@ -19,8 +19,8 @@ $logo = $logo ? url($logo) : url('assets/images/logo.png');
     @yield('content')
     <script>
     var ajax_url = '{!! route('ajax') !!}';
-    var ajax_url_follow = '{!! route('ajax_follow') !!}';
-    var socket_url = 'http://127.0.0.1:2888';
+    var ajax_url_follow = '{!! route('ajax_follow') !!}'; 
+    var socket_url = 'https://datev2.com/'; 
     var logged_id = {!! auth()->check() ? auth()->id() : 'false' !!};
     </script>
     </script>

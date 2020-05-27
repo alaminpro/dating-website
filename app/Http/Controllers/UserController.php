@@ -378,9 +378,11 @@ class UserController extends Controller
                     if($this->request->has('lat')){
                         $user->lat = $this->request->get('lat');
                     }
+                    
                     if($this->request->has('lng')){
                         $user->lng = $this->request->get('lng');
                     }
+
                     if($this->request->has('password') && !empty($this->request->password)){
                         $user->password = Hash::make($this->request->password);
                     }
