@@ -16,10 +16,21 @@ $seo_website_description = setting('website_description');
 @section('social_image')
     {!! isset($seo_image) ? $seo_image : url($seo_social_image) !!}
 @endsection
- 
+ <style>
+ .hero-bg {
+     background:#fafafa;
+     border-bottom:1px #ccc solid;
+ }
+ .pleft-1 {
+     padding-left:1rem;
+ }
+ .pright-1 {
+     padding-right:1rem;
+ }
+ </style>
     <div class="overflow-hidden bg-white">
         <div class="container-fluid m-0 p-0">
-            <div class="row">
+            <div class="row hero-bg">
                 <div class="col-md-6 d-none d-md-block"> 
                     <?php
                     $home_background = setting('home_background');
@@ -42,8 +53,8 @@ $seo_website_description = setting('website_description');
                         <a href="/" class="logo__login"><img class="set-welcome-logo" src="{!! $logo !!}"></a>
                     </div>
                     <div class="login__register_wrapper">
-                        <h1 class="login__register_heading">Live stream and video chat with singles nearby</h1>
-                        <h3 class="login__register_sub_heading">Why stay signle when you can find the perfect date on DateV2</h3>
+                        <h1 class="login__register_heading">Chat, flirt and Video Call Live Singles Nearby</h1>
+                        <h2 class="login__register_sub_heading">See who you are taking to online before meeting them in person</h2>
                         <a href="{{ route('register') }}" class="login__register_btn register__margin">Register</a> 
                         <hr>
                         @if(session()->has('fail_login'))
@@ -94,7 +105,7 @@ $seo_website_description = setting('website_description');
                                             {{ __('Remember Me') }}
                                         </label>
                                     </div>
-                                    <a href="{{url('forget-password')}}" class="forget__password">Forget password ?</a>
+                                    <a href="{{url('forget-password')}}" class="forget__password">Forgot password ?</a>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -116,38 +127,38 @@ $seo_website_description = setting('website_description');
                 </div>
             </div> 
         </div>
-        <section style="margin-top: 70px;"> 
+        <section style="margin-top: 20px;"> 
             <div class="container d-none d-lg-block" >
                 <div class="row">
                     <div class="col-lg-6 d-flex flex-column justify-content-center">
-                        <h2 class="pb-3">Your solution to online dating</h2>
-                        <p>Looking for the love of your life with no strings attached? At DATEV2, your search will be over. Enjoy the benefits of online dating with the help of DATEV2 in a hassle-free way. With our free video chat feature, you can instantly connect with thousands of people online from all around the globe. And all at your fingertips from the ease of your home. Our interactive approach to online dating allow the users to meet new people one-on-one. So while you find the perfect partner onine, you can maintain your anonymity and privacy.</p>
+                        <h2 class="pb-3">Your Solution to Online Video Dating</h2>
+                        <p>Looking for the love of your life in a fun, new and safe way? At DateV2, your search will be over. Enjoy the benefits of online dating with the help of DateV2 in a hassle-free way. With our <b>Free Video Call</b> feature, you can instantly connect with thousands of singles online from all around the world.</p><p>Dating has changed in 2020. Now it's all at your fingertips from the comfort of your home or on the road. Our interactive approach to online dating allows you to meet new people one-on-one. So while you find the perfect partner online, you can maintain your anonymity, privacy and most of all, Your Safety.</p>
                     </div>
                     <div class="col-lg-6  d-flex justify-content-end">
-                         <img src="{{ asset('uploads/static/landing_1.jpg') }}" width="350" alt="landing image one">
+                         <img src="{{ asset('uploads/static/landing_1.jpg') }}" width="100%" alt="landing image one">
                     </div>
                 </div>
-                <div class="row mt-5 mb-5">
+                <div class="row mt-2 mb-5">
                     <div class="col-lg-6">
-                        <img src="{{ asset('uploads/static/landing_2.jpg') }}" width="350" alt="landing image one"> 
+                        <img src="{{ asset('uploads/static/landing_2.jpg') }}" width="100%" alt="landing image one"> 
                     </div>
                     <div class="col-lg-6  d-flex flex-column justify-content-center">
                         <h2 class="pb-3">Find the perfect match without any upfront cost</h2>
-                        <p>Whether you want to make new friends, get a date, or even find the love of your life, DATEV2 can trun everything around for you. Finding the right partner can be very detrimental and difficult. With video chat, you won't have to worry about spending your resources on a person you are not compatible with. Instead, you can first talk with the man or woman to ensure that the person suits you.</p>
+                        <p>Whether you want to make new friends, get a date, or even find the love of your life, DateV2 can turn everything around for you. Finding the right partner can be very detrimental and difficult. With video chat, you won't have to worry about spending your resources on a person you are not compatible with. Instead, you can first talk with the man or woman to ensure that the person suits you before jumping head first.</p>
                     </div>
                 </div>
             </div>
             <div class="container d-block d-lg-none" >
-                <div class="row justify-content-center px-5"> 
-                        <h2 class="pb-3 text-center">Your solution to online dating</h2>
-                        <img src="{{ asset('uploads/static/landing_1.jpg') }}" width="350" alt="landing image one">
-                        <p class="text-center">Looking for the love of your life with no strings attached? At DATEV2, your search will be over. Enjoy the benefits of online dating with the help of DATEV2 in a hassle-free way. With our free video chat feature, you can instantly connect with thousands of people online from all around the globe. And all at your fingertips from the ease of your home. Our interactive approach to online dating allow the users to meet new people one-on-one. So while you find the perfect partner onine, you can maintain your anonymity and privacy.</p>
+                <div class="row justify-content-center pleft-1 pright-1"> 
+                        <h2 class="pleft-1 pright-1">Your Solution to Online Video Dating</h2>
+                        <img src="{{ asset('uploads/static/landing_1.jpg') }}" width="100%" alt="landing image one">
+                        <p>Looking for the love of your life in a fun, new and safe way? At DateV2, your search will be over. Enjoy the benefits of online dating with the help of DateV2 in a hassle-free way. With our <b>Free Video Call</b> feature, you can instantly connect with thousands of singles online from all around the world.</p><p>Dating has changed in 2020. Now it's all at your fingertips from the comfort of your home or on the road. Our interactive approach to online dating allows you to meet new people one-on-one. So while you find the perfect partner online, you can maintain your anonymity, privacy and most of all, Your Safety.</p>
                  
                 </div>
-                <div class="row justify-content-center mt-5 mb-5 px-5">  
-                        <h2 class="pb-3 text-center">Find the perfect match without any upfront cost</h2>
-                        <img src="{{ asset('uploads/static/landing_2.jpg') }}" width="350" alt="landing image one"> 
-                        <p class="text-center">Whether you want to make new friends, get a date, or even find the love of your life, DATEV2 can trun everything around for you. Finding the right partner can be very detrimental and difficult. With video chat, you won't have to worry about spending your resources on a person you are not compatible with. Instead, you can first talk with the man or woman to ensure that the person suits you.</p>
+                <div class="row justify-content-center pleft-1 pright-1">  
+                        <h2 class="pleft-1 pright-1">Find the perfect match without any upfront cost</h2>
+                        <img src="{{ asset('uploads/static/landing_2.jpg') }}" width="100%" alt="landing image one"> 
+                        <p>Whether you want to make new friends, get a date, or even find the love of your life, DateV2 can turn everything around for you. Finding the right partner can be very detrimental and difficult. With video chat, you won't have to worry about spending your resources on a person you are not compatible with. Instead, you can first talk with the man or woman to ensure that the person suits you before jumping head first.</p>
                  
                 </div>
             </div>

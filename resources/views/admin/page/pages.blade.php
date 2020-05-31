@@ -25,7 +25,7 @@
                             @if($page->type == 'page')
                             <a href="{!! route('page',['slug'=>$page->slug]) !!}">{!! $page->title !!}</a>
                             @else
-                            <a href="{!! route('singelBlogPost',['slug'=>$page->slug]) !!}">{!! $page->title !!}</a>
+                            <a href="{!! route('singleBlogPost',['slug'=>$page->slug]) !!}">{!! $page->title !!}</a>
                             @endif
                         </td>
                         <td>{!! $page->type == 0 ? 'Page' : 'Post' !!}</td>

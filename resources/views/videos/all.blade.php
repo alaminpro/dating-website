@@ -3,10 +3,10 @@
     <div class="conversations clearfix">
       <div class="main-contents">
       <div class="page-title text-capitalize custom-h1">
-          <h1>Video Lobby</h1>
+          <h1>Video Call</h1>
       </div>
       <div class="row m-0">
-        <div class="col-md-3 col-lg-4 col-xl-3 p-0">
+        <div class="float-left list-conversations">
           <div class="video__call_sidebar">
             <div class="search-conversation">
                 <input type="text" placeholder="Search" id="search-user">
@@ -19,7 +19,7 @@
             <div class="d-flex w-100 justify-content-center loading"> </div>
           </div>
         </div>
-        <div class="col-md-9 col-lg-8 col-xl-9 m-0 p-0">
+        <div class="message-box">
             <div class="video-call-body d-flex align-items-center justify-content-center" >
             
             </div>
@@ -86,7 +86,7 @@
                         } 
                           $.map( res.data, function(user) { 
                           $('<li id="video-'+user.id+'" data-id="'+user.id+'" class="video__list ' + (params.caller_id == user.id ? 'isActive' : '') + '"></li>').html('<div>\
-                                        <img width="30" src="'+user.avatar+'" class="mr-1 border rounded-circle" > \
+                                        <img width="50" src="'+user.avatar+'" class="mr-1 border rounded-circle" > \
                                         <span>'+user.username+'</span> \
                                       </div><div>' + (user.online ? '<div class="badge__video_online">Live</div> ' : '<div class="badge__video_offline">Away</div>') + '</div>').appendTo(userDataId);
                       }) 
@@ -126,7 +126,7 @@
                         searchData.empty() 
                         var data = res.data
                         if($.isEmptyObject(data)){
-                          $('<li class="text-center py-3"></li>').html('User not found!').appendTo(searchData);
+                          $('<li class="text-center py-3"></li>').html('No users found!').appendTo(searchData);
                         } 
                         $.map( res.data, function(user) {  
                             $('<li id="video-'+user.id+'" data-id="'+user.id+'" class="video__list"></li>').html('<div>\
@@ -138,12 +138,14 @@
                     },
                     complete: function(){
                       loader.empty() 
+                      
                     }
                 }) 
 
           }else{
             searchData.hide();
             userData.show()
+            
           }
        });
 

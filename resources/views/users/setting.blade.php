@@ -3,6 +3,18 @@
 @section('stylesheet')
 <link rel="stylesheet" type="text/css" href="{!! url('assets/css/no-uislider.css') !!}">
     <style>
+    .btn-block {
+    display: block;
+    width: 43%;
+    margin: auto;
+    padding:5px;
+}
+    .pt-6 {
+        padding-top:1rem;
+    }
+    .cropper-container {
+        border-radius:10px;
+    }
       .tab__main {
             background: #fff;
             padding: 15px 0px;
@@ -50,15 +62,16 @@
             display: none;
         }
         .custom-file-label-setting {
-                height: auto;
-                padding: 16px 50px;
-                text-align: center;
-                background-color: #5692ff;
-                color: white;
-                display: inline-block;
-                margin-top: 50px;
-                margin-right: 5px;
-                cursor: pointer;
+            height: auto;
+padding: 16px 50px;
+text-align: center;
+background-color: #8d92a1;
+color: white;
+display: inline-block;
+margin: 50px 30px auto;
+cursor: pointer;
+width: 90%;
+border-radius:10px;
             }
             .input-group > .custom-file {
                 display: flex;
@@ -189,9 +202,9 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="tab__main">
-                            <h3 class="mb-2">Profile Settings</h3>
+                          <!--  <h3 class="mb-2">Profile Settings</h3> -->
                             <ul class="tab__items">
-                                <li class="tab__item tab__active" data-tab="tab-1">Image Upload</li>
+                                <li class="tab__item tab__active" data-tab="tab-1">Profile Image</li>
                                 <li class="tab__item " data-tab="tab-2">Profile Details</li>
                                 <li class="tab__item " data-tab="tab-3">Password and  Security</li>
                                 <li class="tab__item" data-tab="tab-4">Location</li>
@@ -216,14 +229,14 @@
                                         <div class="input-group mb-3">
                                             <div class="custom-file">
                                                 <input accept="image/*" type="file" class="custom-file-input" name="avatar" id="register-avatar" aria-describedby="register-avatar">
-                                                <label class="custom-file-label-setting" for="register-avatar">upload</label>
+                                                <label class="custom-file-label-setting" for="register-avatar">Add Image</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group text-center pt-3">
-                                <button class="btn btn-primary btn-block"   type="submit">Update Profile</button>
+                            <div class="form-group text-center pt-6">
+                                <button class="btn btn-primary btn-block"   type="submit">Save Image</button>
                             </div>
                         </div>
                         <div class="tab__content " id="tab-2">
@@ -435,9 +448,9 @@
                 </div>
         </div>
     </form>
-
-</div>
 @include('partials.footer')
+</div>
+
 <script src="{!! url('assets/js/no-uislider.js') !!}"></script>
 <script>
     $(document).ready(function() {

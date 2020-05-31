@@ -29,15 +29,15 @@ width:25% !important;
                 </a>
                 <a href="{!! route('profile',['username'=>$user->username]) !!}"> <p style="font-size: 1.2rem;margin:5px;" class="font-weight-bold text-capitalize mb-0">{!! fullname($user->firstname, $user->lastname, $user->username) !!}</p></a>
                 @if($user->address !=null && $user->country)
-                <p style="font-size: 14px; font-weight:400;margin:5px;"><i class="fas fa-users"></i> Popularity - Very Low</p>
-                <a class="btn btn-upgrade">Upgrade Now!</a>
+                <p style="font-size: 14px; font-weight:400;margin:5px;"><i class="fas fa-map-marker-alt"></i> {{ $user->address }}</p>
+                <a href="{!! route('profile',['username'=>$user->username]) !!}" class="btn btn-upgrade">View Profile</a>
                 @endif
           </div>
         </div>
         <ul class="list-unstyled">
         <li><a class="{!! Illuminate\Support\Facades\Route::is('blog')?'active':'' !!}" href="{!! route('blogPost') !!}">Blogs <i class="fas fa-book"></i></a></li>
             <li><a class="{!! Illuminate\Support\Facades\Route::is('landing')?'active':'' !!}" href="{!! route('landing') !!}">People Nearby <i class="fas fa-search"></i></a></li>
-            <li><a class="{!! Illuminate\Support\Facades\Route::is('follow')?'active':'' !!}" href="{!! route('follow') !!}">Follow <i class="fa fa-user-plus" aria-hidden="true"></i>
+            <li><a class="{!! Illuminate\Support\Facades\Route::is('follow')?'active':'' !!}" href="{!! route('follow') !!}">Dashboard <i class="fa fa-user-plus" aria-hidden="true"></i>
             </a></li>
             <li id="message-sidebar"><a class="{!! Illuminate\Support\Facades\Route::is('messages') || Illuminate\Support\Facades\Route::is('message')?'active':'' !!}" href="{!! route('messages') !!}">Messages  <span class="badge badge-pink">{!! $unread > 0 ? $unread: '' !!}</span><i class="fas fa-comments"></i></a></li>
             <li><a class="{!! Illuminate\Support\Facades\Route::is('videos') || Illuminate\Support\Facades\Route::is('video')?'active':'' !!}" href="{{route('videos')}}">Video Chat <i class="fas fa-video"></i></a></li>

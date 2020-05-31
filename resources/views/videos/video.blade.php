@@ -4,29 +4,40 @@
         .audiojs{
             display: none;
         }
+        .vcall > h2 {
+    color:white !important;
+    font-weight:300 !important;
+    font-size:2.4rem;
+}
+.typin-x {
+    color:#a3ffa3 !important
+}
+.typing-dot {
+    background-color:orange !important;
+}
     </style>
     <div class="clearfix">
       <div class="main-contents">
       <div class="page-title text-capitalize custom-h1">
-          <h1>Video Lobby</h1>
+          <h1>Video Call Lobby</h1>
       </div>
       <div class="row m-0">
         <div class="col-md-12 p-0 m-0">
         <div class="video-con" > 
         <div id="remote-media">
-            <div class="username_intecator">
+            <div class="username_intecator vcall">
                  
                 @if(auth()->id() === $video->sender_id)
                 <h2 class="text-center text-capitalize">Calling {{$video->receive->username}}</h2> 
-                <div class="typing text-center">Connecting 
-                    <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
-                    Please Wait
+                <div class="typing text-center typin-x">Connecting 
+                    <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>&nbsp;
+                    please wait
                 </div>
             @else
             <h2 class="text-center text-capitalize">Incoming {{$video->sender->username}}</h2> 
-                <div class="typing text-center">Connecting 
-                    <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
-                    Please Wait
+                <div class="typing text-center typin-x">Connecting 
+                    <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>&nbsp;
+                    please wait
                 </div>
             @endif
             </div>
@@ -115,8 +126,23 @@
 
                             Twilio.Video.connect('{!! (auth()->id() === $video->sender_id)?$video->access_token:$video->access_token_2 !!}',{ 
                                     name: '{!! $video->room_name !!}',
-                                    audio: true, 
-                                    video: { frameRate: 15 },
+                                    audio: true,  
+                                    video: { height: 720, frameRate: 24, width: 1280 },
+                                    bandwidthProfile: {
+                                        video: {
+                                        mode: 'grid',
+                                        maxTracks: 10,
+                                        renderDimensions: {
+                                            high: {height:1080, width:1980},
+                                            standard: {height:720, width:1280},
+                                            low: {height:176, width:144}
+                                        }
+                                        }
+                                    },
+                                    maxAudioBitrate: 16000, //For music remove this line
+                                    //For multiparty rooms (participants>=3) uncomment the line below
+                                    //preferredVideoCodecs: [{ codec: 'VP8', simulcast: true }],
+                                    networkQuality: {local:1, remote: 1}
                                   }).then(room => { 
                                 room.participants.forEach(participantConnected);
                                 room.on('participantConnected', participantConnected);

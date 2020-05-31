@@ -25,7 +25,6 @@
 </script>
 <script src="{!! url('assets/js/app.js') !!}"></script>
 <script src="{!! url('assets/js/socket.js') !!}"></script>
-<script src="{!! url('assets/js/jquery.toast.min.js') !!}"></script>
 @if(auth()->user()) 
 <script>
 
@@ -74,9 +73,9 @@
  })
  
 </script>
-@endif 
-
+@endif
+ <!-- <script src="http://localhost/dating/assets/js/app.js"></script>
+<script src="http://localhost/dating/assets/js/socket.js"></script> -->
 @yield('javascript')
-
 </body>
 </html>

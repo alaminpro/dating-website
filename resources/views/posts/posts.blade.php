@@ -60,6 +60,7 @@
     <div class="container-fluid main_container"> 
         @include('partials.sidebar')
         <div class="main">
+            <div class="main-content">
             <div class="page-title text-capitalize custom-h1 mb-4"><h1>Blog posts</h1></div>
             <div class="main-photos">
                  <div class="row m-0">
@@ -67,11 +68,11 @@
                         <div class="col-md-6 col-lg-4  mb-4">
                             <div class="card custom-card">
                                 <div class="card-body p-0">
-                                <a href="{{ route('singelBlogPost', $data->slug) }}">
+                                <a href="{{ route('singleBlogPost', $data->slug) }}">
                                     <div class="image__box" style="background-image: url('{{asset("uploads/". $data->image)}}')"> </div>
                                 </a>
                                     <div class="post_title_body p-4">
-                                        <a href="{{ route('singelBlogPost', $data->slug) }}"> <h2 class="page__title">{{ ucfirst($data->title) }}</h2>   </a>
+                                        <a href="{{ route('singleBlogPost', $data->slug) }}"> <h2 class="page__title">{{ ucfirst($data->title) }}</h2>   </a>
                                         <p class="page__details">
                                             @if(!empty($data->excerpt))
                                             {{ $data->excerpt }}
@@ -90,6 +91,7 @@
                  </div>
             </div>
             @include('partials.footer')
+            </div>
         </div>
 
     </div>

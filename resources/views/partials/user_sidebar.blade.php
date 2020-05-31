@@ -21,12 +21,13 @@
                 <a href="{!! route('profile',['username'=>$user->username]) !!}"><img src="{!! avatar($user->avatar, $user->gender) !!}" class="w-25 rounded-circle mb-2"></a>
                 <p style="font-size: 1.2rem;margin:5px;" class="font-weight-bold text-capitalize mb-0">{!! fullname($user->firstname, $user->lastname, $user->username) !!}</p>
                 @if($user->address !=null && $user->country)
-                <p style="font-size: 14px; font-weight:400;margin:5px;"><i class="fas fa-users"></i> Popularity - Very Low</p>
-                <a class="btn btn-upgrade">Upgrade Now!</a>
+                <p style="font-size: 14px; font-weight:400;margin:5px;"><i class="fas fa-map-marker-alt"></i> {{ $user->address }}</p>
+                <a href="{!! route('profile',['username'=>$user->username]) !!}" class="btn btn-upgrade">View Profile</a>
                 @endif
           </div>
         </div>
         <ul class="list-unstyled">
+        <li><a class="{!! Illuminate\Support\Facades\Route::is('follow')?'active':'' !!}" href="{!! route('follow') !!}">Dashboard <i class="fas fa-search"></i></a></li>
             <li><a class="{!! Illuminate\Support\Facades\Route::is('landing')?'active':'' !!}" href="{!! route('landing') !!}">Browse <i class="fas fa-search"></i></a></li>
             <li id="message-sidebar"><a class="{!! Illuminate\Support\Facades\Route::is('messages') || Illuminate\Support\Facades\Route::is('message')?'active':'' !!}" href="{!! route('messages') !!}">Messages  <span class="badge badge-pink">{!! $unread > 0 ? $unread: '' !!}</span><i class="fas fa-comments"></i></a></li>
             <li><a class="{!! Illuminate\Support\Facades\Route::is('video')?'active':'' !!}" href="">Video Chat <i class="fas fa-video"></i></a></li>

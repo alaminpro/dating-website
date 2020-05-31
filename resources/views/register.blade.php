@@ -1,11 +1,11 @@
 @extends('layouts.welcome')
-<?php
+<!-- <?php
 $seo_social_image = setting('social_image');
-?>
+?> --> <!--
 <?php
 $seo_website_title = setting('website_title');
 $seo_website_description = setting('website_description');
-?>
+?> -->
 @section('page_title')
     {{ "Register | DateV2" }}
 @endsection
@@ -66,8 +66,9 @@ $seo_website_description = setting('website_description');
         }
     }
     .step__heading{ 
-        font-size: 24px; 
+        font-size: 14px; 
         font-weight: normal;
+        padding:10px;
     }
     .interest_heading{
         color: rgb(50, 50, 50);
@@ -200,6 +201,10 @@ $seo_website_description = setting('website_description');
                         <div id="register__step_four" class="register__step">
                             <i class="fas fa-check"></i>
                         </div>
+                        <div id="bar__four"  class="step__bar"></div>
+                        <div id="register__step_five" class="register__step">
+                            <i class="fas fa-check"></i>
+                        </div>
                     </div>
                     <div class="tab__area_main">
                         @if($errors->any())
@@ -316,10 +321,9 @@ $seo_website_description = setting('website_description');
                                         </div>
                                         <div class="date-error pl-3"></div>
                                     </div>
-                                </div>
-                                <h2 class="step__heading mb-2">Where are you located in the world?</h2>
+                                </div> 
                                 <div class="form-group">
-                                    <label  for="register-address" class="font-weight-bold">Address</label>
+                                    <label  for="register-address" class="font-weight-bold">City</label>
                                     <input class="form-control second" name="address" id="register-address">
                                     <input type="hidden" value="{!! $geoip['lat'] !!}" name="lat" id="register-lat">
                                     <input type="hidden" value="{!! $geoip['lng'] !!}" name="lng" id="register-lng">
@@ -337,7 +341,7 @@ $seo_website_description = setting('website_description');
                                     <div class="country-error"></div>
                                 </div>
                                 <div class="form-group d-flex justify-content-between mr-2 mt-4">
-                                    <button id="step-back-1" class="login__register_btn btn__blank mr-3"  type="button">Previews</button>
+                                    <button id="step-back-1" class="login__register_btn btn__blank mr-3"  type="button">Previous</button>
                                     <button id="step-btn-2" class="login__register_btn"  type="button">Next</button>
                                 </div>
                             </div>
@@ -347,13 +351,19 @@ $seo_website_description = setting('website_description');
                                     <h3 class="interest_heading mb-2">Please choose some basic interest's</h3> 
                                     <div>
                                         <label  for="search_interest" class="font-weight-bold">Type here to search for interest's</label>
-                                        <input type="text" id="search_interest"  class="form-control second" placeholder="Photography, Gaming">
+                                        <input type="text" id="search_interest"  class="form-control second" placeholder="Photography, Gaming, Traveling etc">
                                     </div>
                                     <div class="selected__interest"></div>
                                     <div id="registered_interest" class="search_interest_available  mt-2"></div>
                                     <div class="loader d-flex justify-content-center"></div> 
                                     <div class="interest-error"></div>
                                 </div>
+                                <div class="form-group d-flex justify-content-between  mr-2 mt-4">
+                                    <button id="step-back-2" class="login__register_btn btn__blank  mr-3"  type="button">Previous</button>
+                                    <button id="step-btn-3" class="login__register_btn"  type="button">Next</button>
+                                </div>
+                            </div> 
+                            <div  class="step step-4  ">   
                                 <h2 class="step__heading mb-2 text-dark font-weight-normal">Upload your best photo!</h2>
                                 <div class="row">
                                     <div class="col-xl-6">
@@ -368,7 +378,7 @@ $seo_website_description = setting('website_description');
                                     </div>
                                     <div class="col-xl-6 d-flex align-items-center">
                                         <div class="form-group">
-                                           <h5 class="text-dark">Upload Profile Photo</h5>
+                                           <h5 class="text-dark">Choose Image</h5>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
                                                     <input accept="image/*" type="file" class="custom-file-input" name="avatar" id="register-avatar" aria-describedby="register-avatar">
@@ -380,26 +390,26 @@ $seo_website_description = setting('website_description');
                                     </div> 
                                 </div>
                                 <div class="form-group d-flex justify-content-between  mr-2 mt-4">
-                                    <button id="step-back-2" class="login__register_btn btn__blank  mr-3"  type="button">Previews</button>
-                                    <button id="step-btn-3" class="login__register_btn"  type="button">Next</button>
+                                    <button id="step-back-3" class="login__register_btn btn__blank  mr-3"  type="button">Previous</button>
+                                    <button id="step-btn-4" class="login__register_btn"  type="button">Next</button>
                                 </div>
                             </div>
-                            <div  class="step step-4 "> 
+                            <div  class="step step-5 "> 
                                 <div class="d-flex justify-content-center flex-column align-items-center">
-                                 
+                                 <h6 class="register__final text-center">Finally! Tell everyone a little bout you!</h6>
                                     <div class="final__icon"> 
                                         <i class="fas fa-check"></i>
                                     </div>
-                                    <p class="register__final text-center">Finally! Tell everyone a little bout you!</p>
+                                    
                                 </div>
                                 <div class="form-group">
                                     <label class="font-weight-bold">About Me</label>
                                     <textarea class="form-control second" rows="4" name="about"></textarea>
                                     <p class="font-weight-bold mb-0 mt-2">Please include important keywords example. </p>
-                                    <p class="helper">Shy, Outgoing, Spontaneous, Fun, Love to travel or home body etc.</p>
+                                    <p class="helper">Outgoing, Spontaneous, Fun, Love to travel or home body, Shy etc.</p>
                                 </div>
                                 <div class="form-group d-flex justify-content-between mr-2 mt-5">
-                                    <button id="step-back-3" class="login__register_btn btn__blank  mr-3"  type="button">Previews</button>
+                                    <button id="step-back-4" class="login__register_btn btn__blank  mr-3"  type="button">Previous</button>
                                     <button class="login__register_btn"  type="submit">Submit</button>
                                 </div>
                             </div>
@@ -430,9 +440,11 @@ $seo_website_description = setting('website_description');
             var register__step_two = $('#register__step_two');
             var register__step_three = $('#register__step_three');
             var register__step_four = $('#register__step_four');
+            var register__step_five = $('#register__step_five');
             var bar__one = $('#bar__one');
             var bar__two = $('#bar__two');
             var bar__three = $('#bar__three');
+            var bar__four = $('#bar__four');
             // coding for password and confirm password
             var password =  $("#register-password");
             var c_password =  $("#register-password-confirm");
@@ -587,8 +599,8 @@ $seo_website_description = setting('website_description');
                 if(preference.val() != '' && gender.val() != ''){ 
                     gender_error.empty();
                     preference_error.empty();
-                    $('.step-4').removeClass('active-step');
-                    $('.step-5').addClass('active-step');
+                    $('.step-5').removeClass('active-step');
+                   // $('.step-5').addClass('active-step');
                     
                 }
                 if(day.val() != '' && month.val() != '' && year.val() != ''){ 
@@ -633,8 +645,16 @@ $seo_website_description = setting('website_description');
             $('#step-back-3').on('click',function(){ 
                 $('.step-3').addClass('active-step');
                 $('.step-4').removeClass('active-step');
-                bar__three.removeClass('step__bar_complete') 
+                bar__three.removeClass('step__bar_complete')
+                bar__four.removeClass('step__bar_active') 
                 register__step_four.removeClass('step__active') 
+            }) 
+            $('#step-back-4').on('click',function(){ 
+                $('.step-4').addClass('active-step');
+                $('.step-5').removeClass('active-step');
+                bar__four.removeClass('step__bar_complete')
+                bar__five.removeClass('step__bar_active') 
+                register__step_five.removeClass('step__active') 
             }) 
            
             
@@ -648,6 +668,7 @@ $seo_website_description = setting('website_description');
             var interest_search_available = $('.search_interest_available');
             var loader = $('.loader');
             var interest_error = $('.interest-error');
+
 
            
             search_interest.on('keyup',function (e) {
@@ -760,7 +781,18 @@ $seo_website_description = setting('website_description');
                 }
                   
             })
+        
           
         });
+    </script>
+    <script>
+     $('#step-btn-4').on('click',function(){    
+                
+                $('.step-4').removeClass('active-step');
+                $('.step-5').addClass('active-step');
+                bar__four.addClass('step__bar_complete') 
+                register__step_five.addClass('step__active')
+        
+        })
     </script>
 @endsection

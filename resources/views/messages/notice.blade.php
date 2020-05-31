@@ -3,7 +3,7 @@
     <a href="{!! route('message',['id'=>$message->conversation_id]) !!}">
         <div class="media">
             <img src="{!! avatar($message->user->avatar, $message->user->gender) !!}" class="rounded-circle border">
-            <div class="media-body">
+            <div class="media-body ml-2">
                 {!! fullname($message->user->firstname, $message->user->lastname, $message->user->username) !!}
             </div>
         </div>

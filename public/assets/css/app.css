@@ -641,7 +641,7 @@ a {
 .btn-upgrade {
     border-radius: 25px;
     width: 55%;
-    background: orange;
+    background: #8d92a1;
     color: #ffffff !important;
     font-weight: 600;
     border: 3px #ffffff solid;
@@ -1042,18 +1042,32 @@ textarea.edit-comment {
 
 .btn-chatter {
     background: #ffffff;
-    color: #ff007c !important;
-    border: 1px solid #ff007c !important;
+    color: #8fbbfe !important;
+    border: 1px solid #ccc !important;
     padding: 9px 14px !important;
     font-size: 24px;
-    border-radius: 50px;
+    border-radius: 50%;
     margin-right: 4px;
 }
 
 .btn-chatter:hover {
     color: #ffffff !important;
-    background: #ff007c;
-    border: 1px solid #ff007c !important;
+    background: #6ba3f7;
+    box-shadow: 1px 1px 7px 1px #bfbfbf;
+}
+.btn-video {
+    font-size: 21px;
+background: white;
+border: 1px #ccc solid;
+padding: 14px;
+border-radius: 50%;
+color: #7caa90;
+margin-left: 2px;
+}
+.btn-video:hover {
+    color: #ffffff !important;
+    background: #7caa90;
+    box-shadow: 1px 1px 7px 1px #bfbfbf;
 }
 
 .user-interest {
@@ -1215,11 +1229,11 @@ textarea.edit-comment {
 
 .btn-love {
     font-size: 25px;
-    border: 1px solid #ff007c;
+    border: 1px solid #ccc;
     background: #fff;
     padding: 6px 13px;
     border-radius: 36px;
-    color: #ff007c;
+    color: #ffbbd1;
 }
 
 .btn-love.active,
@@ -1228,7 +1242,7 @@ textarea.edit-comment {
 .btn-love:hover {
     background: #ff007c;
     color: #ffff;
-    border-color: #bc46a5;
+    box-shadow: 1px 1px 7px 1px #bfbfbf;
 }
 
 .btn-unlove {
@@ -1300,6 +1314,7 @@ textarea.edit-comment {
 .user-setting {
     padding-bottom: 120px;
     padding-top: 30px;
+    background:#ffffff;
 }
 
 .clearfix:after {
@@ -1876,6 +1891,12 @@ textarea.edit-comment {
         width: 100% !important;
     }
 }
+.notifications{
+    position: relative;
+    bottom: 0;
+    right: 0;
+    z-index: 9999;
+}
 .notifications .notification .close {
     position: absolute;
     top: 5px;
@@ -1888,17 +1909,19 @@ textarea.edit-comment {
 
 .notifications .notification {
     border: 1px solid #eee;
-    min-width: 200px;
+    min-width: 220px;
     border-radius: 6px;
     background: #fff;
     padding: 10px;
-    position: relative;
+    position: fixed;
     margin: 5px 0px;
+    right: 5px;
+    bottom: 5px;
 }
 
 .notifications .notification .media img {
     width: 40px;
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 .notifications .notification p {
@@ -1935,7 +1958,7 @@ textarea.edit-comment {
 }
 
 .main .video-con #remote-media video {
-    width: 80%;
+    width: 100%;
     height: 50%;
     background-color: #272726;
     background-repeat: no-repeat;
@@ -1997,7 +2020,6 @@ textarea.edit-comment {
     position: absolute;
     margin: 0 auto;
     border-radius: 100%;
-    border: solid 5px #fff;
     animation: play 2s ease infinite;
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
@@ -3214,8 +3236,8 @@ textarea.edit-comment {
 .follow__content {
     padding: 10px;
     background: #fff;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+   /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05); */
     width: 100%;
     min-height: 200px;
     display: flex;
@@ -3390,6 +3412,7 @@ textarea.edit-comment {
         padding-left: 30px;
         padding-top: 20px;
         padding-right: 100px;
+        min-height:600px;
     } 
     .forget__password {
         font-weight: bold;
@@ -3398,14 +3421,14 @@ textarea.edit-comment {
     }
   
     .login__register_heading {
-        font-size: 36px;
+        font-size: 33px;
         padding-bottom: 2px;
         line-height: 1.2;
         color: #000;
     }
     .login__register_sub_heading {
         font-weight: 600;
-        font-size: 24px;
+        font-size: 15px;
         line-height: 1.5;
         padding-bottom: 10px;
     } 
@@ -3488,10 +3511,10 @@ textarea.edit-comment {
         padding-right: 20px;
     }
     .login__register_heading {
-        text-align: center;
+        text-align: left;
     }
     .login__register_sub_heading {
-        text-align: center;
+        text-align: left;
     } 
     .login__register_btn {
         width: 100% !important;
@@ -3599,7 +3622,7 @@ textarea.edit-comment {
 .register__step {
     position: relative;
 	width: 50px;
-	height: 50px;
+	height: 42px;
 	display: flex;
 	justify-content: center;
 	align-items: center;

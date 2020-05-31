@@ -18,7 +18,7 @@
             <i class="fa fa-arrow-left"></i>
         </a>
         <ul class="list-unstyled mb-0">
-
+            
             @if($conversation->messages()->count())
                 @if($conversation->messages()->count() > 20)
                     <li class="load_more_message" data-id="{!! $conversation->id !!}" data-page="1"><span>Load more</span></li>
@@ -27,7 +27,9 @@
                     {!! $message->seen() !!}
                     @include('messages.message')
                 @endforeach
+                
             @endif
+            
         </ul>
         <div class="write-message{!! auth()->id() == $conversation->sender_id && $conversation->waiting == 1 && !empty($conversation->last_message)?' waiting':'' !!}">
             <form data-receive="{!! auth()->id() === $conversation->sender_id ? $conversation->receive_id : $conversation->sender_id !!}" data-id="{!! $conversation->id !!}" id="uploadChat" method="post" action="{!! route('message_upload') !!}" enctype="multipart/form-data">

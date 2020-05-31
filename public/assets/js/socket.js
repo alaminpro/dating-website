@@ -292,7 +292,7 @@ $(function () {
     socket.on('receive-stop-typing' ,function (data) {
         var boxMessage = $('#message-box-'+data.id);
         if(data.receive_id === logged_id && boxMessage.length){
-            boxMessage.find('.write-message .typing').hide();
+            boxMessage.find('.write-message .typing').hide();;
         }
     });
 

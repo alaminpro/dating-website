@@ -16,6 +16,12 @@
 #filter__container{
     display: none;
 }
+.or {
+text-align: center;
+color: #1f1c1c;
+margin: 10px auto;
+display: block;
+}
 </style>
 @endsection
 @section('content') 
@@ -52,11 +58,11 @@ $seo_website_description = setting('website_description');
             <div class=" col-lg-4 border-right">
                 <div class="filter">
                     <strong class="d-block">I am a&nbsp;</strong>
-                    <div class="custom-control custom-radio" >
+                    <div class="custom-control  custom-checkbox custom-control-inline" >
                         <input {!! request()->get('gender') == 'male' || (auth()->check() && auth()->user()->gender == '1') || !auth()->check()?' checked':'' !!} type="radio" value="male" id="gender-filter-male" name="gender" class="custom-control-input">
                         <label class="custom-control-label" for="gender-filter-male">Male</label>
                     </div>
-                    <div class="custom-control custom-radio" >
+                    <div class="custom-control  custom-checkbox custom-control-inline" >
                         <input {!! request()->get('gender') == 'female' || auth()->check() && auth()->user()->gender == '2' ?' checked':'' !!} type="radio" value="female" id="gender-filter-female" name="gender" class="custom-control-input">
                         <label class="custom-control-label" for="gender-filter-female">Female</label>
                     </div>
@@ -100,10 +106,10 @@ $seo_website_description = setting('website_description');
                         <input class="search__address" name="keywords" id="search__address"> 
                     
                 </div> 
-                <div class="filter mt-4">
+                <div class="filter mt-4"><span class="or">Or</span>
                     <div class="location__filter">
                         <div class="location__main">
-                            Distance <i class="fa fa-location-arrow" id="location__icon" aria-hidden="true"></i> 
+                            Search by Distance <i class="fa fa-location-arrow" id="location__icon" aria-hidden="true"></i> 
                         </div>
                         <div class="location__search">
                             <div class="w-100 h-100 d-flex justify-content-between align-items-center p-2">
@@ -138,8 +144,8 @@ $seo_website_description = setting('website_description');
         @else
         <div class="d-flex justify-content-center flex-column align-items-center mt-5">
 
-            <img src="{{ asset('uploads/404_not_found.svg') }}" class="img-fluid not__found_img"/>
-            <h2 class="text-center">Sorry no users found for you!</h2>
+            <img src="{{ asset('uploads/404.gif') }}" class="img-fluid not__found_img"/>
+            <h6 class="text-center">Sorry no users found!</h6><p>Please change your settings or extend your search distance.</p>
         </div>
         @endif
         {!! $users->links() !!}

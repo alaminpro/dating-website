@@ -67,7 +67,7 @@ $(document).ready(function() {
             success: function (res) {
                 if(res.status === 'success'){ 
                     if($.isEmptyObject(res.datas)){
-                        $('<div class="text-center text-danger w-100"></div>').html('Data not found!').appendTo(contents);
+                        $('<div class="text-center text-danger w-100"></div>').html('You have no followers at the moment').appendTo(contents);
                     }  
                     $.map(res.datas, function(data) {
                         if(data.avatar){
@@ -155,7 +155,7 @@ $(document).ready(function() {
                                 not_found.empty();
                                 if(res.status === 'success'){ 
                                     if($.isEmptyObject(res.datas)){
-                                        $('<div class="text-center text-danger"></div>').html('Data not found!').appendTo(not_found);
+                                        $('<div class="text-center text-danger"></div>').html('No data found!').appendTo(not_found);
                                     }  
                                     $.map(res.datas, function(data) {
                                         if(data.avatar){
@@ -220,7 +220,7 @@ $(document).ready(function() {
             success: function (res) {
                 if(res.status === 'success'){ 
                     if($.isEmptyObject(res.datas)){
-                        $('<div class="text-center text-danger w-100"></div>').html('Data not found!').appendTo(contents);
+                        $('<div class="text-center text-danger w-100"></div>').html('You follow no one at the moment!').appendTo(contents);
                     }  
                     $.map(res.datas, function(data) {
                         if(data.avatar){
@@ -309,7 +309,7 @@ $(document).ready(function() {
                                 not_found.empty();
                                 if(res.status === 'success'){ 
                                     if($.isEmptyObject(res.datas)){
-                                        $('<div class="text-center text-danger"></div>').html('Data not found!').appendTo(not_found);
+                                        $('<div class="text-center text-danger"></div>').html('Thats it!').appendTo(not_found);
                                     }  
                                     $.map(res.datas, function(data) {
                                         if(data.avatar){

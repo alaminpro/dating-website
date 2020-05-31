@@ -73,13 +73,48 @@ if ($avatar2 == 'localhost') {
             color: #fff;
             background: #ff278f
         }
+
+        .same-user {
+            font-size:0.9rem;
+            margin-top:1rem;
+        }
+        .alert-profile {
+            color: #8d92a1;
+background-color: #eef7ff;
+border-color: #ebeffa;
+        }
+        @media screen and (min-width:768px) {
+        .custom__photo_middle {
+            display: flex;
+flex-direction: row;
+justify-content: left;
+align-items: center;
+height:225px;
+        }
+        .user__info {
+            margin-left:25px;
+            display: flex;
+justify-content: left;
+align-items: baseline;
+flex-direction: column;
+margin-top: 15px;
+        }
+        .img-div {
+            margin-left:30px;
+        }
+        }
 </style>
 @endsection
 @section('content') 
 <div class="landing"> 
     <div class="container-fluid main_container ">
         @include('partials.sidebar')
-    <div class="main" id="main__user_id" data-id="{{$user->id}}"> 
+    <div class="main" id="main__user_id" data-id="{{$user->id}}">@if(auth()->check() && auth()->user()->id === $user->id)
+                      <div class="alert alert-profile alert-dismissible fade show mb-0">
+                            <span class="same-user">Hi {!! fullname($user->firstname, $user->lastname, $user->username) !!}! Welcome to your profile page. Feel free to use the red <a href="#about"><img src="https://datev2.com/uploads/static/plus--v2.png" width="3%"/></a> button to share as many post's as you like. Good Luck!</span> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+                        </div>@endif
         <nav class="navbar navbar-expand navbar-expand-md navbar-expand-lg navbar-light bg-white shadow-sm "
         id="profile-header">
         <div class="container">
@@ -89,10 +124,10 @@ if ($avatar2 == 'localhost') {
             </button>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto"> 
-                    <li class="nav-item">
-                        <div class="mb-1 pl-2">
+                    <li class="nav-item"> 
+                       <div class="mb-1 pl-2">
                             <h1 class="user__username">{!! fullname($user->firstname, $user->lastname, $user->username) !!}, {!! Carbon\Carbon::parse($user->birthday)->age !!}</h1> 
-                        </div>
+                        </div> 
                     </li>
                 </ul>
                 @if((auth()->check() && auth()->user()->id != $user->id) || !auth()->check())
@@ -119,7 +154,7 @@ if ($avatar2 == 'localhost') {
                 @if(auth()->check() && auth()->user()->isFollowEach($user->id))
                     <span class="navbar-text">
                         <p class="video__icon p-0 m-0" data-id="{{ $user->id }}" style="cursor: pointer">
-                            <i class="fas fa-video" style="font-size: 21px;background: white;border: 1px solid;padding: 14px;border-radius: 50%;color: #0f8e64;margin-left: 2px;"></i>
+                            <i class="fas fa-video btn-video"></i>
                         </p>
                     </span>  
                 @endif
@@ -128,7 +163,7 @@ if ($avatar2 == 'localhost') {
         </div>
     </nav>
             <div class="main-content profile-min-height">  
-                <div class="top-photo pb-3 pl-3">
+                <div class="top-photo pb-3 pl-3 pt-3">
                     <div class="custom__photo_middle">
                       <?php
                       $avatar = avatar($user->avatar, $user->gender);
@@ -139,7 +174,7 @@ if ($avatar2 == 'localhost') {
                       }
                        ?>
                          <div class="img-div">
-                             <a href="{!! route('profile',['username'=>$user->username]) !!}" class="profile__photo">
+                             <a href="{!! route('profile',['username'=>$user->username]) !!}?type=about#about" class="profile__photo">
                                 @if($user->isOnline())
                                  <span class="online-class"></span>
                                 @endif
@@ -174,7 +209,7 @@ if ($avatar2 == 'localhost') {
                 </div>
                     <div class="main-photos">
                         <div class="material__tabs">
-                            <ul class="material__tab_ul">
+                            <ul class="material__tab_ul"><a id="about"></a>
                                 <li class="about__us">About</li>
                                 <li class="posts">
                                     <div class="d-flex justify-content-center flex-column align-items-center">
@@ -198,8 +233,7 @@ if ($avatar2 == 'localhost') {
                         </div>
                         <div class="tab-content">
                             <div class="row contents"></div> 
-                            <div class="loader"></div>    
-                            <div class="not_found mt-4"></div>
+                            <div class="loader"></div>     
                             <div class="d-flex justify-content-center mt-4" id="load__more_main"></div>
                         </div>
                     </div> 

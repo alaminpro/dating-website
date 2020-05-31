@@ -1,6 +1,22 @@
 @extends('layouts.page')
 @section('content')
 <style>
+.frown {
+  font-size: 2rem;
+color: #ff1f8f;
+}
+.conversations .list-conversations {
+  border-right:1px #e3e3e3 solid;
+}
+.mt-2 {
+  margin-top:2.7rem;
+}
+.mt-5 {
+  margin-top:5rem;
+}
+.mt-50 {
+  margin-top:10rem;
+}
 @media (max-width: 444px) {
   .main-content {
     /* margin-top: 4rem; */
@@ -96,6 +112,7 @@
                     @foreach($conversations as $key=>$conv)
                         @include('messages.item')
                     @endforeach
+                    @else <div class="text-center mt-5"><i class="fas fa-frown frown"></i><h6>Bummer!</h6>Looks like you have no messages yet!</div>
                 @endif
             </ul>
         </div>
@@ -110,6 +127,7 @@
             @if($conversation)
 
                 @include('messages.conversation')
+                @else <div class="text-center mt-50">Lets go find some people to <b>follow and chat</b> with<br><a href="/browse" class="btn btn-primary mt-2"><b>Search!</b></a></div>
             @endif
 
         </div>

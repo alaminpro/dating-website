@@ -15,8 +15,8 @@
     align-items: center;
 }
 .LoaderBalls__item {
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: #ff007c;
 }
@@ -43,19 +43,23 @@
 }
         
     </style>
+    
 @endsection
 <div class="main-content"> 
     <div class="page-title text-capitalize">
-       <div class="w-100">Follow</div> 
+       <div class="w-100">Dashboard</div> 
     </div>
-    
+    <div style="text-align: center;height: 200px;background: #e3e3e3;padding: 20px;">
+                      <h2>Hi {!! fullname(auth()->user()->firstname, auth()->user()->lastname, auth()->user()->username) !!}!
+                        </h2><h6 style="text-align: center;">Whats your Status today?</h6>
+<input type="text" placeholder="Share with the world!" style="height: 45px;width: 230px;padding: 20px;border-radius: 25px;border: 1px #c1c0c0 solid;margin: 15px;"></div>
     <div class="mt-3 col-lg-12">
         <div class="follow__main_tab">
             <div class="follow__tab">
-                <div class="follow__followers">
+                <div class="follow__followers "> 
                     <div class="follow__text">Followers</div>
                 </div>
-                <div class="follow__following">
+                <div class="follow__following"> 
                     <div class="follow__text">Following</div>
                 </div>
             </div>

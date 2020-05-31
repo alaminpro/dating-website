@@ -316,8 +316,7 @@ class UserController extends Controller
             $validator = Validator::make($this->request->all(), [ 
                 'day' => 'required',
                 'month' => 'required',
-                'year' => 'required',
-                'interests' => 'required',
+                'year' => 'required', 
                 'preference' => 'required',
                 'gender' =>  'required',
                 'country' =>  'required',
@@ -325,8 +324,7 @@ class UserController extends Controller
             ],
             [
                 'username.required' => __('Username fields is required!'), 
-                'username.unique' => __('Username already taken!'), 
-                'interests.required' => __('Interests fields is required!'), 
+                'username.unique' => __('Username already taken!'),  
                 'day.required' => __('Day fields is required!'), 
                 'month.required' => __('Month fields is required!'), 
                 'year.required' => __('Year fields is required!'), 
@@ -413,7 +411,7 @@ class UserController extends Controller
                         }
                     }
                     $user->save();
-                    if($this->request->has('interests')){
+                    if($this->request->get('interests')){
                         $user->interests()->detach();
                         $user->interests()->attach(explode(',', $this->request->get('interests')));
                     }
