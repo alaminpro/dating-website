@@ -42,7 +42,7 @@ class HomeController extends Controller
                 if ($this->request->has('ref')) {
                     return redirect()->to($this->request->get('ref'));
                 } else {
-                    return redirect()->route('landing');
+                    return redirect()->route('follow');
                 }
             } else {
                 return redirect()->back()->with('fail_login', 'Username or password is incorrect!');

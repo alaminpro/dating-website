@@ -1,8 +1,13 @@
 <div id="message-box-{!! $conversation->id !!}" class="h-100">
-    <div class="title-conversation clearfix"><span style="float:left;"><h6 style="font-weight:700 !important;"><a class="dropdown-item" href="{!! route('profile', ['username' => (auth()->id() === $conversation->sender_id ? $conversation->receive->username : $conversation->sender->username)]) !!}">@
-        {!! auth()->id() === $conversation->sender_id ? fullname($conversation->receive->firstname, $conversation->receive->lastname, $conversation->receive->username) : fullname($conversation->sender->firstname, $conversation->sender->lastname, $conversation->sender->username) !!}</a></h6></span>
-        <div class="dropdown float-right">
-
+    <div class="title-conversation clearfix">
+        <span style="float:left;">
+            <h6 style="font-weight:700 !important;" class="m-0 p-0">
+                <a class="dropdown-item p-0 mt-1" href="{!! route('profile', ['username' => (auth()->id() === $conversation->sender_id ? $conversation->receive->username : $conversation->sender->username)]) !!}">@
+                    {!! auth()->id() === $conversation->sender_id ? fullname($conversation->receive->firstname, $conversation->receive->lastname, $conversation->receive->username) : fullname($conversation->sender->firstname, $conversation->sender->lastname, $conversation->sender->username) !!}
+                </a>
+            </h6>
+        </span>
+        <div class="dropdown float-right"> 
             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-ellipsis-v"></i>
             </a>

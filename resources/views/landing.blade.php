@@ -142,22 +142,19 @@ $seo_website_description = setting('website_description');
             @endforeach
             </div>
         @else
-        <div class="d-flex justify-content-center flex-column align-items-center mt-5">
-
+        <div class="d-flex justify-content-center flex-column align-items-center mt-5"> 
             <img src="{{ asset('uploads/404.gif') }}" class="img-fluid not__found_img"/>
             <h6 class="text-center">Sorry no users found!</h6><p>Please change your settings or extend your search distance.</p>
         </div>
         @endif
         {!! $users->links() !!}
     </div>
-  </div>
-
-  @include('partials.footer')
+  </div> 
 @endsection
 
 @section('javascript')
 <script src="https://maps.googleapis.com/maps/api/js?key={!! env('GOOGLE_PLACE_API','AIzaSyBjVRkL8MOLaVd-fjloQguTIQDLAAzA4w0') !!}&libraries=places&callback=startMap" async defer></script>
-<script src="{!! url('assets/js/no-uislider.js') !!}"></script>
+
     <script>
          $(document).ready(function() {
              var filter_container  = $('#filter__container');
@@ -230,21 +227,15 @@ $seo_website_description = setting('website_description');
                 $('.range').val(queries.distance)
                 $('#rangevalue1').val(queries.distance)
                 $('#distance').val(queries.distance)
-            }
-
-
+            } 
             var elem = document.querySelector('input[type="range"]');
 
             var rangeValue = function(){
             var newValue = elem.value;
             var target = document.querySelector('#rangevalue1');
             target.innerHTML = newValue;
-            }
-
-            elem.addEventListener("input", rangeValue);
-            
-        });
-
-        
+            } 
+            elem.addEventListener("input", rangeValue); 
+        }); 
     </script>
 @endsection

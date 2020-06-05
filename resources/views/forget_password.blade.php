@@ -1,4 +1,4 @@
-@extends('layouts.welcome')
+@extends('layouts.default')
 @section('content')
 @section('stylesheet')
     <?php
@@ -22,9 +22,9 @@ $seo_social_image = setting('social_image');
         <div class="row" style="height: 82vh">
             <div class="col-md-6 d-none d-md-block"> 
                 <?php
-                $home_background = setting('home_background');
-                $home_background = $home_background ? url($home_background) : url('uploads/static/background.jpg');
-            ?>
+                    $home_background = setting('home_background');
+                    $home_background = $home_background ? url($home_background) : url('uploads/static/background.jpg');
+                ?>
                <div class="login__sidebar__main" style="background: url('{{ $home_background }}')">
                 <?php
                     $logo = setting('website_logo');
@@ -33,7 +33,7 @@ $seo_social_image = setting('social_image');
                 <a href="/" class="logo__login_register"><img class="set-welcome-logo" src="{!! $logo !!}"></a>
                </div>
             </div>
-            <div class="col-md-6 d-flex align-items-center flex-column justify-content-center">  
+            <div class="col-md-6 ">  
                 <div class="d-md-none w-100">
                     <?php
                         $logo = setting('website_logo');
@@ -41,7 +41,7 @@ $seo_social_image = setting('social_image');
                     ?>  
                     <a href="/" class="logo__login "><img class="set-welcome-logo" src="{!! $logo !!}"></a>
                 </div>
-                <div class="login__register_wrapper">
+                <div class="login__register_wrapper d-flex flex-column justify-content-center">
                     <h1 class="login__register_heading">Forgot your password?</h1>
                     <h3 class="login__register_sub_heading">No worries! Simply enter your email below and we will send you instructions to help you setup a new password</h3>
                       <hr>
@@ -62,21 +62,20 @@ $seo_social_image = setting('social_image');
                                 </button>
                             </div>
                                 {{ session()->forget('resetSuccess') }}
-                            @endif
-
+                            @endif 
                             @if($errors->any())
-                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                        <ul class="mb-0">
-                                        @foreach($errors->all() as $error)
-                                            @foreach($error as $item)
-                                                <li>{!! $item !!}</li>
-                                            @endforeach
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <ul class="mb-0">
+                                    @foreach($errors->all() as $error)
+                                        @foreach($error as $item)
+                                            <li>{!! $item !!}</li>
                                         @endforeach
-                                        </ul>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
+                                    @endforeach
+                                    </ul>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
                             @endif
                             <form method="post" class="login_forms" action="{{ url('/checkEmail') }}">
                                 {!! csrf_field() !!}

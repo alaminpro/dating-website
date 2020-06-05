@@ -1,4 +1,4 @@
-@extends('layouts.custome')
+@extends('layouts.default')
 @section('stylesheet')
     <style>
 .custom-h1 >h1 {
@@ -49,14 +49,10 @@ padding-top:10px;
 @section('social_image')
     {{asset("uploads/". $data->image)}}
 @endsection
-@section('content')
-    <div class="landing">
-    <div class="container-fluid main_container">
-
-        @include('partials.sidebar')
-        <div class="main">
-            <div class="page-title text-capitalize custom-h1"><h1>
-                {{ $data->title }}</h1>
+@section('content') 
+        <div class="main-contents">
+            <div class="page-title text-capitalize m-0">
+                <h2 class="m-0">{{ $data->title }}</h2>
             </div>
             <div class="main-photos">
                 <div class="w-100"><img class="custom-image" alt="{{ $data->title }}" src="{{asset("uploads/". $data->image)}}"/></div>
@@ -64,10 +60,6 @@ padding-top:10px;
                     <div class="custom-description"><h2>{{ $data->description }}</h2></div>
                     <p class="pl-3 custom-content-main">{!! $data->content !!}</p>
                 </div>
-            </div>
-            @include('partials.footer')
-        </div>
-
-    </div>
-    </div>
+            </div> 
+        </div> 
 @endsection

@@ -1,32 +1,36 @@
 @extends('layouts.default')
+
+@section('page_title')
+{{ "| Calling to ". $video->receive->username }}
+@endsection
+
 @section('content')
     <style>
         .audiojs{
             display: none;
         }
         .vcall > h2 {
-    color:white !important;
-    font-weight:300 !important;
-    font-size:2.4rem;
-}
-.typin-x {
-    color:#a3ffa3 !important
-}
-.typing-dot {
-    background-color:orange !important;
-}
-    </style>
+            color:white !important;
+            font-weight:300 !important;
+            font-size:2.4rem;
+        }
+        .typin-x {
+            color:#a3ffa3 !important
+        }
+        .typing-dot {
+            background-color:orange !important;
+        }
+ </style>
     <div class="clearfix">
       <div class="main-contents">
-      <div class="page-title text-capitalize custom-h1">
-          <h1>Video Call Lobby</h1>
+      <div class="page-title text-capitalize m-0">
+          <h2 class="m-0">Video Call Lobby</h2>
       </div>
       <div class="row m-0">
         <div class="col-md-12 p-0 m-0">
         <div class="video-con" > 
         <div id="remote-media">
-            <div class="username_intecator vcall">
-                 
+            <div class="username_intecator vcall"> 
                 @if(auth()->id() === $video->sender_id)
                 <h2 class="text-center text-capitalize">Calling {{$video->receive->username}}</h2> 
                 <div class="typing text-center typin-x">Connecting 

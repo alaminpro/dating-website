@@ -1,4 +1,4 @@
-@extends('layouts.welcome')
+@extends('layouts.default')
 @section('content')
 <?php
 $seo_social_image = setting('social_image');

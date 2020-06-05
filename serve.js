@@ -34,6 +34,9 @@ io.on('connection', function(socket){
     socket.on('cancel-call', function(data){
         socket.broadcast.emit('cancel-call', data);
     });
+    socket.on('notifications', function(data){
+        socket.broadcast.emit('notifications', data);
+    });
 });
  
 http.listen(8000, '127.0.0.1', function(){

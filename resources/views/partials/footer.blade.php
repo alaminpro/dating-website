@@ -1,13 +1,7 @@
-<style>
-.ads {
-    padding: 10px 15px;
-    margin-bottom: 5px;
-}
-</style>
 <div class="ads">
     {!! $ads->value !!}
 </div>
-<div class="footer">
+<footer class="footer">
     <div class="container">
         <div class="text-center">
             <ul class="list-unstyled menu-footer clearfix mb-1">
@@ -21,7 +15,7 @@
             <p class="mb-1">&copy; 2020 Singles Dating World</p>
         </div>
     </div>
-</div>
+</footer>
 <div class="modal" id="modalLogin" tabindex="-1" data-backdrop="static"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content rounded-0">
@@ -64,9 +58,8 @@
         </div>
     </div>
 </div>
-<audio src="{!! url('assets/message.mp3') !!}" id="message_audio"></audio> 
-<input type="hidden" value="{!! url('assets/tone.mp3') !!}" id="audio_source"/>
-<div class="notifications"></div>
+
+
  
 
  

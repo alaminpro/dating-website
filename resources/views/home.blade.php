@@ -1,4 +1,4 @@
-@extends('layouts.welcome')
+@extends('layouts.default')
 @section('content')
 <?php
 $seo_social_image = setting('social_image');
@@ -15,19 +15,7 @@ $seo_website_description = setting('website_description');
 @endsection
 @section('social_image')
     {!! isset($seo_image) ? $seo_image : url($seo_social_image) !!}
-@endsection
- <style>
- .hero-bg {
-     background:#fafafa;
-     border-bottom:1px #ccc solid;
- }
- .pleft-1 {
-     padding-left:1rem;
- }
- .pright-1 {
-     padding-right:1rem;
- }
- </style>
+@endsection 
     <div class="overflow-hidden bg-white">
         <div class="container-fluid m-0 p-0">
             <div class="row hero-bg">

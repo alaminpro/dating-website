@@ -1,4 +1,4 @@
-@extends('layouts.profile')
+@extends('layouts.default')
 @section('javascript')
     <script>
         function showUserLocation(){

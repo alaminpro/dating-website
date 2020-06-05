@@ -11,16 +11,20 @@
         "server": "node serve.js"
     },
     "devDependencies": {
-        "axios": "^0.19",
         "cross-env": "^5.1",
         "laravel-mix": "^5.0.1",
-        "lodash": "^4.17.13",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
-        "sass-loader": "^8.0.0"
+        "sass-loader": "^8.0.0",
+        "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "bootstrap": "^4.5.0",
+        "cropperjs": "^1.5.7",
         "express": "^4.17.1",
+        "jquery": "^3.5.1",
+        "jquery-ui": "^1.12.1",
+        "popper.js": "^1.16.1",
         "socket.io": "^2.3.0",
         "socket.io-client": "^2.3.0"
     }

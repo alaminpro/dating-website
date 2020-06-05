@@ -50,7 +50,8 @@ Route::middleware(['auth','complete'])->prefix('/')->group(function(){
     Route::get('chat/{id}','MessageController@startChat')->name('chat');  
     Route::get('videos','VideoController@videos')->name('videos');  
     Route::get('video/{id}','VideoController@video')->name('video');
-    Route::get('follow','FollowController@index')->name('follow');
+    Route::get('dashboard','FollowController@index')->name('follow');
+    Route::post('dashboard/status','FollowController@updateStatus')->name('user_status');
 });
 
 /**

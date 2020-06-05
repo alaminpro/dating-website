@@ -1,107 +1,13 @@
-@extends('layouts.page')
-@section('content')
-<style>
-.frown {
-  font-size: 2rem;
-color: #ff1f8f;
-}
-.conversations .list-conversations {
-  border-right:1px #e3e3e3 solid;
-}
-.mt-2 {
-  margin-top:2.7rem;
-}
-.mt-5 {
-  margin-top:5rem;
-}
-.mt-50 {
-  margin-top:10rem;
-}
-@media (max-width: 444px) {
-  .main-content {
-    /* margin-top: 4rem; */
-    min-height: 475px;
-    /* min-height: 100% !important; */
-  }
-  .message-box {
-    height: 400px !important;
-  }
-}
-@media  (min-device-width: 444px) and (max-device-width: 768px) {
-  .main-content {
-    /* margin-top: 7rem; */
-    /* min-height: 500px !important; */
-    min-height: 93%;
-
-  }
-}
-@media  (min-device-width: 600px) and (max-device-width: 768px) {
-  .foo_container {
-    margin-left: -5rem !important;
-  }
-}
-@media (max-device-width: 1024px) and (min-device-width: 769px){
-  .main-content {
-      min-height: 90%;
-      /* margin-top: 7rem; */
-  }
-}
-@media  (min-device-width: 768px) and (max-device-width: 1024px) {
-  .foo_container {
-    margin-left: 0rem !important;
-  }
-}
-@media  (min-device-width: 1900px) and (max-device-width: 2000px) {
-  .foo_container {
-    margin-left: 14rem !important;
-  }
-}
-/* Iphone X css portrait */
-@media only screen
-  and (min-device-width: 375px)
-  and (max-device-width: 812px)
-  and (orientation: portrait)
-  and (-webkit-min-device-pixel-ratio: 3) {
-    .main-content {
-        min-height: 83% !important;
-    }
-  }
-.main-content {
-  min-height: 536px;
-}
-/* .footer{
-  position: fixed !important;
-} */
-.message-box {
-  max-height:
-}
-.list-unstyled {
-  border-left: 1px solid #f6f6f6;
-}
-.page-title {
-    min-height: 50px;
-    line-height: 50px;
-    font-size: 20px;
-    font-weight: bold;
-    padding-left: 20px;
-    border-bottom: 1px solid #f6f6f6;
-}
-.custom-h1 >h1 {
-    color: rgb(101, 119, 134);
-    font-size: 1.3rem;
-    font-weight: 700;
-    padding-top: 10px;
-}
-.mCSB_draggerRail {
-	width:10px !important;
-}
-</style>
-    <div class="conversations clearfix">
-      <div class="main-content"><div class="page-title text-capitalize custom-h1"><h1>
-                Conversations</h1>
-            </div>
-
-
+@extends('layouts.default')
+@section('page_title')
+{{ "| Conversations " }}
+@endsection
+@section('content') 
+  <div class="conversations clearfix">
+      <div class="main-content__message"> 
+        <div class="page-title text-capitalize m-0">
+            <h2 class="m-0">Conversations</h2>
+        </div>
         <div class="float-left list-conversations">
             <div class="search-conversation">
                 <input type="text" placeholder="Search">
@@ -116,14 +22,12 @@ color: #ff1f8f;
                 @endif
             </ul>
         </div>
-        <div class="float-left message-box hidden-xs" style="height:481px;">
-
+        <div class="float-left message-box hidden-xs message__main_body"> 
             <?php
             if(!isset($conversation)){
                 $conversation = $conversations->first();
             }
-            ?>
-
+            ?> 
             @if($conversation)
 
                 @include('messages.conversation')
@@ -131,10 +35,8 @@ color: #ff1f8f;
             @endif
 
         </div>
-      </div>
-
-       @include('partials.footer')
-</div>
+      </div> 
+  </div>
     <script>
         function functionHide() {
             if (navigator.userAgent.match(/Android/i)
