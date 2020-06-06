@@ -1,15 +1,14 @@
 {
-    "/assets/js/admin.js": "/assets/js/admin.js",
     "/assets/js/app.js": "/assets/js/app.js",
     "/assets/css/app.css": "/assets/css/app.css",
-    "/assets/css/admin.css": "/assets/css/admin.css",
     "/assets/js/custom.js": "/assets/js/custom.js",
     "/assets/js/follows.js": "/assets/js/follows.js",
     "/assets/js/profile.js": "/assets/js/profile.js",
-    "/assets/js/register.js": "/assets/js/register.js",
     "/assets/js/setting.js": "/assets/js/setting.js",
+    "/assets/js/register.js": "/assets/js/register.js",
     "/assets/js/socket.js": "/assets/js/socket.js",
-    "/assets/css/vendor.css": "/assets/css/vendor.css",
-    "/assets/css/fontawesome.min.css": "/assets/css/fontawesome.min.css",
-    "/assets/js/vendor.js": "/assets/js/vendor.js"
+    "/assets/js/video-all.js": "/assets/js/video-all.js",
+    "/assets/js/video.js": "/assets/js/video.js",
+    "/assets/js/landing.js": "/assets/js/landing.js",
+    "/assets/js/map_script.js": "/assets/js/map_script.js"
 }

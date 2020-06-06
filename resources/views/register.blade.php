@@ -281,9 +281,9 @@ $seo_website_description = setting('website_description');
     </div>
 </div>
 @endsection
-@section('javascript')
-<script src="https://maps.googleapis.com/maps/api/js?key={!! env('GOOGLE_PLACE_API','AIzaSyBjVRkL8MOLaVd-fjloQguTIQDLAAzA4w0') !!}&libraries=places&callback=initMap" async defer></script>
-    <script>var uploadedImageURL = '{!! url('assets/images/1.jpg') !!}';</script>
-    
-    <script src="{!! url('assets/js/register.js') !!}"></script>
+@section('javascript') 
+    <script src="https://maps.googleapis.com/maps/api/js?key={!! env('GOOGLE_PLACE_API','AIzaSyBjVRkL8MOLaVd-fjloQguTIQDLAAzA4w0') !!}&libraries=places&callback=initMap" defer></script>
+    <script>var uploadedImageURL = "{!! url('assets/images/1.jpg') !!}";</script> 
+    <script src="{!! url('assets/js/vendor/cropper.min.js') !!}"></script>
+    <script src="{!! url('assets/js/register.js') !!}"></script>  
 @endsection

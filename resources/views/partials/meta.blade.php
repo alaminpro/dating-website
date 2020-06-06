@@ -16,6 +16,7 @@
 <meta property="og:title" content="@yield('page_title') {!! isset($seo_title) ? $seo_title.' - '.$seo_website_title : $seo_website_title !!}">
 <meta property="og:type" content="{!! isset($seo_type) ? $seo_type: $seo_website_type !!}">
 <meta property="og:url" content="{!! request()->url !!}">
-<meta property="og:image" content="@yield('social_image')">
+{{-- <meta property="og:image" content="@yield('social_image')"> --}}
 <meta property="og:site_name" content="{!! $seo_website_tagline !!}">
 <meta property="og:description" content="@yield('page_description')"> 
+<meta property="og:image" content="http://datev2.com/uploads/sites/90Q4K2tVoSVRqOTSG9dh.jpg">

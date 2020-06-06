@@ -2,7 +2,7 @@
  
 
 @section('stylesheet')
-<link rel="stylesheet" type="text/css" href="{!! url('assets/css/no-uislider.css') !!}">
+<link rel="stylesheet" type="text/css" href="{!! url('assets/css/vendor/no-uislider.css') !!}">
     <style>
     .btn-block {
     display: block;
@@ -456,6 +456,6 @@
 @endsection
 @section('javascript')
 <script src="https://maps.googleapis.com/maps/api/js?key={!! env('GOOGLE_PLACE_API','AIzaSyBjVRkL8MOLaVd-fjloQguTIQDLAAzA4w0') !!}&libraries=places&callback=initMap" async defer></script>
-<script src="{!! url('assets/js/no-uislider.js') !!}"></script>
+<script src="{!! url('assets/js/vendor/no-uislider.js') !!}"></script>
 <script src="{!! url('assets/js/setting.js') !!}"></script> 
 @endsection

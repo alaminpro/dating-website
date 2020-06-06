@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('stylesheet')
-<link rel="stylesheet" type="text/css" href="{!! url('assets/css/no-uislider.css') !!}">
+<link rel="stylesheet" type="text/css" href="{!! url('assets/css/vendor/no-uislider.css') !!}">
 <style>
     @media  (min-device-width: 768px) and (max-device-width: 991px) {
       .filter strong {
@@ -54,7 +54,7 @@ $seo_website_description = setting('website_description');
     </div>
     @endif
     <div class="filter shadow-sm p-3 border-bottom bg-white" id="filter__container" >
-        <form class="row" action="" id="formFilter">
+        <form class="row" action="" id="formFilter" data-min="{{ auth()->check()? auth()->user()->min_age : "" }}" data-max="{{ auth()->check() ? auth()->user()->max_age : ""}} ">
             <div class=" col-lg-4 border-right">
                 <div class="filter">
                     <strong class="d-block">I am a&nbsp;</strong>
@@ -154,88 +154,6 @@ $seo_website_description = setting('website_description');
 
 @section('javascript')
 <script src="https://maps.googleapis.com/maps/api/js?key={!! env('GOOGLE_PLACE_API','AIzaSyBjVRkL8MOLaVd-fjloQguTIQDLAAzA4w0') !!}&libraries=places&callback=startMap" async defer></script>
-
-    <script>
-         $(document).ready(function() {
-             var filter_container  = $('#filter__container');
-            $('#cancel__filter').on('click',function(){
-                filter_container.slideUp();
-            })
-            $('.filter__btn').on('click',function(){
-                filter_container.slideToggle();
-            })
-
-            $('.noUi-handle').on('click', function() {
-                $(this).width(50);
-            });
-            var rangeSlider = document.getElementById('slider-range');
-            var start = [];
-            
-            var min = '{{ auth()->check()? auth()->user()->min_age : "" }}';
-            var max = '{{ auth()->check() ? auth()->user()->max_age : ""}}';
-           
-            if(document.location.search){
-                    var queries = {};
-                    $.each(document.location.search.substr(1).split('&'),function(c,q){
-                        var i = q.split('=');
-                        queries[i[0].toString()] = i[1].toString();
-                    }); 
-                    start = [queries.min_age, queries.max_age] 
-            }else{
-                if(min != '' && max != ''){
-                    start = [min, max];
-                }else{
-                    start = [18, 90]
-                } 
-            }
-            noUiSlider.create(rangeSlider, {
-                start: start,
-                step: 1,
-                range: {
-                    'min': [18],
-                    'max': [90]
-                }, 
-                connect: true,
-                format: wNumb({
-                    decimals: 0
-                }),
-            });
-            
-            // Set visual min and max values and also update value hidden form inputs
-            rangeSlider.noUiSlider.on('update', function(values, handle) {
-                document.getElementById('slider-range-value1').innerHTML = values[0];
-                document.getElementById('slider-range-value2').innerHTML = values[1];  
-                var minVal = $('#min-value');
-                var maxVal = $('#max-value'); 
-                minVal.val(values[0]) 
-                maxVal.val(values[1]) 
-            });
-
-            $('#location__icon').click(function(){
-                $('.location__search').toggle();
-            });
-            $('.range').change(function(){
-                $('#distance').val($(this).val())
-            })
-            if(document.location.search){
-                var queries = {};
-                $.each(document.location.search.substr(1).split('&'),function(c,q){
-                    var i = q.split('=');
-                    queries[i[0].toString()] = i[1].toString();
-                });
-
-                $('.range').val(queries.distance)
-                $('#rangevalue1').val(queries.distance)
-                $('#distance').val(queries.distance)
-            } 
-            var elem = document.querySelector('input[type="range"]');
-
-            var rangeValue = function(){
-            var newValue = elem.value;
-            var target = document.querySelector('#rangevalue1');
-            target.innerHTML = newValue;
-            } 
-            elem.addEventListener("input", rangeValue); 
-        }); 
-    </script>
+<script src="{!! url('assets/js/vendor/no-uislider.js') !!}"></script>
+<script src="{!! url('assets/js/landing.js') !!}"></script> 
 @endsection

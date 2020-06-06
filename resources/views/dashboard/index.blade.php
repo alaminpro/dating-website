@@ -2,10 +2,7 @@
 @section('content')   
 @section('page_description')
    Users follows and unfollows page 
-@endsection 
-@section('stylesheet')
-<link rel="stylesheet" type="text/css" href="{!! url('assets/css/jquery.toast.min.css') !!}"> 
-@endsection
+@endsection  
 <div class="main-content"> 
     <div class="page-title text-capitalize m-0">
        <div class="w-100">Dashboard</div> 
@@ -50,7 +47,6 @@
     </div>
   </div> 
 @endsection 
-@section('javascript') 
-<script src="{!! url('assets/js/jquery.toast.min.js') !!}"></script>
+@section('javascript')  
 <script src="{!! url('assets/js/follows.js') !!}"></script>
 @endsection

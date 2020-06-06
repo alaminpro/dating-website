@@ -1,3 +1,2 @@
-require('./bootstrap');
-require('cropperjs');
+require('./bootstrap'); 
 require('jquery-ui');

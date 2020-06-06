@@ -379,8 +379,7 @@ $(document).ready(function() {
                 type: 'POST',
                 context: this,
                 success: function (res) {
-                    if(res.status === 'success'){
-                        
+                    if(res.status === 'success'){ 
                         socket.emit('notifications', res.user.username); 
                         $('#status__input').val('');  
                         setCookie("update-status", "status", 5);
@@ -390,4 +389,22 @@ $(document).ready(function() {
             });
         }
    })
+    $('.status__btn').on('click',function(e){ 
+            var value = $(e.currentTarget).val(); 
+            $.ajax({
+                url: ajax_url_follow,  
+                data: {action: "updateStatus", id: user_id, status: value, _token: token},
+                dataType: 'JSON',
+                type: 'POST',
+                context: this,
+                success: function (res) {
+                    if(res.status === 'success'){ 
+                        socket.emit('notifications', res.user.username); 
+                        $('#status__input').val('');  
+                        setCookie("update-status", "status", 5);
+                        window.location.href = '/u/'+ res.user.username; 
+                    }
+                }, 
+            }); 
+        })
 }); 
