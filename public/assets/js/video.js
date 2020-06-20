@@ -1,1 +1,178 @@
-$(function(){$("meta[name=csrf_token]").attr("content");var e=$("#video-element").data("video"),i=$("#video-element").data("url"),o=$("#video-element").data("avater"),a=$("#video-element").data("name"),n=$("#video-element").data("receiver-url"),d=$("#video-element").data("sender-url"),t=$("#video-element").data("main-url"),r=$("#video-element").data("caller-url"),c=$("#video-element").data("username"),l=io(socket_url,{path:"/node/socket.io",transports:["polling","websocket"]});function s(c){setTimeout(function(){function c(e){const i=document.createElement("div");i.id=e.sid,e.on("trackAdded",e=>m(i,e)),e.tracks.forEach(e=>m(i,e)),e.on("trackRemoved",g),$("#remote-media").html(i),$(".end_vdo_call").removeClass("d-none"),$(".end_vdo_call_before").addClass("d-none"),$(".audiojs").empty()}function s(e){e.tracks.forEach(g),document.getElementById(e.sid).remove(),window.location.href=t,$(".audiojs").empty()}function m(e,i){e.appendChild(i.attach())}function g(e){e.detach().forEach(e=>e.remove())}$("#audioFrenata").on("ended",function(){manageImageObjectsLevel()}).get(0).play(),navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia,navigator.getUserMedia||$("#remote-media h3").text("Sorry, WebRTC is not available in your browser."),navigator.mediaDevices.getUserMedia({video:!0}).then(function(e){document.getElementById("basic-stream").srcObject=e}),Twilio.Video.connect(logged_id===e.sender_id?e.access_token:e.access_token_2,{name:e.room_name,audio:!0,video:{height:720,frameRate:24,width:1280},bandwidthProfile:{video:{mode:"grid",maxTracks:10,renderDimensions:{high:{height:1080,width:1980},standard:{height:720,width:1280},low:{height:176,width:144}}}},maxAudioBitrate:16e3,networkQuality:{local:1,remote:1}}).then(t=>{t.participants.forEach(c),t.on("participantConnected",c),logged_id==e.sender_id&&l.emit("call-incoming",{sender_id:e.sender_id,url:i,avatar:o,receive_id:e.receive_id,name:a}),t.on("participantDisconnected",s),t.once("disconnected",e=>t.participants.forEach(s)),$(document).on("click","a[data-ajax]",function(e){t.disconnect()}),$(document).on("click",".end_vdo_call",function(i){confirm("You are on call. Are you sure to exit?")&&(logged_id==e.sender_id&&l.emit("cancel-call",{receive_id:e.receive_id}),t.disconnect(),logged_id==e.sender_id&&(window.location.href=n),logged_id==e.receive_id&&(window.location.href=d))})}),l.on("reject-call",function(e){var i=logged_id;e.sender_id==i&&(window.location.href=r+e.receive_id)})},1e3)}function m(){confirm("Camera not found! Please go back.")&&(l.emit("camera-not-found",{sender_id:e.sender_id,username:c}),setTimeout(()=>{logged_id==e.sender_id&&(window.location.href=n),logged_id==e.receive_id&&(window.location.href=d)},500))}audiojs.events.ready(function(){audiojs.createAll()}),navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia,void 0===navigator.mediaDevices.getUserMedia?navigator.getUserMedia({audio:!0,video:!0},s,m):navigator.mediaDevices.getUserMedia({audio:!0,video:!0}).then(s).catch(m),$(document).on("click",".end_vdo_call_before",function(i){confirm("You are on call. Are you sure to exit?")&&(logged_id==e.sender_id&&l.emit("cancel-call",{receive_id:e.receive_id}),logged_id==e.sender_id&&(window.location.href=n),logged_id==e.receive_id&&(window.location.href=d))}),l.on("camera-not-found",function(i){confirm(i.username+" camera is not found! Please go back.")&&logged_id==e.sender_id&&(window.location.href=n)})});
+$(function () {  
+    var token = $('meta[name=csrf_token]').attr('content'); 
+    var video = $('#video-element').data('video');
+    var url = $('#video-element').data('url');
+    var avater = $('#video-element').data('avater');
+    var name = $('#video-element').data('name');
+    var receiver_url = $('#video-element').data('receiver-url');
+    var sender_url = $('#video-element').data('sender-url');
+    var main_url = $('#video-element').data('main-url');
+    var caller_url = $('#video-element').data('caller-url');
+    var user_name = $('#video-element').data('username');
+  
+    var socket = io(socket_url, {
+        path: '/node/socket.io',
+        transports: ['polling','websocket']
+    });
+    audiojs.events.ready(function() {
+        var as = audiojs.createAll();
+    });
+     navigator.getUserMedia = (
+                navigator.getUserMedia ||
+                navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia ||
+                navigator.msGetUserMedia
+            );
+
+            if (typeof navigator.mediaDevices.getUserMedia === 'undefined') {
+                navigator.getUserMedia({
+                    audio: true,
+                    video: true
+                }, streamHandler, errorHandler);
+            } else {
+                navigator.mediaDevices.getUserMedia({
+                    audio: true,
+                    video: true
+                }).then(streamHandler).catch(errorHandler);
+            }
+
+            function streamHandler(stream){   
+                setTimeout(function(){
+
+                    $('#audioFrenata').on('ended', function() {
+                            manageImageObjectsLevel();
+                    }).get(0).play();
+
+                    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+                    if (!navigator.getUserMedia) {
+                        $('#remote-media h3').text('Sorry, WebRTC is not available in your browser.');
+                    }
+                    navigator.mediaDevices.getUserMedia({ 
+                        video: true
+                    }).then(function(s){
+                        var video = document.getElementById('basic-stream'); 
+                        video.srcObject = s; 
+                    });
+                  
+            
+                    Twilio.Video.connect((logged_id === video.sender_id) ? video.access_token : video.access_token_2 ,{ 
+                            name: video.room_name,
+                            audio: true,  
+                            video: { height: 720, frameRate: 24, width: 1280 },
+                            bandwidthProfile: {
+                                video: {
+                                mode: 'grid',
+                                maxTracks: 10,
+                                renderDimensions: {
+                                    high: {height:1080, width:1980},
+                                    standard: {height:720, width:1280},
+                                    low: {height:176, width:144}
+                                }
+                                }
+                            },
+                            maxAudioBitrate: 16000, //For music remove this line
+                            //For multiparty rooms (participants>=3) uncomment the line below
+                            //preferredVideoCodecs: [{ codec: 'VP8', simulcast: true }],
+                            networkQuality: {local:1, remote: 1}
+                          }).then(room => { 
+                        room.participants.forEach(participantConnected);
+                        room.on('participantConnected', participantConnected);
+                        if(logged_id == video.sender_id){
+                            socket.emit('call-incoming', {sender_id: video.sender_id, url: url, avatar: avater, receive_id:video.receive_id, name: name});
+                        }
+                        room.on('participantDisconnected', participantDisconnected);
+                        room.once('disconnected', error => room.participants.forEach(participantDisconnected));
+                        $(document).on('click', 'a[data-ajax]', function(e) {
+                            room.disconnect();
+                        });
+                        $(document).on('click', '.end_vdo_call', function(e) {
+                                if(confirm('You are on call. Are you sure to exit?')){  
+                                    if(logged_id == video.sender_id){
+                                        socket.emit('cancel-call',{ receive_id: video.receive_id }); 
+                                    }
+                                    room.disconnect(); 
+                                    if(logged_id == video.sender_id){
+                                            window.location.href = receiver_url;
+                                       } 
+                                    if(logged_id == video.receive_id){
+                                        window.location.href = sender_url;
+                                    }
+                            }  
+                        });
+                    }); 
+                         
+                    function participantConnected(participant) { 
+                        const div = document.createElement('div');
+                        div.id = participant.sid;
+                        //div.innerText = participant.identity;
+
+                        participant.on('trackAdded', track => trackAdded(div, track));
+                        participant.tracks.forEach(track => trackAdded(div, track));
+                        participant.on('trackRemoved', trackRemoved);
+
+                        $('#remote-media').html(div); 
+                        $('.end_vdo_call').removeClass('d-none');  
+                        $('.end_vdo_call_before').addClass('d-none');
+                        $('.audiojs').empty();
+                    }
+                   
+                    function participantDisconnected(participant) { 
+                        participant.tracks.forEach(trackRemoved);
+                        document.getElementById(participant.sid).remove();
+                        window.location.href = main_url;
+                        $('.audiojs').empty();
+                    }
+
+                    function trackAdded(div, track) {
+                        div.appendChild(track.attach());
+                    }
+
+                    function trackRemoved(track) {
+                        track.detach().forEach(element => element.remove());
+                    }
+                    socket.on('reject-call', function (data) {  
+                        var auth = logged_id;
+                        if(data.sender_id == auth){
+                            window.location.href = caller_url + data.receive_id;  
+                        } 
+                    })
+                    
+                },1000); 
+            }
+                
+        function errorHandler(){ 
+            if(confirm('Camera not found! Please go back.')) { 
+                socket.emit('camera-not-found', {sender_id: video.sender_id, username: user_name}); 
+                setTimeout(() => { 
+                    if(logged_id == video.sender_id){
+                        window.location.href = receiver_url;
+                    } 
+                    if(logged_id == video.receive_id){
+                        window.location.href = sender_url;
+                    }
+                }, 500);
+            }
+        }
+        $(document).on('click', '.end_vdo_call_before', function(e) { 
+            if(confirm('You are on call. Are you sure to exit?')){ 
+                if(logged_id == video.sender_id){
+                    socket.emit('cancel-call',{ receive_id: video.receive_id }); 
+                }
+               
+                if(logged_id == video.sender_id){
+                    window.location.href = receiver_url;
+                } 
+                if(logged_id == video.receive_id){
+                    window.location.href = sender_url;
+                }
+        }  
+        });
+        socket.on('camera-not-found', function (data) {  
+            if(confirm(data.username+' camera is not found! Please go back.')) {  
+                    if(logged_id == video.sender_id){
+                        window.location.href = receiver_url;
+                    }
+                }
+         })
+   
+});

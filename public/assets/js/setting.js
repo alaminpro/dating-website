@@ -1,1 +1,451 @@
-$(document).ready(function(){$(".noUi-handle").on("click",function(){$(this).width(50)});var e=document.getElementById("slider-range"),t=[],a="{{ $user->min_age }}",i="{{ $user->max_age }}";t=[a,i],noUiSlider.create(e,{start:t,step:1,range:{min:[18],max:[90]},connect:!0,format:wNumb({decimals:0})}),e.noUiSlider.on("update",function(e,t){document.getElementById("slider-range-value1").innerHTML=e[0],document.getElementById("slider-range-value2").innerHTML=e[1];var a=$("#min-value"),i=$("#max-value");a.val(e[0]),i.val(e[1])})}),$("#location__icon").click(function(){$(".location__search").toggle()}),$(".range").change(function(){$("#distance").val($(this).val())});var uploadedImageURL="{!! avatar($user->avatar, $user->gender) !!}";$(document).ready(function(){var e=$("meta[name=csrf_token]").attr("content");$("ul.tab__items li").click(function(){var e=$(this).attr("data-tab");$("ul.tab__items li.tab__item").removeClass("tab__active"),$(".tab__content").removeClass("current"),$(this).addClass("tab__active"),$("#"+e).addClass("current")});var t=$(".loader"),a=$(".username-error");$("#register-setting-username").on("keyup",function(i){var s=$(this).val();t.empty(),a.empty(),""!=s?s.trim().length>=6?(a.empty(),$.ajax({url:ajax_url,beforeSend:function(){$('<div class="lds-ellipsis" style="height: 40px; margin-top: -20px;"></div>').html("<div></div><div></div><div></div><div></div>").appendTo(t),a.empty()},data:{action:"check_username_setting",username:s,_token:e},dataType:"JSON",type:"POST",success:function(e){a.empty(),"error"==e.status?($("#tab-2-profile").attr("disabled",!0),$('<div class="text-danger"></div>').html("Username already exist! Try again.").appendTo(a)):"success"==e.status?($("#tab-2-profile").removeAttr("disabled"),$('<div class="text-success"></div>').html("Great! You'r Choose good username.").appendTo(a)):"you"==e.status&&($("#tab-2-profile").removeAttr("disabled"),$('<div class="text-success"></div>').html("Your current username!").appendTo(a))},complete:function(){t.empty()}})):$('<div class="text-danger"></div>').html("Please enter at least 6 charecter!").appendTo(a):(t.empty(),a.empty())});var i=$("#register-password"),s=$("#register-password-confirm"),r=$("#register-password-old"),n=$(".password-error"),d=$(".c-password-error"),c=$(".old-password-error");t=$(".loader");r.on("keyup",function(){var a=$(this).val();t.empty(),a.length>=6?(c.empty(),$.ajax({url:ajax_url,beforeSend:function(){$('<div class="lds-ellipsis" style="height: 40px; margin-top: -20px;"></div>').html("<div></div><div></div><div></div><div></div>").appendTo(t),c.empty()},data:{action:"check_password",password:a,_token:e},dataType:"JSON",type:"POST",success:function(e){c.empty(),"error"==e.status?(i.attr("disabled",!0),s.attr("disabled",!0),$("#tab-3-password").attr("disabled",!0),$('<div class="text-danger"></div>').html("Old password doesn't match!").appendTo(c)):(i.removeAttr("disabled"),s.removeAttr("disabled"),$("#tab-3-password").removeAttr("disabled"),$('<div class="text-success"></div>').html("Password match!").appendTo(c))},complete:function(){t.empty()}})):(c.empty(),$('<div class="text-danger"></div>').html("Please enter at least 6 charecter!").appendTo(c))}),i.on("keyup",function(e){var t=$(this).val();t.length>=6?""!=t?n.empty():n.html('<div class="text-danger">OPS!  Password is required!</div>'):(n.empty(),n.html('<div class="text-danger">OPS!  Password must be 6 charecter!</div>'))}),s.on("keyup",function(e){var t=$(this).val();t.length>=6?""!=t?(n.empty(),i.val()!=t?d.html('<div class="text-danger">OPS! Confirm Password does not match!</div>'):d.empty()):d.html('<div class="text-danger">OPS! Confirm Password is required!</div>'):(d.empty(),d.html('<div class="text-danger">OPS! Confirm Password must be 6 charecter!</div>'))}),$("#tab-3-password").on("click",function(){var e=!0;if(r.val().length>=6){if(""==i.val())return n.html('<div class="text-danger">OPS!  Password is required!</div>'),!1;if(""==s.val())return d.html('<div class="text-danger">OPS! Confirm Password is required!</div>'),!1;if(i.val()!=s.val())return d.html('<div class="text-danger">OPS! Confirm Password does not match!</div>'),!1}return e});var l=$("#register-address"),o=$("#register-country"),v=$(".address-error"),u=$(".country-error");l.on("keyup",function(e){""==$(this).val()?v.html('<div class="text-danger">OPS! Address field is required!</div>'):v.empty()}),o.on("change",function(e){""==$(this).val()?u.html('<div class="text-danger">OPS! Country is required!</div>'):u.empty()}),$("#tab-4-interest").click(function(e){var t=!0;return""==l.val()&&(v.html('<div class="text-danger">OPS! Address field is required!</div>'),t=!1),""==o.val()&&(u.html('<div class="text-danger">OPS! Country is required!</div>'),t=!1),t});var m=$("#gender"),p=$("#preference"),h=$(".gender-error"),f=$(".preference-error");m.on("change",function(e){""==$(this).val()?h.html('<div class="text-danger">OPS! Gender is required!</div>'):h.empty()}),p.on("change",function(e){""==$(this).val()?f.html('<div class="text-danger">OPS! Preference is required!</div>'):f.empty()}),$("#tab-2-profile").click(function(e){var t=!0;return""==m.val()&&(h.html('<div class="text-danger">OPS! Gender is required!</div>'),t=!1),""==p.val()&&(f.html('<div class="text-danger">OPS! Preference is required!</div>'),t=!1),t});var _=[],y=$(".selected__interest"),g=$("#register-interests-input"),x=$("#search_interest"),b=$(".search_interest_available"),P=(t=$(".loader"),$(".interest-error"));x.on("keyup",function(a){var i=$(this).val();t.empty(),P.empty(),b.empty(),""!=i?(b.empty(),$.ajax({url:ajax_url,beforeSend:function(){$('<div class="lds-ellipsis" style="height: 40px; margin-top: -20px;"></div>').html("<div></div><div></div><div></div><div></div>").appendTo(t),b.empty()},data:{action:"search_interest",search:i,_token:e},dataType:"JSON",type:"POST",success:function(e){if(b.empty(),$.isEmptyObject(e.data)&&$('<div class="text-center text-danger"></div>').html("Interest not found!").appendTo(b),"success"===e.status){var t=e.data.filter(function(e){return!_.some(function(t){return e.id===t.id})});$.map(t,function(e){$('<div class="interest__item" data-id="'+e.id+'"></div>').html('<i class="'+e.icon+'"></i>                                            <span>'+e.text+"</span>").appendTo(b)})}},complete:function(){t.empty()}})):(t.empty(),b.empty())}),$.ajax({url:ajax_url,data:{action:"load_user_interest",id:"{{auth()->user()->id}}",_token:e},dataType:"JSON",type:"POST",context:this,success:function(e){"success"===e.status&&(g.val(e.interest_id.join(",")),_=e.interest,$.map(e.interest,function(e){$('<div class="interest__item_selected"></div>').html('<i data-id="'+e.id+'" class="cross__interest_btn fa fa-times"></i><i class="'+e.icon+'"></i>                                <span>'+e.text+"</span>").appendTo(y)}),$(".cross__interest_btn").click(function(){g.val("");var e=$(this).data("id");if(e){var t=_.find(t=>t.id===e),a=_.indexOf(t);_.splice(a,1),$(this).parent().remove();var i=_.map(e=>e.id);g.val(i.join(",")),$('<div class="interest__item" data-id="'+t.id+'"></div>').html('<i class="'+t.icon+'"></i>                                    <span>'+t.text+"</span>").appendTo(b)}}))}}),$(document).off("click").on("click",".interest__item",function(){var t=$(this).data("id");$.ajax({url:ajax_url,data:{action:"interest_by_id",id:t,_token:e},dataType:"JSON",type:"POST",context:this,success:function(e){"success"===e.status&&($(this).remove(),P.empty(),_.push(e.data)),setTimeout(()=>{var e=_;if(_.filter(function(t){return e.findIndex(e=>e.id==t.id)<=-1&&e.push(t),null}),!$.isEmptyObject(e)){y.empty();var t=[];$.map(e,function(e){t.push(e.id),$('<div class="interest__item_selected"></div>').html('<i data-id="'+e.id+'" class="cross__interest_btn fa fa-times"></i><i class="'+e.icon+'"></i>                                        <span>'+e.text+"</span>").appendTo(y)}),g.val(t.join(",")),$(".cross__interest_btn").click(function(){g.val("");var e=$(this).data("id");if(e){var t=_.find(t=>t.id===e),a=_.indexOf(t);_.splice(a,1),$(this).parent().remove();var i=_.map(e=>e.id);g.val(i.join(",")),$('<div class="interest__item" data-id="'+t.id+'"></div>').html('<i class="'+t.icon+'"></i>                                            <span>'+t.text+"</span>").appendTo(b)}})}},50)}})}),$("#tab-5-interest").click(function(e){var t=!0;return""==g.val()&&(P.html('<div class="text-danger">OPS! Interest is required!</div>'),t=!1),t})});
+$(document).ready(function() {
+    $('.noUi-handle').on('click', function() {
+        $(this).width(50);
+    });
+    var rangeSlider = document.getElementById('slider-range');
+    var start = [];
+    var min = $('#setting-form').data('min');
+    var max = $('#setting-form').data('max'); 
+    if(min != '' && max != ''){
+        start = [min, max];
+    }else{
+        start = [18, 90]
+    }
+    noUiSlider.create(rangeSlider, {
+        start: start,
+        step: 1,
+        range: {
+            'min': [18],
+            'max': [90]
+        }, 
+        connect: true,
+        format: wNumb({
+            decimals: 0
+        }),
+    });
+    
+        // Set visual min and max values and also update value hidden form inputs
+        rangeSlider.noUiSlider.on('update', function(values, handle) {
+            document.getElementById('slider-range-value1').innerHTML = values[0];
+            document.getElementById('slider-range-value2').innerHTML = values[1];  
+            var minVal = $('#min-value');
+            var maxVal = $('#max-value'); 
+            minVal.val(values[0]) 
+            maxVal.val(values[1]) 
+        });
+    });
+
+    $('#location__icon').click(function(){
+            $('.location__search').toggle();
+        });
+    $('.range').change(function(){
+        $('#distance').val($(this).val())
+    })
+
+
+
+   var uploadedImageURL = '{!! avatar($user->avatar, $user->gender) !!}'; 
+   $(document).ready(function(){
+    var token = $('meta[name=csrf_token]').attr('content');
+
+    var profile = $('#profile'); 
+    var profile_details = $('#profile_details'); 
+    var password_tab = $('#password_tab'); 
+    var location_tab = $('#location_tab'); 
+    var interest_tab = $('#interest_tab'); 
+    var preferences_tab = $('#preferences_tab'); 
+
+    if(!location.search){
+        queryParams('?tab=tab-1');
+    }  
+    var tabs = $('.tab__item');
+    $('ul.tab__items li.tab__item').removeClass('tab__active');
+    $('.tab__content').removeClass('current'); 
+    Array.from(tabs).forEach(function(tab){ 
+        var current_tab = $(tab).data('tab'); 
+        if(getQueryParams() == current_tab){ 
+            $(tab).addClass('tab__active');
+		    $("#"+current_tab).addClass('current');
+        }
+    }) 
+    $('ul.tab__items li').click(function(){
+        var tab_id = $(this).attr('data-tab'); 
+		$('ul.tab__items li.tab__item').removeClass('tab__active');
+		$('.tab__content').removeClass('current');
+        queryParams('?tab='+tab_id) 
+		$(this).addClass('tab__active');
+		$("#"+tab_id).addClass('current');
+    })
+
+    function queryParams(query){
+        var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + query;
+       return window.history.pushState({ path: newurl }, '', newurl);
+    }
+
+    function getQueryParams(){
+        var queries = {};
+        $.each(document.location.search.substr(1).split('&'),function(c,q){
+            var i = q.split('=');
+            queries[i[0].toString()] = i[1].toString();
+        });
+        return queries.tab
+    }
+  
+
+
+    var loader = $('.loader');
+    var alert = $('.username-error');
+    $('#register-setting-username').on('keyup',function (e) {
+        var username = $(this).val();
+        loader.empty() 
+        alert.empty()  
+        if(username != ''){
+            if(username.trim().length >= 6){
+                alert.empty()  
+                $.ajax({
+                    url: ajax_url,
+                    beforeSend: function(){ 
+                        $('<div class="lds-ellipsis" style="height: 40px; margin-top: -20px;"></div>').html('<div></div><div></div><div></div><div></div>').appendTo(loader);
+                        alert.empty()  
+                    },
+                    data: {action: 'check_username_setting', username: username, _token: token},
+                    dataType: 'JSON',
+                    type: 'POST',
+                    success: function (res) { 
+                        alert.empty()  
+                        if(res.status == 'error'){  
+                            $('#tab-2-profile').attr( "disabled", true )
+                            $('<div class="text-danger"></div>').html('Username already exist! Try again.').appendTo(alert);
+                        }
+                        else if(res.status == 'success'){  
+                            $('#tab-2-profile').removeAttr( "disabled" ) 
+                            $('<div class="text-success"></div>').html('Great! You\'r Choose good username.').appendTo(alert);
+                        }
+                        else if(res.status == 'you'){ 
+                            $('#tab-2-profile').removeAttr( "disabled" ) 
+                            $('<div class="text-success"></div>').html('Your current username!').appendTo(alert);
+                        }
+                    },
+                    complete: function(){
+                        loader.empty();
+                    }
+                });
+            }else{
+                $('<div class="text-danger"></div>').html('Please enter at least 6 charecter!').appendTo(alert);
+            }
+        }else{
+            loader.empty() 
+            alert.empty()  
+        }
+    });
+            var password =  $("#register-password");
+            var c_password =  $("#register-password-confirm");
+            var old_password =  $("#register-password-old");
+            var password_error = $('.password-error');
+            var c_password_error = $('.c-password-error');
+            var old_password_error = $('.old-password-error');
+            var loader = $('.loader');
+            old_password.on('keyup',function(){
+                var old_password =  $(this).val();
+                loader.empty() 
+                if(old_password.length >= 6){ 
+                        old_password_error.empty()  
+                        $.ajax({
+                            url: ajax_url,
+                            beforeSend: function(){ 
+                                $('<div class="lds-ellipsis" style="height: 40px; margin-top: -20px;"></div>').html('<div></div><div></div><div></div><div></div>').appendTo(loader);
+                                old_password_error.empty()  
+                            },
+                            data: {action: 'check_password', password: old_password , _token: token},
+                            dataType: 'JSON',
+                            type: 'POST',
+                            success: function (res) { 
+                                old_password_error.empty()  
+                                if(res.status == 'error'){    
+                                    password.attr( "disabled", true )
+                                    c_password.attr( "disabled",true)
+                                    $('#tab-3-password').attr( "disabled", true )
+                                    $('<div class="text-danger"></div>').html('Old password doesn\'t match!').appendTo(old_password_error);
+                                }
+                                else{ 
+                                    password.removeAttr( "disabled" )
+                                    c_password.removeAttr( "disabled" ) 
+                                    $('#tab-3-password').removeAttr( "disabled" )
+                                    $('<div class="text-success"></div>').html('Password match!').appendTo(old_password_error);
+                                }
+                            },
+                            complete: function(){
+                                loader.empty();
+                            }
+                        }); 
+                }else{ 
+                    old_password_error.empty()  
+                    $('<div class="text-danger"></div>').html('Please enter at least 6 charecter!').appendTo(old_password_error);
+                }
+            })
+
+
+
+            password.on('keyup',function (e) {
+                var password_val = $(this).val();
+                if(password_val.length >= 6){
+                    if(password_val != ''){
+                        password_error.empty();
+                    } else{
+                        password_error.html('<div class="text-danger">OPS!  Password is required!</div>');
+                    }
+                }else{
+                    password_error.empty();
+                    password_error.html('<div class="text-danger">OPS!  Password must be 6 charecter!</div>');
+                }
+            });
+            c_password.on('keyup',function (e) {
+                var c_password_val = $(this).val();
+                if(c_password_val.length >= 6){
+                    if(c_password_val != ''){
+                        password_error.empty();
+                        if(password.val() != c_password_val){
+                            c_password_error.html('<div class="text-danger">OPS! Confirm Password does not match!</div>');
+                        }else{
+                            c_password_error.empty();
+                        }
+                    } else{
+                        c_password_error.html('<div class="text-danger">OPS! Confirm Password is required!</div>');
+                    }
+                }else{
+                    c_password_error.empty();
+                    c_password_error.html('<div class="text-danger">OPS! Confirm Password must be 6 charecter!</div>');
+                    }
+            }); 
+            $('#tab-3-password').on('click',function(){ 
+                var submited = true;
+                if(old_password.val().length >= 6){ 
+                    if(password.val() == ''){
+                            password_error.html('<div class="text-danger">OPS!  Password is required!</div>');
+                            return submited = false
+                        }
+                        if(c_password.val() == ''){ 
+                            c_password_error.html('<div class="text-danger">OPS! Confirm Password is required!</div>');
+                            return submited = false
+                        }
+                        if(password.val() != c_password.val()){
+                            c_password_error.html('<div class="text-danger">OPS! Confirm Password does not match!</div>');
+                            return submited = false
+                        }
+                }
+                return submited;
+            })
+     
+         //start coding for day month year
+            var address = $('#register-address') 
+            var country = $('#register-country') 
+            var address_error = $('.address-error') 
+            var country_error = $('.country-error') 
+            address.on('keyup',function (e) {
+                if($(this).val() == ''){
+                    address_error.html('<div class="text-danger">OPS! Address field is required!</div>');
+                }else{
+                    address_error.empty();
+                }
+            }) 
+            country.on('change',function (e) {
+                if($(this).val() == ''){
+                    country_error.html('<div class="text-danger">OPS! Country is required!</div>');
+                }else{
+                    country_error.empty();
+                }
+            })  
+            $('#tab-4-interest').click(function(e){
+               var submited = true;
+               if(address.val() == ''){
+                    address_error.html('<div class="text-danger">OPS! Address field is required!</div>');
+                    submited= false
+               }
+               if(country.val() == ''){
+                    country_error.html('<div class="text-danger">OPS! Country is required!</div>');
+                    submited= false
+               }
+              return submited;
+           })
+
+         //start coding for day month year
+            var gender = $('#gender') 
+            var preference = $('#preference') 
+            var gender_error = $('.gender-error') 
+            var preference_error = $('.preference-error')  
+            gender.on('change',function (e) {
+                if($(this).val() == ''){
+                    gender_error.html('<div class="text-danger">OPS! Gender is required!</div>');
+                }else{
+                    gender_error.empty();
+                }
+            })  
+            preference.on('change',function (e) {
+                if($(this).val() == ''){
+                    preference_error.html('<div class="text-danger">OPS! Preference is required!</div>');
+                }else{
+                    preference_error.empty();
+                }
+            })  
+            $('#tab-2-profile').click(function(e){
+               var submited = true;
+               if(gender.val() == ''){
+                    gender_error.html('<div class="text-danger">OPS! Gender is required!</div>');
+                    submited= false
+               }
+               if(preference.val() == ''){
+                preference_error.html('<div class="text-danger">OPS! Preference is required!</div>');
+                    submited= false
+               }
+              return submited;
+           })
+
+
+
+
+        // start coding for interest
+            var selectedInterests = [];
+            var selected_interest = $('.selected__interest');
+            var interests = $('#register-interests-input');
+            var search_interest = $('#search_interest');
+            var interest_search_available = $('.search_interest_available');
+            var loader = $('.loader');
+            var interest_error = $('.interest-error');
+                  
+            search_interest.on('keyup',function (e) {
+                var search = $(this).val();
+                loader.empty()
+                interest_error.empty();
+                interest_search_available.empty()
+                if(search != ''){
+                interest_search_available.empty()
+                        $.ajax({
+                            url: ajax_url,
+                            beforeSend: function(){
+                                $('<div class="lds-ellipsis" style="height: 40px; margin-top: -20px;"></div>').html('<div></div><div></div><div></div><div></div>').appendTo(loader);
+                                interest_search_available.empty()
+                            },
+                            data: {action: 'search_interest', search: search, _token: token},
+                            dataType: 'JSON',
+                            type: 'POST',
+                            success: function (res) {
+                                interest_search_available.empty() ;
+                                if($.isEmptyObject(res.data)){
+                                    $('<div class="text-center text-danger"></div>').html('Interest not found!').appendTo(interest_search_available);
+                                }
+                                if(res.status === 'success'){
+
+                                    var results = res.data.filter(function(o1){
+                                        return !selectedInterests.some(function(o2){
+                                            return o1.id === o2.id;
+                                        });
+                                    })
+
+                                    $.map(results, function(interest) {
+                                            $('<div class="interest__item" data-id="'+interest.id+'"></div>').html('<i class="'+ interest.icon +'"></i>\
+                                            <span>'+ interest.text +'</span>').appendTo(interest_search_available);
+                                    })
+                                } 
+                            },
+                            complete: function(){
+                                loader.empty();
+                            }
+                        });
+                }else{
+                    loader.empty()
+                    interest_search_available.empty()
+                }
+            });
+            $.ajax({
+                url: ajax_url, 
+                data: {action: 'load_user_interest', id:logged_id , _token: token},
+                dataType: 'JSON',
+                type: 'POST',
+                context: this,
+                success: function (res) {
+                    if(res.status === 'success'){
+                        interests.val(res.interest_id.join(',')) 
+                        selectedInterests = res.interest;
+                        $.map(res.interest, function(interest) { 
+                                $('<div class="interest__item_selected"></div>').html('<i data-id="'+interest.id+'" class="cross__interest_btn fa fa-times"></i><i class="'+ interest.icon +'"></i>\
+                                <span>'+ interest.text +'</span>').appendTo(selected_interest); 
+                            })
+                            $('.cross__interest_btn').click(function(){
+                                interests.val('');
+                                var id = $(this).data('id');
+                                if(id){
+                                    var deleteint = selectedInterests.find(interest => interest.id === id);
+                                    var index = selectedInterests.indexOf(deleteint);
+                                    selectedInterests.splice(index, 1);
+                                    $(this).parent().remove();
+                                    var removeOutput = selectedInterests.map(int => int.id)
+                                    interests.val(removeOutput.join(','))
+                                    $('<div class="interest__item" data-id="'+deleteint.id+'"></div>').html('<i class="'+ deleteint.icon +'"></i>\
+                                    <span>'+ deleteint.text +'</span>').appendTo(interest_search_available);
+                                }
+                            })
+                    } 
+                }
+            });
+            $(document).on('click', '.interest__item', function() {
+            var id = $(this).data('id');
+                $.ajax({
+                    url:ajax_url,
+                    data: {action: 'interest_by_id', id: id, _token: token},
+                    dataType: 'JSON',
+                    type: 'POST',
+                    context: this,
+                    success: function (res) {
+                        if(res.status === 'success'){
+                            $(this).remove();
+                            interest_error.empty();
+                            selectedInterests.push(res.data)
+                            }
+                        setTimeout(() => {
+                            var uniqueInterest = selectedInterests;
+                                selectedInterests.filter(function(item){
+                                    var i = uniqueInterest.findIndex(x => x.id == item.id);
+                                        if(i <= -1){
+                                            uniqueInterest.push(item);
+                                        }
+                                    return null;
+                                });
+                                if(!$.isEmptyObject(uniqueInterest)){
+                                    selected_interest.empty();
+                                    var outputs = [];
+                                    $.map(uniqueInterest, function(output) {
+                                        outputs.push(output.id)
+                                        $('<div class="interest__item_selected"></div>').html('<i data-id="'+output.id+'" class="cross__interest_btn fa fa-times"></i><i class="'+ output.icon +'"></i>\
+                                        <span>'+ output.text +'</span>').appendTo(selected_interest);
+
+                                    })
+                                    interests.val(outputs.join(','))
+                                    $('.cross__interest_btn').click(function(){
+                                        interests.val('');
+                                        var id = $(this).data('id');
+                                        if(id){
+                                            var deleteint = selectedInterests.find(interest => interest.id === id);
+                                            var index = selectedInterests.indexOf(deleteint);
+                                            selectedInterests.splice(index, 1);
+                                            $(this).parent().remove();
+                                            var removeOutput = selectedInterests.map(int => int.id)
+                                            interests.val(removeOutput.join(','))
+                                            $('<div class="interest__item" data-id="'+deleteint.id+'"></div>').html('<i class="'+ deleteint.icon +'"></i>\
+                                            <span>'+ deleteint.text +'</span>').appendTo(interest_search_available);
+                                        }
+                                    })
+                                }
+
+                        }, 50);
+                    }
+                })
+            })   
+           $('#tab-5-interest').click(function(e){
+               var submited = true;
+               if(interests.val() == ''){
+                    interest_error.html('<div class="text-danger">OPS! Interest is required!</div>');
+                    submited= false
+               }
+              return submited;
+           })
+})

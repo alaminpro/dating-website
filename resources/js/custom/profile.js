@@ -7,6 +7,7 @@ $(document).ready(function() {
     var followers = $('.follow__followers');
     var following = $('.follow__following');
     var contents = $('.contents'); 
+    
     if(!location.search){
         queryParams('?type=posts');
     } 

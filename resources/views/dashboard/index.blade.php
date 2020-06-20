@@ -7,7 +7,7 @@
     <div class="page-title text-capitalize m-0">
        <div class="w-100">Dashboard</div> 
     </div>
-    <div style="text-align: center;height: 200px;background: #e3e3e3;padding: 20px;" id="main__user_id" data-id="{{ auth()->user()->id }}">
+    <div style="text-align: center;height: 200px;background: #f1f1f1; padding: 20px;" id="main__user_id" data-id="{{ auth()->user()->id }}">
         <h2 style="color: rgb(254, 55, 111)">Hi {!! fullname(auth()->user()->firstname, auth()->user()->lastname, auth()->user()->username) !!}!</h2>
         <h6 style="text-align: center;">Whats your Status today?</h6>
                         

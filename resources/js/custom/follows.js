@@ -119,8 +119,22 @@ $(document).ready(function() {
                             type: 'POST',
                             context: this,
                             success: function (res) {
-                                if(res.status === 'success'){ 
+                                if(res.status === 'success'){  
                                     btn.html(res.data)
+                                    if(res.data === 'Following'){  
+                                        $.ajax({
+                                            url: ajax_url_follow,  
+                                            data: {action: "update_follow_notification", id: logged_id, follow_id: id, _token: token},
+                                            dataType: 'JSON',
+                                            type: 'POST',
+                                            context: this,
+                                            success: function (response) { 
+                                                if(response.status === 'success'){  
+                                                    socket.emit('notifications', 'status'); 
+                                                }
+                                            }, 
+                                        });  
+                                    }
                                 }
                             }, 
                         });
@@ -369,28 +383,28 @@ $(document).ready(function() {
         var maxAgeSegment = "; max-age=" + maxAgeSeconds;
         document.cookie = encodeURI(name) + "=" + encodeURI(value) + maxAgeSegment;
     }
-   $('#status__input').on('keypress',function(e){
-        if(e.which === 13){
-            var value = $(e.currentTarget).val(); 
-            $.ajax({
-                url: ajax_url_follow,  
-                data: {action: "updateStatus", id: user_id, status: value, _token: token},
-                dataType: 'JSON',
-                type: 'POST',
-                context: this,
-                success: function (res) {
-                    if(res.status === 'success'){ 
-                        socket.emit('notifications', res.user.username); 
-                        $('#status__input').val('');  
-                        setCookie("update-status", "status", 5);
-                        window.location.href = '/u/'+ res.user.username; 
-                    }
-                }, 
-            });
-        }
-   })
+//    $('#status__input').on('keypress',function(e){
+//         if(e.which === 13){
+//             var value = $(e.currentTarget).val(); 
+//             $.ajax({
+//                 url: ajax_url_follow,  
+//                 data: {action: "updateStatus", id: user_id, status: value, _token: token},
+//                 dataType: 'JSON',
+//                 type: 'POST',
+//                 context: this,
+//                 success: function (res) {
+//                     if(res.status === 'success'){ 
+//                         socket.emit('notifications', res.user.username); 
+//                         $('#status__input').val('');  
+//                         setCookie("update-status", "status", 5);
+//                         window.location.href = '/u/'+ res.user.username; 
+//                     }
+//                 }, 
+//             });
+//         }
+//    })
     $('.status__btn').on('click',function(e){ 
-            var value = $(e.currentTarget).val(); 
+            var value = $('#status__input').val(); 
             $.ajax({
                 url: ajax_url_follow,  
                 data: {action: "updateStatus", id: user_id, status: value, _token: token},
@@ -399,10 +413,24 @@ $(document).ready(function() {
                 context: this,
                 success: function (res) {
                     if(res.status === 'success'){ 
-                        socket.emit('notifications', res.user.username); 
-                        $('#status__input').val('');  
-                        setCookie("update-status", "status", 5);
-                        window.location.href = '/u/'+ res.user.username; 
+                        $.ajax({
+                            url: ajax_url_follow,  
+                            data: {action: "update_status_notification", id: user_id, message: res.user.user_status, _token: token},
+                            dataType: 'JSON',
+                            type: 'POST',
+                            context: this,
+                            success: function (response) { 
+                                if(response.status === 'success'){  
+                                    socket.emit('notifications', 'status');  
+                                    setTimeout(() => {
+                                        $('#status__input').val('');  
+                                        setCookie("update-status", "status", 5);
+                                        window.location.href = '/u/'+ res.user.username; 
+                                    }, 500);
+                                }
+                            }, 
+                        }); 
+                       
                     }
                 }, 
             }); 

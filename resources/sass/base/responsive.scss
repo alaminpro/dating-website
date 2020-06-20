@@ -1,0 +1,30 @@
+
+  /* phones */
+@media only screen and (max-width: 767px) {
+    .datev2__navbar .datev2__navbar_brand img {
+        height: 25px;
+    }
+    .datev2__navbar .datev2__navbar_brand {
+        width: 25%; 
+    }
+    .datev2__right_side {
+        width: 75%; 
+    } 
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+    .datev2__navbar .datev2__navbar_brand img {
+        height: 25px;
+    }
+    .datev2__navbar .datev2__navbar_brand {
+        width: 25%; 
+    }
+    .datev2__right_side {
+        width: 75%; 
+    }
+}
+
+  /* tablets and desktop */
+@media only screen and (min-width: 768px) {
+ 
+}
+ 

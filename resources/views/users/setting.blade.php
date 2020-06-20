@@ -3,168 +3,12 @@
 
 @section('stylesheet')
 <link rel="stylesheet" type="text/css" href="{!! url('assets/css/vendor/no-uislider.css') !!}">
-    <style>
-    .btn-block {
-    display: block;
-    width: 43%;
-    margin: auto;
-    padding:5px;
-}
-    .pt-6 {
-        padding-top:1rem;
-    }
-    .cropper-container {
-        border-radius:10px;
-    }
-      .tab__main {
-            background: #fff;
-            padding: 15px 0px;
-            border-radius: 10px;
-            margin-bottom: 120px;
-            position: sticky;
-            top: 20px;
-        }
-        .tab__main h3 {
-            color: #222;
-            font-size: 24px;
-            padding: 10px 15px;
-        }
-        .tab__items{
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        .tab__item:first-child {
-            border-top: 1px solid #e8e8e8;
-        }
-        .tab__item:last-child {
-            border-bottom: none;
-        }
-        .tab__item {
-            border-bottom: 1px solid #e8e8e8;
-            padding: 20px 15px;
-            cursor: pointer;
-        }
-        .tab__active {
-            background: #f0f0f0;
-        }
-        .tab__content{
-			display: none;
-			padding: 15px;
-		}
-        .tab__content.current{
-			display: inherit;
-		}
-        .user-setting{
-            padding-bottom: 0;
-        }
-        .custom-file-label::after{
-            position: relative;
-            display: none;
-        }
-        .custom-file-label-setting {
-            height: auto;
-            padding: 16px 50px;
-            text-align: center;
-            background-color: #8d92a1;
-            color: white;
-            display: inline-block;
-            margin: 50px 30px auto;
-            cursor: pointer;
-            width: 90%;
-            border-radius:10px;
-            }
-            .input-group > .custom-file {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-            }
-        .interest_heading {
-            color: #686868;
-            font-size: 26px;
-            margin-bottom: 25px;
-        }
-        .step__heading{ 
-            font-size: 30px; 
-        }
-        .custom__search_interest{
-            width: 100%;
-            background: transparent;
-            border: none; 
-            border-bottom: 1px solid #c1c1c1; 
-            text-align: center; 
-            color: #4d4d4d;
-            margin-bottom: 10px;
-        }
-        .search_interest_available {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .selected__interest {
-            display: flex;
-            flex-wrap: wrap;  
-        }
-        .interest__item { 
-            background: white;
-            margin: 5px;
-            padding: 10px;
-            cursor: pointer;
-            color: #5e5e5e;
-            border-radius: 5px;
-            box-shadow: 0px 2px 5px -1px #d2d2d2;
-            translate: .5s all ease;
-        }
-        .interest__item:hover{
-            background: #f2f2f2;
-        }
-        .interest__item_selected{
-            position: relative;
-            background: white;
-            margin: 5px;
-            padding: 10px; 
-            color: #5e5e5e;
-            border-radius: 5px;
-            box-shadow: 0px 2px 5px -1px #d2d2d2; 
-        }
-        .cross__interest_btn{
-            position: absolute;
-        }
-        .cross__interest_btn {
-            position: absolute;
-            right: -5px;
-            top: -5px;
-            background: #1c1c1c;
-            padding: 5px;
-            border-radius: 50px;
-            width: 20px;
-            height: 20px;
-            font-size: 11px;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-        .cross__interest_btn:hover{
-            background: #ff4f4f;
-        }
-        .location__search{
-            right: 50%;
-            transform: translateX(50%);
-        }
-        h3.title__range {
-            font-size: 22px;
-            text-align: center;
-        }
-    </style>
+  
 @endsection
 
 @section('content')
 <div class="clearfix">
-    <div class="main-contents">
+    <div class="main-contents settings__page">
         <div class="page-title text-capitalize border-bottom-0">
             <h2 class="m-0">Settings</h2>
         </div>
@@ -181,7 +25,7 @@
                 </div>
             @endif
             @if(session()->has('success_msg'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <div class="alert alert-success alert-dismissible fade show mx-3" role="alert">
                     <strong>Success!</strong> {!! session()->get('success_msg') !!}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -198,26 +42,26 @@
                     {!! session()->forget('error_msg') !!}
                 </div>
             @endif
-        <form id="setting-form" autocomplete="off" action="" method="post" enctype="multipart/form-data">
+        <form id="setting-form" autocomplete="off" action="" method="post" enctype="multipart/form-data" data-min="{{ auth()->check()? auth()->user()->min_age : "" }}" data-max="{{ auth()->check() ? auth()->user()->max_age : ""}} ">
             {!! csrf_field() !!}
             <div class="row mr-1">
                 <div class="col-md-12 col-sm-12 col-12">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="tab__main">
-                            <!--  <h3 class="mb-2">Profile Settings</h3> -->
+                            {{-- <h3 class="mb-2">Profile Settings</h3>  --}}
                                 <ul class="tab__items">
-                                    <li class="tab__item tab__active" data-tab="tab-1">Profile Image</li>
-                                    <li class="tab__item " data-tab="tab-2">Profile Details</li>
-                                    <li class="tab__item " data-tab="tab-3">Password and  Security</li>
-                                    <li class="tab__item" data-tab="tab-4">Location</li>
-                                    <li class="tab__item " data-tab="tab-5">Interest's</li>
-                                    <li class="tab__item " data-tab="tab-6">Search preferences</li>
+                                    <li id="profile" class="tab__item" data-tab="tab-1">Profile Image</li>
+                                    <li id="profile_details" class="tab__item " data-tab="tab-2">Profile Details</li>
+                                    <li id="password_tab" class="tab__item " data-tab="tab-3">Password and  Security</li>
+                                    <li id="location_tab" class="tab__item" data-tab="tab-4">Location</li>
+                                    <li id="interest_tab" class="tab__item " data-tab="tab-5">Interest's</li>
+                                    <li id="preferences_tab" class="tab__item " data-tab="tab-6">Search preferences</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="tab__content current" id="tab-1">
+                            <div class="tab__content" id="tab-1">
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6 offset-md-3">

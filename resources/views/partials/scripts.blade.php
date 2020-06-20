@@ -2,6 +2,7 @@
 <script>
     var ajax_url = '{!! route('ajax') !!}';
     var ajax_url_follow = '{!! route('ajax_follow') !!}';
+    var ajax_url_notification = '{!! route('ajax_notification') !!}';
     var socket_url = 'https://datev2.com/'; 
     var logged_id = {!! auth()->check() ? auth()->id() : 'false' !!};
 </script> 

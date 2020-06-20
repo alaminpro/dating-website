@@ -20,3 +20,6 @@ mix.scripts(['resources/js/custom/map_script.js'], 'public/assets/js/map_script.
 
  
 
+if (mix.inProduction()) {
+   mix.version();
+}

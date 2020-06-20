@@ -4,8 +4,8 @@ $(document).ready(function() {
     });
     var rangeSlider = document.getElementById('slider-range');
     var start = [];
-    var min = '{{ $user->min_age }}';
-    var max = '{{ $user->max_age }}';
+    var min = $('#setting-form').data('min');
+    var max = $('#setting-form').data('max'); 
     if(min != '' && max != ''){
         start = [min, max];
     }else{
@@ -48,15 +48,51 @@ $(document).ready(function() {
    $(document).ready(function(){
     var token = $('meta[name=csrf_token]').attr('content');
 
-	$('ul.tab__items li').click(function(){
-        var tab_id = $(this).attr('data-tab');
+    var profile = $('#profile'); 
+    var profile_details = $('#profile_details'); 
+    var password_tab = $('#password_tab'); 
+    var location_tab = $('#location_tab'); 
+    var interest_tab = $('#interest_tab'); 
+    var preferences_tab = $('#preferences_tab'); 
 
+    if(!location.search){
+        queryParams('?tab=tab-1');
+    }  
+    var tabs = $('.tab__item');
+    $('ul.tab__items li.tab__item').removeClass('tab__active');
+    $('.tab__content').removeClass('current'); 
+    Array.from(tabs).forEach(function(tab){ 
+        var current_tab = $(tab).data('tab'); 
+        if(getQueryParams() == current_tab){ 
+            $(tab).addClass('tab__active');
+		    $("#"+current_tab).addClass('current');
+        }
+    }) 
+    $('ul.tab__items li').click(function(){
+        var tab_id = $(this).attr('data-tab'); 
 		$('ul.tab__items li.tab__item').removeClass('tab__active');
 		$('.tab__content').removeClass('current');
-
+        queryParams('?tab='+tab_id) 
 		$(this).addClass('tab__active');
 		$("#"+tab_id).addClass('current');
     })
+
+    function queryParams(query){
+        var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + query;
+       return window.history.pushState({ path: newurl }, '', newurl);
+    }
+
+    function getQueryParams(){
+        var queries = {};
+        $.each(document.location.search.substr(1).split('&'),function(c,q){
+            var i = q.split('=');
+            queries[i[0].toString()] = i[1].toString();
+        });
+        return queries.tab
+    }
+  
+
+
     var loader = $('.loader');
     var alert = $('.username-error');
     $('#register-setting-username').on('keyup',function (e) {
@@ -322,7 +358,7 @@ $(document).ready(function() {
             });
             $.ajax({
                 url: ajax_url, 
-                data: {action: 'load_user_interest', id: '{{auth()->user()->id}}', _token: token},
+                data: {action: 'load_user_interest', id:logged_id , _token: token},
                 dataType: 'JSON',
                 type: 'POST',
                 context: this,
@@ -351,7 +387,7 @@ $(document).ready(function() {
                     } 
                 }
             });
-            $(document).off('click').on('click', '.interest__item', function() {
+            $(document).on('click', '.interest__item', function() {
             var id = $(this).data('id');
                 $.ajax({
                     url:ajax_url,
@@ -367,7 +403,7 @@ $(document).ready(function() {
                             }
                         setTimeout(() => {
                             var uniqueInterest = selectedInterests;
-                            selectedInterests.filter(function(item){
+                                selectedInterests.filter(function(item){
                                     var i = uniqueInterest.findIndex(x => x.id == item.id);
                                         if(i <= -1){
                                             uniqueInterest.push(item);
@@ -383,7 +419,7 @@ $(document).ready(function() {
                                         <span>'+ output.text +'</span>').appendTo(selected_interest);
 
                                     })
-                                        interests.val(outputs.join(','))
+                                    interests.val(outputs.join(','))
                                     $('.cross__interest_btn').click(function(){
                                         interests.val('');
                                         var id = $(this).data('id');

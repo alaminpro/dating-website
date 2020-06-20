@@ -29,7 +29,6 @@
             }
             ?> 
             @if($conversation)
-
                 @include('messages.conversation')
                 @else <div class="text-center mt-50">Lets go find some people to <b>follow and chat</b> with<br><a href="/browse" class="btn btn-primary mt-2"><b>Search!</b></a></div>
             @endif
@@ -37,21 +36,21 @@
         </div>
       </div> 
   </div>
-    <script>
-        function functionHide() {
-            if (navigator.userAgent.match(/Android/i)
-                || navigator.userAgent.match(/webOS/i)
-                || navigator.userAgent.match(/iPhone/i)
+  <script>
+    function functionHide() {
+        // if (navigator.userAgent.match(/Android/i)
+        //     || navigator.userAgent.match(/webOS/i)
+        //     || navigator.userAgent.match(/iPhone/i)
 
-                || navigator.userAgent.match(/BlackBerry/i)
-                || navigator.userAgent.match(/Windows Phone/i)
-            )
-            {
-                // $('.list-conversations').hide();
-                $('.list-conversations').hide("slide", { direction: "left" }, 1000);
-                $('.message-box').show();
-            }
-
+        //     || navigator.userAgent.match(/BlackBerry/i)
+        //     || navigator.userAgent.match(/Windows Phone/i)
+        // )
+        {
+            // $('.list-conversations').hide();
+            $('.list-conversations').hide("slide", { direction: "left" }, 1000);
+            $('.message-box').show();
         }
-    </script>
+
+    // }
+</script>
 @endsection

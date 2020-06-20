@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\General\CollectionHelper;
 use App\User;
 use DB;
 use Illuminate\Http\Request;
@@ -9,8 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Mail;
-use Illuminate\Pagination\Paginator;
-use App\Helpers\General\CollectionHelper;
+
 class HomeController extends Controller
 {
     protected $request;
@@ -51,7 +51,7 @@ class HomeController extends Controller
     }
 
     public function landing()
-    {  
+    {
         $distance = 1000;
         $seo_title = 'Search';
         if (Auth::check()) {
@@ -67,8 +67,6 @@ class HomeController extends Controller
         $min_age = $this->request->get('min_age');
         $max_age = $this->request->get('max_age');
 
-       
-      
         if ($this->request->has('gender') && ($gender == 'male' || $gender == 'female')) {
             $default_gender = $gender == 'male' ? 1 : 2;
         }
@@ -81,78 +79,78 @@ class HomeController extends Controller
         if ($seeking && is_array($seeking) && in_array('female', $seeking) && in_array('male', $seeking)) {
             $default_preference = [1, 2];
         }
-        if($this->request->distance){
+        if ($this->request->distance) {
             $distance = (int) $this->request->distance;
-        } 
-       $users = User::orderBy('created_at', 'DESC');  
+        }
+        $users = User::orderBy('created_at', 'DESC');
 
         $this->guestUserPreference($users, $seeking, $gender);
 
-        if (Auth::check()) { 
-            if(!$this->request->distance){
-                if(auth()->user()->distance){
+        if (Auth::check()) {
+            if (!$this->request->distance) {
+                if (auth()->user()->distance) {
                     $distance = auth()->user()->distance;
-                } 
-            } 
+                }
+            }
             $this->authUserPreference($users, $seeking, $gender);
             $this->authUserDistance($users, $distance);
-            $users->whereNotIn('id', [Auth::user()->id]); 
-        }else{ 
+            $users->whereNotIn('id', [Auth::user()->id]);
+        } else {
             $this->guestUserDistance($users, $distance);
         }
 
-        if ($this->request->has('keywords') && $this->request->keywords != '') { 
-            $keywords = explode(',',  $this->request->keywords);  
-              $terms= array_map('trim', $keywords);
-            foreach($keywords  as $keyword){        
-                $users->where(function($query) use ($terms){
-                    foreach($terms as $term){
-                        $query->where('address', 'LIKE', '%'.$term.'%');
-                        $query->orWhere('country', 'LIKE', '%'.$term.'%');  
+        if ($this->request->has('keywords') && $this->request->keywords != '') {
+            $keywords = explode(',', $this->request->keywords);
+            $terms = array_map('trim', $keywords);
+            foreach ($keywords as $keyword) {
+                $users->where(function ($query) use ($terms) {
+                    foreach ($terms as $term) {
+                        $query->where('address', 'LIKE', '%' . $term . '%');
+                        $query->orWhere('country', 'LIKE', '%' . $term . '%');
                     }
-                }); 
-            } 
-        }  
-         $users = $users->get();
-         $collection = collect($users);
-        if(Auth::check()){ 
-            if(empty($min_age) && empty($max_age)){ 
-                if(auth()->user()->min_age && auth()->user()->max_age){  
-                    $filtered = $collection->whereBetween('age', [auth()->user()->min_age,  auth()->user()->max_age]); 
+                });
+            }
+        }
+        $users = $users->get();
+        $collection = collect($users);
+        if (Auth::check()) {
+            if (empty($min_age) && empty($max_age)) {
+                if (auth()->user()->min_age && auth()->user()->max_age) {
+                    $filtered = $collection->whereBetween('age', [auth()->user()->min_age, auth()->user()->max_age]);
                     $users = $filtered->all();
-                } 
-            } else{ 
-                $filtered = $collection->whereBetween('age', [$min_age, $max_age]); 
+                }
+            } else {
+                $filtered = $collection->whereBetween('age', [$min_age, $max_age]);
                 $users = $filtered->all();
             }
 
-        }else{
-            if(!empty($min_age) && !empty($max_age)){ 
-                $filtered = $collection->whereBetween('age', [$min_age, $max_age]); 
+        } else {
+            if (!empty($min_age) && !empty($max_age)) {
+                $filtered = $collection->whereBetween('age', [$min_age, $max_age]);
                 $users = $filtered->all();
-            }else{
-                 $users =  $collection;
-            } 
-        } 
-     
+            } else {
+                $users = $collection;
+            }
+        }
+
         $collection = collect($users);
         $total = $collection->count();
         $pageSize = 16;
-        $users = CollectionHelper::paginate($collection, $total, $pageSize); 
-         return view('landing', compact('users', 'seo_title', 'default_preference'));
+        $users = CollectionHelper::paginate($collection, $total, $pageSize);
+        return view('landing', compact('users', 'seo_title', 'default_preference'));
     }
 
     public function authUserDistance($users, $distance)
     {
-        if(auth()->user()->lat && auth()->user()->lng){
-        $havingSql= '(3959 * acos( cos( radians(' . auth()->user()->lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . auth()->user()->lng . ') ) + sin( radians(' . auth()->user()->lat . ') ) * sin( radians( lat ) ) ) )';
-        return $users->select('users.*',
-            DB::raw( $havingSql .'AS distance')) 
-            ->whereRaw($havingSql . '<= ?', $distance)
-            ->orderBy('distance');
+        if (auth()->user()->lat && auth()->user()->lng) {
+            $havingSql = '(3959 * acos( cos( radians(' . auth()->user()->lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . auth()->user()->lng . ') ) + sin( radians(' . auth()->user()->lat . ') ) * sin( radians( lat ) ) ) )';
+            return $users->select('users.*',
+                DB::raw($havingSql . 'AS distance'))
+                ->whereRaw($havingSql . '<= ?', $distance)
+                ->orderBy('distance');
         }
     }
-    public function authUserPreference($users, $seeking, $gender) 
+    public function authUserPreference($users, $seeking, $gender)
     {
         if (!$seeking && !$gender) {
             $auth_gender = $auth_preference = '';
@@ -175,26 +173,26 @@ class HomeController extends Controller
                 $auth_gender = 1;
                 $auth_preference = 3;
             }
-           return  $users->where('gender', $auth_gender)->where('preference', $auth_preference); 
+            return $users->where('gender', $auth_gender)->where('preference', $auth_preference);
         }
     }
     public function guestUserDistance($users, $distance)
     {
-        $ip =  \Request::ip(); 
-        $res = file_get_contents('https://www.iplocate.io/api/lookup/'.$ip);
-        $res = json_decode($res); 
+        $ip = \Request::ip();
+        $res = file_get_contents('https://www.iplocate.io/api/lookup/' . $ip);
+        $res = json_decode($res);
         $lat = $res->latitude;
         $lng = $res->longitude;
-       if(!empty($lat) && !empty($lng)){
-        $havingSql= '(3959 * acos( cos( radians(' .  $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' .  $lng  . ') ) + sin( radians(' .  $lat  . ') ) * sin( radians( lat ) ) ) )';
-        return $users->select('users.*',
-            DB::raw( $havingSql .'AS distance')) 
-            ->whereRaw($havingSql . '<= ?', $distance)
-            ->orderBy('distance');
-       }
+        if (!empty($lat) && !empty($lng)) {
+            $havingSql = '(3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) )';
+            return $users->select('users.*',
+                DB::raw($havingSql . 'AS distance'))
+                ->whereRaw($havingSql . '<= ?', $distance)
+                ->orderBy('distance');
+        }
     }
 
-    public function guestUserPreference($users, $seeking, $gender) 
+    public function guestUserPreference($users, $seeking, $gender)
     {
         $genders = $preference = '';
         if ($seeking && $gender) {
@@ -210,15 +208,14 @@ class HomeController extends Controller
             } elseif ($gender == 'male' && in_array('male', $seeking) && count($seeking) <= 1) {
                 $genders = 1;
                 $preference = 1;
-            } 
-            elseif ($gender == 'female' && count($seeking) > 1 && in_array('male', $seeking) && in_array('female', $seeking)) {
+            } elseif ($gender == 'female' && count($seeking) > 1 && in_array('male', $seeking) && in_array('female', $seeking)) {
                 $genders = 2;
                 $preference = 3;
             } elseif ($gender == 'male' && count($seeking) > 1 && in_array('female', $seeking) && in_array('male', $seeking)) {
                 $genders = 1;
                 $preference = 3;
             }
-           return  $users->where('gender', $genders)->where('preference', $preference);
+            return $users->where('gender', $genders)->where('preference', $preference);
         }
     }
 

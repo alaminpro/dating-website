@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Conversation;
+use App\Helpers\General\CollectionHelper;
 use App\Interest;
 use App\Message;
 use App\Photo;
 use App\User;
 use App\VideoCall;
+use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Twilio\Jwt\AccessToken;
 use Twilio\Jwt\Grants\VideoGrant;
-use App\Helpers\General\CollectionHelper;
-use DB;
 
 class AjaxController extends Controller
 {
@@ -239,7 +239,6 @@ class AjaxController extends Controller
         }
     }
 
-  
     public function delete_photo()
     {
 
@@ -289,7 +288,6 @@ class AjaxController extends Controller
         return response()->json(['status' => 'success', 'text' => $this->request->text]);
     }
 
-
     public function view_cover_photo()
     {
         if ($this->request->has('id')) {
@@ -302,7 +300,7 @@ class AjaxController extends Controller
         }
         return response()->json(['status' => 'error']);
     }
-    
+
     public function view_photo()
     {
         if ($this->request->has('id')) {
@@ -560,8 +558,8 @@ class AjaxController extends Controller
     {
         $users = User::where('id', '!=', auth()->user()->id)->where('video_chat', 1)->get();
         $newUser = [];
-        foreach ($users as $user) { 
-            if(auth()->user()->isFollowEach($user->id)){
+        foreach ($users as $user) {
+            if (auth()->user()->isFollowEach($user->id)) {
                 $newUser[] = [
                     'id' => $user->id,
                     'username' => $user->username,
@@ -569,7 +567,7 @@ class AjaxController extends Controller
                     'online' => $user->isOnline(),
                 ];
             }
-            
+
         }
 
         return response()->json(['status' => 'success', 'data' => $newUser]);
@@ -583,7 +581,7 @@ class AjaxController extends Controller
 
         $newUser = [];
         foreach ($users as $user) {
-            if(auth()->user()->isFollowEach($user->id)){
+            if (auth()->user()->isFollowEach($user->id)) {
                 $newUser[] = [
                     'id' => $user->id,
                     'username' => $user->username,
@@ -598,7 +596,7 @@ class AjaxController extends Controller
 
     public function load_user_by_id()
     {
-        $user = User::where('id', $this->request->id) 
+        $user = User::where('id', $this->request->id)
             ->where('video_chat', 1)
             ->first();
 
@@ -606,14 +604,14 @@ class AjaxController extends Controller
     }
     public function permission()
     {
-        if($this->request->id){
+        if ($this->request->id) {
             $user = User::find($this->request->id);
-            $user->video_chat =  1;
-            $user->save(); 
-            if($user){ 
+            $user->video_chat = 1;
+            $user->save();
+            if ($user) {
                 return $this->startcall();
-            } 
-        } 
+            }
+        }
     }
 
     public function startcall()
@@ -691,53 +689,54 @@ class AjaxController extends Controller
     public function about_us_section()
     {
         $user = User::where('id', $this->request->id)->first();
-   
-        if ($user) {
-            $html = view('users.about', compact('user'))->render(); 
 
-            return response()->json(['status' => 'success', 'html' => $html]); 
+        if ($user) {
+            $html = view('users.about', compact('user'))->render();
+
+            return response()->json(['status' => 'success', 'html' => $html]);
         } else {
             return response()->json(['status' => 'error']);
         }
 
     }
-    
+
     public function fetch_user_photos()
     {
         if ($this->request->has('id')) {
-            $user = User::with('photos')->where('id', $this->request->id)->select('id','birthday')->first(); 
- 
+            $user = User::with('photos')->where('id', $this->request->id)->select('id', 'birthday')->first();
+
             if ($user) {
-                $html = view('photo.photo-post', compact('user'))->render(); 
+                $html = view('photo.photo-post', compact('user'))->render();
                 return response()->json(['status' => 'success', 'html' => $html, 'user' => $user]);
             }
         }
-        return response()->json(['status' => 'error']); 
+        return response()->json(['status' => 'error']);
     }
     public function load_more_photo()
     {
- 
+
         $user_id = $this->request->id;
-        if($user_id){
-            $user = User::with('photos')->where('id', $user_id)->select('id','birthday')->first();
-            if($user){ 
+        if ($user_id) {
+            $user = User::with('photos')->where('id', $user_id)->select('id', 'birthday')->first();
+            if ($user) {
                 $new_photos = [];
-                foreach($user->photos as $data){ 
+                foreach ($user->photos as $data) {
                     $new_photos[] = [
                         'id' => $data['id'],
-                        'file' => $data['file'], 
-                        'thumb' => $data['thumb'], 
+                        'file' => $data['file'],
+                        'thumb' => $data['thumb'],
                     ];
-                } 
+                }
 
-                if($this->request->data_id && $this->request->item){
-                    $data = array_map('intval',   $this->request->data_id) ;
-                    $photos =  collect($new_photos)->whereNotIn('id', $data )->take($this->request->item);
-                    $html = view('photo.load', compact('photos'))->render(); 
-                    return response()->json(['status' => 'success', 'html' => $html, 'datas' => $photos]); 
-                }  
+                if ($this->request->data_id && $this->request->item) {
+                    $data = array_map('intval', $this->request->data_id);
+                    $photos = collect($new_photos)->whereNotIn('id', $data)->take($this->request->item);
+                    $html = view('photo.load', compact('photos'))->render();
+                    return response()->json(['status' => 'success', 'html' => $html, 'datas' => $photos]);
+                }
             }
-        }  
-       return response()->json(['status' => 'error']); 
+        }
+        return response()->json(['status' => 'error']);
     }
+
 }

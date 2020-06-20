@@ -68,12 +68,14 @@ jQuery(document).ready(function ($) {
             }
         })
     });
+
     if($('.conversations .message-box .list-messages ul').length){
         $('.conversations .message-box .list-messages ul').mCustomScrollbar().mCustomScrollbar("scrollTo","bottom",{scrollInertia:0});
     }
     if($('.conversations .list-conversations ul').length){
         $('.conversations .list-conversations ul').mCustomScrollbar().mCustomScrollbar();
     }
+
     $('.load_more_photo').click(function (e) {
         var el = $(this);
         el.addClass('loading');
@@ -819,3 +821,4 @@ $(document).ready(function () {
         })
     }
 })
+ 

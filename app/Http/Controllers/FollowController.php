@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Notification;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FollowController extends Controller
@@ -18,7 +20,8 @@ class FollowController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $seo_title = 'Dashboard';
+        return view('dashboard.index', compact('seo_title'));
     }
 
     /**
@@ -162,11 +165,53 @@ class FollowController extends Controller
         }
         return response()->json(['status' => 'error']);
     }
+
     public function updateStatus()
     {
+        if ($this->request->status != '') {
+            $user_id = $this->request->id;
+            $user = User::where('id', $user_id)->update(['user_status' => $this->request->status]);
+            $user = User::where('id', $user_id)->first();
+            return response()->json(['status' => 'success', 'user' => $user]);
+        }
+        return response()->json(['status' => 'error']);
+    }
+    public function update_status_notification()
+    {
         $user_id = $this->request->id;
-        $user = User::where('id', $user_id)->update(['user_status' => $this->request->status]);
-        $user = User::where('id', $user_id)->first();
-        return response()->json(['status' => 'success', 'user' => $user]);
+        if ($user_id) {
+            $followers = User::find($user_id)->following;
+            foreach ($followers as $follower) {
+                $notify = new Notification();
+                $notify->user_id = $user_id;
+                $notify->user_to_notify = $follower->id;
+                $notify->type = 'status';
+                $notify->data = $this->request->message;
+                $notify->read = 0;
+                $notify->date = Carbon::now()->format("Y-m-d");
+                $notify->redirect_url = route('profile', auth()->user()->username);
+                $notify->save();
+            }
+            return response()->json(['status' => 'success']);
+        }
+    }
+
+    public function update_follow_notification()
+    {
+        $user_id = $this->request->id;
+        $follow_id = $this->request->follow_id;
+        if ($user_id) {
+            $user = User::where('id', $user_id)->first();
+            $notify = new Notification();
+            $notify->user_id = $user_id;
+            $notify->user_to_notify = $follow_id;
+            $notify->type = 'follow';
+            $notify->data = 'Followed you';
+            $notify->read = 0;
+            $notify->date = Carbon::now()->format("Y-m-d");
+            $notify->redirect_url = route('profile', $user->username);
+            $notify->save();
+            return response()->json(['status' => 'success']);
+        }
     }
 }

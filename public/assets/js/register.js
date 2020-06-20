@@ -1,1 +1,362 @@
-jQuery(document).ready(function(e){var t=e("meta[name=csrf_token]").attr("content");e("#register__step_one");var s=e("#register__step_two"),a=e("#register__step_three"),r=e("#register__step_four"),i=e("#register__step_five"),d=e("#bar__one"),n=e("#bar__two"),l=e("#bar__three"),c=e("#bar__four"),v=e("#register-password"),u=e("#register-password-confirm"),o=e(".password-error"),p=e(".c-password-error");e("#step-btn-1").on("click",function(){var t=e("#register-username").val(),a=e("#register-email").val();""==t?e(".username-error").html('<div class="text-danger">OPS!  Username is required!</div>'):t.trim().length<=5&&(e(".username-error").empty(),e(".username-error").html('<div class="text-danger">Please enter at least 6 charecter!</div>')),""==a?e(".email-error").html('<div class="text-danger">OPS!  Email is required!</div>'):function(e){return new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i).test(e)}(a)||(e(".email-error").empty(),e(".email-error").html('<div class="text-danger">Please enter valid email address!</div>')),""==v.val()&&o.html('<div class="text-danger">OPS!  Password is required!</div>'),""==u.val()&&p.html('<div class="text-danger">OPS! Confirm Password is required!</div>'),v.val()!=u.val()?p.html('<div class="text-danger">OPS! Confirm Password does not match!</div>'):""!=t&&""!=a&&""!=v.val()&&""!=u.val()&&(o.empty(),e(".username-error").empty(),e(".email-error").empty(),p.empty(),e(".step-1").removeClass("active-step"),e(".step-2").addClass("active-step"),d.addClass("step__bar_complete"),n.addClass("step__bar_active"),s.addClass("step__active"))}),v.on("keyup",function(t){var s=e(this).val();s.length>=6?""!=s?o.empty():o.html('<div class="text-danger">OPS!  Password is required!</div>'):(o.empty(),o.html('<div class="text-danger">OPS!  Password must be 6 charecter!</div>'))}),u.on("keyup",function(t){var s=e(this).val();s.length>=6?""!=s?(o.empty(),v.val()!=s?p.html('<div class="text-danger">OPS! Confirm Password does not match!</div>'):p.empty()):p.html('<div class="text-danger">OPS! Confirm Password is required!</div>'):(p.empty(),p.html('<div class="text-danger">OPS! Confirm Password must be 6 charecter!</div>'))});var m=e("#register-gender"),F=e("#register-preference"),_=e(".gender-error"),x=e(".preference-error");m.on("change",function(t){""==e(this).val()?_.html('<div class="text-danger">OPS!  Gender is required!</div>'):_.empty()}),F.on("change",function(t){""==e(this).val()?x.html('<div class="text-danger">OPS! Perference is required!</div>'):x.empty()});var h=e("#register-day"),f=e("#register-month"),C=e("#register-year"),g=e(".date-error");h.on("change",function(t){""==e(this).val()?g.html('<div class="text-danger">OPS! All field is required!</div>'):g.empty()}),f.on("change",function(t){""==e(this).val()?g.html('<div class="text-danger">OPS! All field is required!</div>'):g.empty()}),C.on("change",function(t){""==e(this).val()?g.html('<div class="text-danger">OPS! All field is required!</div>'):g.empty()});var y=e("#register-address"),b=e("#register-country"),P=e(".address-error"),D=e(".country-error");y.on("keyup",function(t){""==e(this).val()?P.html('<div class="text-danger">OPS! Address field is required!</div>'):P.empty()}),b.on("change",function(t){""==e(this).val()?D.html('<div class="text-danger">OPS! Country is required!</div>'):D.empty()}),e("#step-btn-2").on("click",function(){""==m.val()&&_.html('<div class="text-danger">OPS!  Gender is required!</div>'),""==F.val()&&x.html('<div class="text-danger">OPS! Perference is required!</div>'),""!=F.val()&&""!=m.val()&&(_.empty(),x.empty(),e(".step-5").removeClass("active-step")),""!=h.val()&&""!=f.val()&&""!=C.val()?g.empty():g.html('<div class="text-danger">OPS! All field is required!</div>'),""==y.val()&&P.html('<div class="text-danger">OPS! Address field is required!</div>'),""==b.val()&&D.html('<div class="text-danger">OPS! Country is required!</div>'),""!=F.val()&&""!=m.val()&&""!=b.val()&&""!=y.val()&&""!=h.val()&&""!=f.val()&&""!=C.val()&&(P.empty(),D.empty(),e(".step-2").removeClass("active-step"),e(".step-3").addClass("active-step"),n.addClass("step__bar_complete"),l.addClass("step__bar_active"),a.addClass("step__active"))}),e("#step-back-1").on("click",function(){e(".step-1").addClass("active-step"),e(".step-2").removeClass("active-step"),d.removeClass("step__bar_complete"),n.removeClass("step__bar_active"),s.removeClass("step__active")}),e("#step-back-2").on("click",function(){e(".step-2").addClass("active-step"),e(".step-3").removeClass("active-step"),n.removeClass("step__bar_complete"),l.removeClass("step__bar_active"),a.removeClass("step__active")}),e("#step-back-3").on("click",function(){e(".step-3").addClass("active-step"),e(".step-4").removeClass("active-step"),l.removeClass("step__bar_complete"),c.removeClass("step__bar_active"),r.removeClass("step__active")}),e("#step-back-4").on("click",function(){e(".step-4").addClass("active-step"),e(".step-5").removeClass("active-step"),c.removeClass("step__bar_complete"),bar__five.removeClass("step__bar_active"),i.removeClass("step__active")});var O=[],S=e(".selected__interest"),k=e("#register-interests-input"),q=e("#search_interest"),A=e(".search_interest_available"),E=e(".loader"),w=e(".interest-error");q.on("keyup",function(s){var a=e(this).val();E.empty(),w.empty(),A.empty(),""!=a?(A.empty(),e.ajax({url:ajax_url,beforeSend:function(){e('<div class="lds-ellipsis" style="height: 40px; margin-top: -20px;"></div>').html("<div></div><div></div><div></div><div></div>").appendTo(E),A.empty()},data:{action:"search_interest",search:a,_token:t},dataType:"JSON",type:"POST",success:function(s){if(A.empty(),e.isEmptyObject(s.data)&&e('<div class="text-center text-danger"></div>').html("Interest not found!").appendTo(A),"success"===s.status){var a=s.data.filter(function(e){return!O.some(function(t){return e.id===t.id})});e.map(a,function(t){e('<div class="interest__item" data-id="'+t.id+'"></div>').html('<i class="'+t.icon+'"></i>                                    <span>'+t.text+"</span>").appendTo(A)})}setTimeout(()=>{e(document).off("click").on("click",".interest__item",function(){var s=e(this).data("id");e.ajax({url:ajax_url,data:{action:"interest_by_id",id:s,_token:t},dataType:"JSON",type:"POST",context:this,success:function(t){"success"===t.status&&(e(this).remove(),w.empty(),O.push(t.data)),setTimeout(()=>{var t=O;if(O.filter(function(e){return t.findIndex(t=>t.id==e.id)<=-1&&t.push(e),null}),!e.isEmptyObject(t)){S.empty();var s=[];e.map(t,function(t){s.push(t.id),e('<div class="interest__item_selected"></div>').html('<i data-id="'+t.id+'" class="cross__interest_btn fa fa-times"></i><i class="'+t.icon+'"></i>                                                        <span>'+t.text+"</span>").appendTo(S)}),k.val(s.join(",")),e(".cross__interest_btn").click(function(){k.val("");var t=e(this).data("id");if(t){var s=O.find(e=>e.id===t),a=O.indexOf(s);O.splice(a,1),e(this).parent().remove();var r=O.map(e=>e.id);k.val(r.join(",")),e('<div class="interest__item" data-id="'+s.id+'"></div>').html('<i class="'+s.icon+'"></i>                                                            <span>'+s.text+"</span>").appendTo(A)}})}},50)}})})},100)},complete:function(){E.empty()}})):(E.empty(),A.empty())}),e("#step-btn-3").on("click",function(){""!=k.val()?(e(".step-3").removeClass("active-step"),e(".step-4").addClass("active-step"),l.addClass("step__bar_complete"),r.addClass("step__active")):w.html('<div class="text-danger">OPS! Interest is required!</div>')}),e("#step-btn-4").on("click",function(){e(".step-4").removeClass("active-step"),e(".step-5").addClass("active-step"),c.addClass("step__bar_complete"),i.addClass("step__active")})});
+jQuery(document).ready(function ($) { 
+    var token = $('meta[name=csrf_token]').attr('content'); 
+    function isValidEmail(email) {
+        var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+        return pattern.test(email);
+    };
+   
+    var register__step_one = $('#register__step_one');
+    var register__step_two = $('#register__step_two');
+    var register__step_three = $('#register__step_three');
+    var register__step_four = $('#register__step_four');
+    var register__step_five = $('#register__step_five');
+    var bar__one = $('#bar__one');
+    var bar__two = $('#bar__two');
+    var bar__three = $('#bar__three');
+    var bar__four = $('#bar__four');
+    // coding for password and confirm password
+    var password =  $("#register-password");
+    var c_password =  $("#register-password-confirm");
+    var password_error = $('.password-error');
+    var c_password_error = $('.c-password-error'); 
+    $('#step-btn-1').on('click',function(){
+       var username =  $("#register-username").val();
+       var email =  $("#register-email").val();
+        if(username == ''){
+            $('.username-error').html('<div class="text-danger">OPS!  Username is required!</div>');
+        }else if(username.trim().length <= 5){
+            $('.username-error').empty();
+            $('.username-error').html('<div class="text-danger">Please enter at least 6 charecter!</div>');
+        } 
+        
+        if(email == ''){
+            $('.email-error').html('<div class="text-danger">OPS!  Email is required!</div>');
+        }else if(!isValidEmail(email)){
+            $('.email-error').empty();
+            $('.email-error').html('<div class="text-danger">Please enter valid email address!</div>');
+        } 
+
+        if(password.val() == ''){
+            password_error.html('<div class="text-danger">OPS!  Password is required!</div>');
+        }
+        if(c_password.val() == ''){ 
+            c_password_error.html('<div class="text-danger">OPS! Confirm Password is required!</div>');
+        }
+        if(password.val() != c_password.val()){
+            c_password_error.html('<div class="text-danger">OPS! Confirm Password does not match!</div>');
+        }else{
+            if(username != '' && email != '' && password.val() !='' &&  c_password.val() != ''){
+                password_error.empty(); 
+                $('.username-error').empty();
+                $('.email-error').empty();
+                c_password_error.empty();
+                $('.step-1').removeClass('active-step');
+                $('.step-2').addClass('active-step'); 
+                bar__one.addClass('step__bar_complete')
+                bar__two.addClass('step__bar_active')
+                register__step_two.addClass('step__active')
+            }
+        }
+       
+    })
+
+    password.on('keyup',function (e) {
+        var password_val = $(this).val();
+        if(password_val.length >= 6){
+            if(password_val != ''){
+                password_error.empty();
+            } else{
+                password_error.html('<div class="text-danger">OPS!  Password is required!</div>');
+            }
+        }else{
+            password_error.empty();
+            password_error.html('<div class="text-danger">OPS!  Password must be 6 charecter!</div>');
+        }
+    });
+    c_password.on('keyup',function (e) {
+        var c_password_val = $(this).val();
+        if(c_password_val.length >= 6){
+            if(c_password_val != ''){
+                password_error.empty();
+                if(password.val() != c_password_val){
+                    c_password_error.html('<div class="text-danger">OPS! Confirm Password does not match!</div>');
+                }else{
+                    c_password_error.empty();
+                }
+            } else{
+                c_password_error.html('<div class="text-danger">OPS! Confirm Password is required!</div>');
+            }
+        }else{
+            c_password_error.empty();
+            c_password_error.html('<div class="text-danger">OPS! Confirm Password must be 6 charecter!</div>');
+            }
+    }); 
+
+    //start coding for gender and preference
+    var gender = $('#register-gender')
+    var preference = $('#register-preference')
+    var gender_error = $('.gender-error')
+    var preference_error = $('.preference-error')
+    gender.on('change',function (e) {
+        if($(this).val() == ''){
+            gender_error.html('<div class="text-danger">OPS!  Gender is required!</div>');
+        }else{
+            gender_error.empty();
+        }
+    })
+    preference.on('change',function (e) {
+        if($(this).val() == ''){
+            preference_error.html('<div class="text-danger">OPS! Perference is required!</div>');
+        }else{
+            preference_error.empty();
+        }
+    }) 
+
+     //start coding for day month year
+    var day = $('#register-day') 
+    var month = $('#register-month') 
+    var year = $('#register-year') 
+    var date_error = $('.date-error') 
+    day.on('change',function (e) {
+        if($(this).val() == ''){
+            date_error.html('<div class="text-danger">OPS! All field is required!</div>');
+        }else{
+            date_error.empty();
+        }
+    }) 
+    month.on('change',function (e) {
+        if($(this).val() == ''){
+            date_error.html('<div class="text-danger">OPS! All field is required!</div>');
+        }else{
+            date_error.empty();
+        }
+    }) 
+    year.on('change',function (e) {
+        if($(this).val() == ''){
+            date_error.html('<div class="text-danger">OPS! All field is required!</div>');
+        }else{
+            date_error.empty();
+        }
+    }) 
+       //start coding for day month year
+     var address = $('#register-address') 
+    var country = $('#register-country') 
+    var address_error = $('.address-error') 
+    var country_error = $('.country-error') 
+    address.on('keyup',function (e) {
+        if($(this).val() == ''){
+            address_error.html('<div class="text-danger">OPS! Address field is required!</div>');
+        }else{
+            address_error.empty();
+        }
+    }) 
+    country.on('change',function (e) {
+        if($(this).val() == ''){
+            country_error.html('<div class="text-danger">OPS! Country is required!</div>');
+        }else{
+            country_error.empty();
+        }
+    }) 
+
+    $('#step-btn-2').on('click',function(){  
+        if(gender.val() == ''){
+            gender_error.html('<div class="text-danger">OPS!  Gender is required!</div>');
+        }
+        if(preference.val() == ''){ 
+            preference_error.html('<div class="text-danger">OPS! Perference is required!</div>');
+        }
+        if(preference.val() != '' && gender.val() != ''){ 
+            gender_error.empty();
+            preference_error.empty();
+            $('.step-5').removeClass('active-step');
+           // $('.step-5').addClass('active-step');
+            
+        }
+        if(day.val() != '' && month.val() != '' && year.val() != ''){ 
+            date_error.empty();  
+        }else{
+            date_error.html('<div class="text-danger">OPS! All field is required!</div>');
+        }
+        
+        if(address.val() == ''){
+            address_error.html('<div class="text-danger">OPS! Address field is required!</div>');
+        }
+        if(country.val() == ''){ 
+            country_error.html('<div class="text-danger">OPS! Country is required!</div>');
+        }
+        if(preference.val() != '' && gender.val() != '' && country.val() != '' && address.val() != '' && day.val() != '' && month.val() != '' && year.val() != ''){ 
+            address_error.empty(); 
+            country_error.empty(); 
+            $('.step-2').removeClass('active-step');
+            $('.step-3').addClass('active-step');
+                 bar__two.addClass('step__bar_complete')
+                bar__three.addClass('step__bar_active')
+                register__step_three.addClass('step__active')
+        }
+    })
+
+
+    $('#step-back-1').on('click',function(){ 
+        $('.step-1').addClass('active-step');
+        $('.step-2').removeClass('active-step');
+        bar__one.removeClass('step__bar_complete')
+        bar__two.removeClass('step__bar_active')
+        register__step_two.removeClass('step__active')
+    }) 
+
+    $('#step-back-2').on('click',function(){ 
+        $('.step-2').addClass('active-step');
+        $('.step-3').removeClass('active-step');
+        bar__two.removeClass('step__bar_complete')
+        bar__three.removeClass('step__bar_active')
+        register__step_three.removeClass('step__active')
+    }) 
+    $('#step-back-3').on('click',function(){ 
+        $('.step-3').addClass('active-step');
+        $('.step-4').removeClass('active-step');
+        bar__three.removeClass('step__bar_complete')
+        bar__four.removeClass('step__bar_active') 
+        register__step_four.removeClass('step__active') 
+    }) 
+    $('#step-back-4').on('click',function(){ 
+        $('.step-4').addClass('active-step');
+        $('.step-5').removeClass('active-step');
+        bar__four.removeClass('step__bar_complete')
+        bar__five.removeClass('step__bar_active') 
+        register__step_five.removeClass('step__active') 
+    }) 
+   
+    
+  
+   
+    // start coding for interest  
+    var selectedInterests = [];
+    var selected_interest = $('.selected__interest');
+    var interests = $('#register-interests-input');
+    var search_interest = $('#search_interest');
+    var interest_search_available = $('.search_interest_available');
+    var loader = $('.loader');
+    var interest_error = $('.interest-error');
+
+
+   
+    search_interest.on('keyup',function (e) {
+        var search = $(this).val();
+        loader.empty() 
+        interest_error.empty();
+        interest_search_available.empty()  
+        if(search != ''){ 
+        interest_search_available.empty()  
+                $.ajax({
+                    url: ajax_url,
+                    beforeSend: function(){ 
+                        $('<div class="lds-ellipsis" style="height: 40px; margin-top: -20px;"></div>').html('<div></div><div></div><div></div><div></div>').appendTo(loader);
+                        interest_search_available.empty()  
+                    },
+                    data: {action: 'search_interest', search: search, _token: token},
+                    dataType: 'JSON',
+                    type: 'POST', 
+                    success: function (res) {
+                        interest_search_available.empty() ;
+                        if($.isEmptyObject(res.data)){
+                            $('<div class="text-center text-danger"></div>').html('Interest not found!').appendTo(interest_search_available);
+                        } 
+                        if(res.status === 'success'){  
+
+                            var results = res.data.filter(function(o1){ 
+                                return !selectedInterests.some(function(o2){
+                                    return o1.id === o2.id;        
+                                });
+                            }) 
+
+                            $.map(results, function(interest) {  
+                                    $('<div class="interest__item" data-id="'+interest.id+'"></div>').html('<i class="'+ interest.icon +'"></i>\
+                                    <span>'+ interest.text +'</span>').appendTo(interest_search_available);
+                            }) 
+                        } 
+                        setTimeout(() => { 
+                            $(document).off('click').on('click', '.interest__item', function() { 
+                                var id = $(this).data('id');
+                                $.ajax({
+                                    url:ajax_url,
+                                    data: {action: 'interest_by_id', id: id, _token: token},
+                                    dataType: 'JSON',
+                                    type: 'POST',   
+                                    context: this,
+                                    success: function (res) {
+                                        if(res.status === 'success'){ 
+                                            $(this).remove(); 
+                                            interest_error.empty();
+                                            selectedInterests.push(res.data)
+                                         }
+                                        setTimeout(() => {
+                                            var uniqueInterest = selectedInterests;
+                                            selectedInterests.filter(function(item){
+                                                    var i = uniqueInterest.findIndex(x => x.id == item.id);
+                                                        if(i <= -1){
+                                                            uniqueInterest.push(item);
+                                                        }
+                                                    return null;
+                                                });
+                                                if(!$.isEmptyObject(uniqueInterest)){
+                                                    selected_interest.empty();
+                                                    var outputs = [];
+                                                    $.map(uniqueInterest, function(output) {  
+                                                        outputs.push(output.id) 
+                                                        $('<div class="interest__item_selected"></div>').html('<i data-id="'+output.id+'" class="cross__interest_btn fa fa-times"></i><i class="'+ output.icon +'"></i>\
+                                                        <span>'+ output.text +'</span>').appendTo(selected_interest);
+                                                        
+                                                    }) 
+                                                     interests.val(outputs.join(',')) 
+                                                    $('.cross__interest_btn').click(function(){
+                                                        interests.val('');
+                                                        var id = $(this).data('id');
+                                                        if(id){
+                                                            var deleteint = selectedInterests.find(interest => interest.id === id); 
+                                                            var index = selectedInterests.indexOf(deleteint);
+                                                            selectedInterests.splice(index, 1); 
+                                                            $(this).parent().remove();
+                                                            var removeOutput = selectedInterests.map(int => int.id) 
+                                                            interests.val(removeOutput.join(',')) 
+                                                            $('<div class="interest__item" data-id="'+deleteint.id+'"></div>').html('<i class="'+ deleteint.icon +'"></i>\
+                                                            <span>'+ deleteint.text +'</span>').appendTo(interest_search_available);
+                                                        }
+                                                    })
+                                                }
+                                               
+                                        }, 50); 
+                                    }
+                                })
+                              })
+                        }, 100);
+                    },
+                    complete: function(){
+                        loader.empty();
+                    }
+                }); 
+        }else{
+            loader.empty() 
+            interest_search_available.empty()   
+        }
+    }); 
+    $('#step-btn-3').on('click',function(){    
+        if(interests.val() != ''){
+            $('.step-3').removeClass('active-step');
+            $('.step-4').addClass('active-step');
+            bar__three.addClass('step__bar_complete') 
+            register__step_four.addClass('step__active')
+        }else{ 
+            interest_error.html('<div class="text-danger">OPS! Interest is required!</div>');
+        }
+          
+    })
+    $('#step-btn-4').on('click',function(){    
+                
+            $('.step-4').removeClass('active-step');
+            $('.step-5').addClass('active-step');
+            bar__four.addClass('step__bar_complete') 
+            register__step_five.addClass('step__active')
+
+    })
+  
+});
