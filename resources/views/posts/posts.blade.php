@@ -23,13 +23,13 @@
         <div class="main-photos">
             <div class="row m-0">
                 @foreach($posts as $data)
-                    <div class="col-md-6 col-lg-4  mb-4">
+                    <div class="col-md-6 col-lg-4  mb-4 p-2">
                         <div class="card custom-card">
                             <div class="card-body p-0">
                             <a href="{{ route('singleBlogPost', $data->slug) }}">
                                 <div class="image__box" style="background-image: url('{{asset("uploads/". $data->image)}}')"> </div>
                             </a>
-                                <div class="post_title_body p-4">
+                                <div class="post_title_body p-2">
                                     <a href="{{ route('singleBlogPost', $data->slug) }}"> 
                                         <h2 class="page__title">{{ ucfirst($data->title) }}</h2>   </a>
                                     <p class="page__details">

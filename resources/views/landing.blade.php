@@ -55,7 +55,7 @@ $seo_website_description = setting('website_description');
     @endif
     <div class="filter shadow-sm p-3 border-bottom bg-white" id="filter__container" >
         <form class="row" action="" id="formFilter" data-min="{{ auth()->check()? auth()->user()->min_age : "" }}" data-max="{{ auth()->check() ? auth()->user()->max_age : ""}} ">
-            <div class=" col-lg-4 border-right">
+            <div class="col-md-4 order-1 order-lg-1 col-sm-4 border-right">
                 <div class="filter">
                     <strong class="d-block">I am a&nbsp;</strong>
                     <div class="custom-control  custom-checkbox custom-control-inline" >
@@ -68,7 +68,7 @@ $seo_website_description = setting('website_description');
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 border-right mt-md-2 mt-lg-0">
+            <div class="col-lg-4 order-3 order-lg-2 col-sm-8 border-right mt-md-2 mt-lg-0">
                 <div class="filter">
                     <strong class="d-block">Seeking a&nbsp;</strong>
                     <div class="custom-control custom-checkbox custom-control-inline">
@@ -100,13 +100,13 @@ $seo_website_description = setting('website_description');
                     <button id="cancel__filter" class="btn btn-secondary custom__button" type="button">Cancel</button> 
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 order-2 order-lg-3">
                 <div class="filter"> 
                         <label for="filter-country" class="country__label">Where</label> 
                         <input class="search__address" name="keywords" id="search__address"> 
                     
                 </div> 
-                <div class="filter mt-4"><span class="or">Or</span>
+                <div class="filter"><span class="or">Or</span>
                     <div class="location__filter">
                         <div class="location__main">
                             Search by Distance <i class="fa fa-location-arrow" id="location__icon" aria-hidden="true"></i> 
@@ -127,15 +127,25 @@ $seo_website_description = setting('website_description');
         @if(count($users))
             <div class="row mb-3 ml-1 mr-1">
             @foreach($users as $user)
-                <div class="col-md-3 col-sm-6 col-xs-12 ipad-col">
+                <div class="col-xs-12 col-lg-6  col-xl-4 ipad-col">
                     <a href="{!! route('profile',['username'=>strtolower($user->username)]) !!}">
                         <div class="user-item shadow-sm rounded effect" style="background-image: url('{!! avatar($user->avatar, $user->gender) !!}') ">
-                            <span class="photos"><i class="fas fa-camera"></i> {!! $user->photos()->count() !!}</span>
-                            @if($user->isOnline())
-                                <span class="online"><div class="badge__video_online">Live</div></span> 
-                            @endif
-                            <span class="fullname">{!! fullname($user->firstname, $user->lastname, $user->username) !!}</span>
-                            <span class="address">{!! fulladdress($user->address, $user->country) !!}</span>
+                            <div class="photo__main_content">
+                                <div class="photos_status">
+                                    <span class="photos">
+                                        <i class="fas fa-camera"></i>
+                                       {!! $user->photos()->count() !!}</span>
+                                        @if($user->isOnline())
+                                            <span class="online">
+                                                <div class="badge__video_online">Live</div>
+                                            </span> 
+                                        @endif
+                                </div>
+                                <div class="users__address">
+                                    <p class="fullname m-0">{!! fullname($user->firstname, $user->lastname, $user->username) !!}</p>
+                                    <p class="address m-0">{!! fulladdress($user->address, $user->country) !!}</p>
+                                </div>
+                            </div>
                         </div>
                     </a>
                 </div>

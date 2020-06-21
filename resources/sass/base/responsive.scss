@@ -1,15 +1,95 @@
-
-  /* phones */
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 440px) {
     .datev2__navbar .datev2__navbar_brand img {
-        height: 25px;
+        height: 18px;
     }
-    .datev2__navbar .datev2__navbar_brand {
-        width: 25%; 
+    .datev2__navbar .datev2__navbar_brand .sidebar__hide_icon { 
+        margin-left: 15px !important;
     }
     .datev2__right_side {
-        width: 75%; 
+        width: 70%;
+    }
+    .datev2__navbar .datev2__navbar_brand {
+        width: 30%;
+    }
+    .datev2__ul  li{
+        padding: 5px 10px !important ;
+    }
+    .datev2__right_side .datev2__ul .notification__dropdown_menu { 
+        right: -70px; 
+    }
+    .datev2__right_side .datev2__ul .notification__dropdown_menu .tip::before { 
+        right: 80px;
+    }
+    .datev2__right_side .datev2__ul .notification__dropdown_menu .tip::after { 
+        right: 80px;
+    }
+    .notification__dropdown_menu {
+        min-width: 22rem;
+    }
+}
+@media only screen and (max-width: 560px) {
+    .datev2__right_side .datev2__ul .notification__dropdown_menu {
+        left: auto;
+        right: -16px;
+        top: 46px;
+    }
+    .datev2__right_side .datev2__ul .notification__dropdown_menu { 
+        right: -80px; 
+        top: 41px;
+    }
+    .datev2__right_side .datev2__ul .notification__dropdown_menu .tip::before { 
+        right: 93px;
+    }
+    .datev2__right_side .datev2__ul .notification__dropdown_menu .tip::after { 
+        right: 93px;
+    }
+    .datev2__right_side .datev2__search_main .datev2__search_input { 
+        width: 100%;
+    }
+}
+  /* phones */
+@media only screen and (max-width: 767px) {
+    .datev2__right_side{ 
+        .datev2__search_main { 
+            margin-left: 20px;
+        }
+    }
+    .datev2__navbar .datev2__navbar_brand img {
+        height: 20px;
+    }
+    .datev2__navbar .datev2__navbar_brand {
+        width: 40%; 
+    }
+    .datev2__right_side {
+        width: 60%; 
     } 
+    .datev2__ul{
+        .search__icon{
+            display: block !important;
+        }
+        .right__sidebar_toggle{
+            display: block !important;
+        }
+    }
+    .datev2__right_side .datev2__ul .datev2__avater img {
+        width: 26px;
+    }
+    .notification i {
+        font-size: 22px  !important; 
+    }
+    .datev2__right_side .datev2__search_main {
+       display: none;
+    }
+    .datev2__navbar .datev2__navbar_brand .sidebar__hide_icon {
+        position: relative;
+        right: 0px;
+        top: 0px;
+        display: flex;
+        margin-left: 28px;
+    }
+    .right__sidebar_active{
+        display: block !important;
+    }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
     .datev2__navbar .datev2__navbar_brand img {
@@ -21,6 +101,20 @@
     .datev2__right_side {
         width: 75%; 
     }
+}
+@media only screen and  (max-width: 1024px) {
+    .toggle__main,.toggle__main_right{  
+        transition: all .3s ease;
+        &::after{ 
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 30, 30, 0.762);
+            left: 0;
+            top: 0;
+        }
+    } 
 }
 
   /* tablets and desktop */

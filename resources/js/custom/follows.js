@@ -113,7 +113,7 @@ $(document).ready(function() {
                         var id= $(this).data('id'); 
                         var btn = $(this);
                         $.ajax({
-                            url: ajax_url_follow,  
+                            url: ajax_url_notification,  
                             data: {action: "follow_following", id: id, _token: token},
                             dataType: 'JSON',
                             type: 'POST',
@@ -414,7 +414,7 @@ $(document).ready(function() {
                 success: function (res) {
                     if(res.status === 'success'){ 
                         $.ajax({
-                            url: ajax_url_follow,  
+                            url: ajax_url_notification,  
                             data: {action: "update_status_notification", id: user_id, message: res.user.user_status, _token: token},
                             dataType: 'JSON',
                             type: 'POST',

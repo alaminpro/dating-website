@@ -14,7 +14,7 @@
     <script src="{!! url('assets/js/vendor/jquery.fancybox.min.js') !!}"></script>
     <script src="{!! url('assets/js/vendor/datepicker.min.js') !!}"></script>
     <script src="{!! url('assets/js/vendor/jquery.form.min.js') !!}"></script>
-    <script src="{!! url('assets/js/vendor/jquery.mcustomscrollbar.min.js') !!}"></script> 
+  
     <script src="{!! url('assets/js/vendor/audio.min.js') !!}"></script> 
     <script src="//media.twiliocdn.com/sdk/js/video/v1/twilio-video.min.js"></script> 
     <script src="{!! url('assets/js/socket.js') !!}"></script>  
@@ -23,6 +23,7 @@
 <script src="{!! url('assets/js/vendor/jquery.toast.min.js') !!}"></script>
 <script src="{!! url('assets/js/vendor/cropper.min.js') !!}"></script>
 @endif
+<script src="{!! url('assets/js/vendor/jquery.mcustomscrollbar.min.js') !!}"></script> 
 <script src="{!! url('assets/js/custom.js') !!}"></script>
 <script src="{!! url('assets/js/map_script.js') !!}"></script> 
 @yield('javascript')

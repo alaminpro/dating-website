@@ -11,11 +11,19 @@
     </div>
     <div class="datev2__right_side">
         <div class="datev2__search_main"> 
-            <i class="fas fa-search"></i>
-            <input type="text" class="datev2__search_input" id="datev2__main_searc" placeholder="Search by interest's or Keywords"/> 
+            <div class="search__area">
+                <i class="fas fa-search"></i>
+                <input type="text" class="datev2__search_input" id="datev2__main_searc" placeholder="Search by interest's or Keywords"/> 
+            </div>
+            <div class="search__cencel_area">
+                <i class="far fa-times-circle"></i>
+            </div>
         </div>
         @auth
         <ul class="datev2__ul d-flex align-items-center">
+            <li class="dropdown px-2 search__icon"> 
+                   <i class="fa fa-search"></i> 
+            </li>
             <li class="dropdown px-3">
                 <div class="notification_main">
                     <a class="notification" href="javascript:void(0)" id="notification" >
@@ -58,6 +66,9 @@
                         <a class="dropdown-item"  href="{!! route('logout') !!}">Logout</a> 
                       </div>
                 </div>
+            </li>
+            <li class="dropdown  px-3 right__sidebar_toggle"> 
+                    <i class="far fa-chart-bar"></i> 
             </li>
         </ul>
         @endauth

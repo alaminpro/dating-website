@@ -2,11 +2,11 @@
     <div class="d-flex align-items-start">
         <a href="javascript:void(0)" class="notification__link" data-id="{{ $follow->id }}">
             <div class="photo__side">
-                <img src="{!! asset($follow->avatar) !!}" class="rounded-circle">
+                <img src="{{  asset($follow->avatar)  }}" class="rounded-circle">
             </div>
             <div class="content__side"> 
-                <div class="notify__username">{!! $follow->username !!}</div> 
-                <div class="notify__content">{!! $follow->data !!}</div> 
+                <div class="notify__username">{{  $follow->username  }}</div> 
+                <div class="notify__content">{{  $follow->data  }}</div> 
                 <div class="notify__time">{{ $follow->created_at->diffForHumans() }}</div>  
             </div>
         </a> 

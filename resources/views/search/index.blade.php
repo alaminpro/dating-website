@@ -1,5 +1,5 @@
  @foreach($users as $user)
-        <div class="col-lg-4">
+        <div class="col-lg-4 col-sm-6">
             <div class="search__users"> 
                 <div class="img-div m-0">
                     <a href="{!! route('profile',['username'=> $user->username]) !!}?type=about" class="profile__photo">

@@ -24,16 +24,16 @@
             @else
             <main>
             @endif 
-                <div class="main-content_loader"></div>
-                <div class="main__search_item"></div>
-                @yield('content') 
-                @include('partials.footer')
-            </main>  
-            @if((Route::current()->getName() != 'home') && (Route::current()->getName() != 'register') && (Route::current()->getName() != 'forget'))
-                @if(auth()->check() && (Route::current()->getName() == 'landing' || Route::current()->getName() == 'follow'))
-                    @include('partials.right-sidebar')  
+               <div class="main-pages">
+                    <div class="main-content_loader"></div>
+                    <div class="main__search_item"></div>
+                    @yield('content') 
+                    @include('partials.footer')
+               </div>
+               @if((Route::current()->getName() != 'home') && (Route::current()->getName() != 'register') && (Route::current()->getName() != 'forget'))
+                    @include('partials.right-sidebar')   
                 @endif
-            @endif
+            </main>   
         </div> 
     </div>
     

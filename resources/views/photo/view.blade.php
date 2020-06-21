@@ -22,8 +22,7 @@
         // dd($photo_file);
       }
        ?>
-        <!-- <div class="full_photo d-flex align-items-center"><img src="{!! url($photo_file) !!}" style="width:100%;max-height: 630px;min-height:500px;"></div> -->
-        <div class="full_photo d-flex align-items-center"><img src="{!! url($photo_file) !!}" style="width:100%;max-height: 570px;min-height:450px;"></div>
+        <div class="full_photo d-flex align-items-center"><img src="{{ url($photo_file) }}" style="width:100%;max-height: 570px;min-height:450px;"></div>
     </div>
     <div class="col-md-4 view-photo-right">
         <div class="content-photo">
@@ -52,9 +51,9 @@
                     $avatar ='http://localhost/dating/'.$avatar; 
                   } 
                   ?>
-                    <img src="{!! $avatar !!}">
+                    <img src="{{  $avatar  }}">
                     <div class="media-body">
-                        <h3 class="mb-0"><a href="{!! route('profile',['username'=>$username]) !!}">{!! fullname($firstname, $lastname, $username) !!}</a></h3>
+                        <h3 class="mb-0"><a href="{{  route('profile',['username'=>$username])  }}">{{  fullname($firstname, $lastname, $username)  }}</a></h3>
                         @if(!auth()->check() || auth()->user()->id != $user_id)
                           @if(auth()->check() && in_array($user_id, collect(auth()->user()->follows()->get())->pluck('id')->all()))
                               <span data-id="{!! $user_id !!}" class="badge badge-primary btn-follow"><i class="fas fa-check"></i> Followed</span>
@@ -86,13 +85,13 @@
         <div class="photo-action">
             <div class="like-photo clearfix">
                 @if($photo->likes()->count() && auth()->check() && in_array(auth()->id(), collect($photo->likes()->get())->pluck('id')->all()))
-                    <i class="fas fa-heart" data-id="{!! $photo->id !!}" id="love-photo"></i>
+                    <i class="fas fa-heart" data-user-id="{{ $photo->user->id }}" data-id="{!! $photo->id !!}" id="love-photo"></i>
                 @else
-                    <i class="far fa-heart" data-id="{!! $photo->id !!}" id="love-photo"></i>
+                    <i class="far fa-heart" data-user-id="{{ $photo->user->id }}" data-id="{!! $photo->id !!}" id="love-photo"></i>
                 @endif
                 <span>{!! $photo->likes()->count()?$photo->likes()->count():'' !!}</span>
             </div>
-            <textarea data-id="{!! $photo->id !!}" class="write-comment" placeholder="Comment on this photo"></textarea>
+            <textarea data-id="{!! $photo->id !!}" class="write-comment" data-user-id="{{ $photo->user->id }}" placeholder="Comment on this photo"></textarea>
         </div>
         @endif
 

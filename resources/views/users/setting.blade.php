@@ -64,7 +64,7 @@
                             <div class="tab__content" id="tab-1">
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-6 offset-md-3">
+                                        <div class="col-md-8 offset-md-2">
                                                 <div class="register-upload-avatar">
                                                     <input type="hidden" id="x" value="" name="x">
                                                     <input type="hidden" id="y" value="" name="y">
@@ -254,7 +254,7 @@
                             </div>
                             <div class="tab__content" id="tab-6">
                                 <div class="row">
-                                    <div class="col-lg-6 offset-lg-3"> 
+                                    <div class="col-lg-8 offset-lg-2"> 
                                         <h3 class="title__range">Show me users between</h3> 
                                         <div class="range_slider_main">
                                             <div class="output__range slider-labels">

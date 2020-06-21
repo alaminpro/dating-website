@@ -4,6 +4,13 @@ jQuery(document).ready(function ($) {
         window.location.href = window.location.href;
     });
     var token = $('meta[name=csrf_token]').attr('content');
+    if(logged_id){
+        var socket = io(socket_url, {
+            path: '/node/socket.io',
+            transports: ['polling','websocket']
+        });
+    }
+    
 
     $(document).on('click','.conversations .message-box .list-messages ul li.message .view-chat-photo', function (event) {
         var el = $(event.currentTarget);
@@ -179,6 +186,18 @@ jQuery(document).ready(function ($) {
                     }
                     else{
                         el.addClass('active');
+                        $.ajax({
+                            url: ajax_url_notification,  
+                            data: {action: "page_like_notification", id: logged_id, notify_id: id,  _token: token},
+                            dataType: 'JSON',
+                            type: 'POST',
+                            context: this,
+                            success: function (response) { 
+                                if(response.status === 'success'){  
+                                    socket.emit('notifications', 'pageLike'); 
+                                }
+                            }, 
+                        });
                     }
                 }
                 else if(res.status === 'login'){
@@ -202,11 +221,24 @@ jQuery(document).ready(function ($) {
                         alert('You can not follow your self');
                     }
                     else if(res.type == 'unfollow'){
-                        el.html('Follow');
+                        el.html('Follow'); 
                     }
                     else{
                         el.html('<i class="fas fa-check"></i> Followed');
+                        $.ajax({
+                            url: ajax_url_notification,  
+                            data: {action: "update_follow_notification", id: logged_id, follow_id: id, _token: token},
+                            dataType: 'JSON',
+                            type: 'POST',
+                            context: this,
+                            success: function (response) { 
+                                if(response.status === 'success'){  
+                                    socket.emit('notifications', 'status'); 
+                                }
+                            }, 
+                        });  
                     }
+                     
                 }
                 else if(res.status === 'login'){
                     $('.modal').modal('hide');
@@ -219,6 +251,7 @@ jQuery(document).ready(function ($) {
         var el = $(event.currentTarget);
         var keycode = (event.keyCode ? event.keyCode : event.which);
         var photo_id = el.attr('data-id');
+        var user_id = el.data('user-id');
         if(keycode === 13){
             event.preventDefault();
             el.val( el.val().replace( /\r?\n/gi, '' ) );
@@ -238,6 +271,18 @@ jQuery(document).ready(function ($) {
                                     $(".view-photo-right .comments ul").mCustomScrollbar("scrollTo","bottom");
                                 },1000);
                             el.val('');
+                            $.ajax({
+                                url: ajax_url_notification,  
+                                data: {action: "photo_comment_notification", user_id: user_id, photo_id: photo_id, _token: token},
+                                dataType: 'JSON',
+                                type: 'POST',
+                                context: this,
+                                success: function (response) { 
+                                    if(response.status === 'success'){  
+                                        socket.emit('notifications', 'comment'); 
+                                    }
+                                }, 
+                            });  
                         }
                         else if(res.status === 'login'){
                             $('.modal').modal('hide');
@@ -252,6 +297,7 @@ jQuery(document).ready(function ($) {
     $(document).on('click','.view-photo-right .photo-action .like-photo .fa-heart', function (e) {
         var el = $(e.currentTarget);
         var photo_id = el.attr('data-id');
+        var user_id = el.data('user-id');
         var count = el.parent().find('span').text();
         if(count == ''){
             count = 0;
@@ -269,6 +315,18 @@ jQuery(document).ready(function ($) {
                         el.removeClass('far');
                         el.addClass('fas');
                         el.parent().find('span').text(count);
+                        $.ajax({
+                            url: ajax_url_notification,  
+                            data: {action: "photo_like_notification", user_id: user_id, photo_id: photo_id, _token: token},
+                            dataType: 'JSON',
+                            type: 'POST',
+                            context: this,
+                            success: function (response) { 
+                                if(response.status === 'success'){  
+                                    socket.emit('notifications', 'likes'); 
+                                }
+                            }, 
+                        });  
                     }
                     else{
                         el.removeClass('fas');
@@ -289,7 +347,7 @@ jQuery(document).ready(function ($) {
             }
         })
     });
-    $(document).on('click','.photo-item.view-photo', function (e) {
+    $(document).on('click','.view-photo', function (e) {
         var el = $(e.currentTarget);
         var photo_id = el.attr('data-id');
         var url = el.attr('data-url');

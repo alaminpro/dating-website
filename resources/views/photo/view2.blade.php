@@ -119,13 +119,13 @@
               <div class="photo-action">
                   <div class="like-photo clearfix">
                       @if($photo->likes()->count() && auth()->check() && in_array(auth()->id(), collect($photo->likes()->get())->pluck('id')->all()))
-                          <i class="fas fa-heart" data-id="{!! $photo->id !!}" id="love-photo"></i>
+                          <i class="fas fa-heart" data-user-id="{{ $photo->user->id }}" data-id="{!! $photo->id !!}" id="love-photo"></i>
                       @else
-                          <i class="far fa-heart" data-id="{!! $photo->id !!}" id="love-photo"></i>
+                          <i class="far fa-heart" data-user-id="{{ $photo->user->id }}" data-id="{!! $photo->id !!}" id="love-photo"></i>
                       @endif
                       <span>{!! $photo->likes()->count()?$photo->likes()->count():'' !!}</span>
                   </div>
-                  <textarea data-id="{!! $photo->id !!}" class="write-comment" placeholder="Comment on this photo"></textarea>
+                  <textarea data-id="{!! $photo->id !!}"  data-user-id="{{ $photo->user->id }}" class="write-comment" placeholder="Comment on this photo"></textarea>
               </div>
               @endif
 

@@ -223,4 +223,129 @@ class NotificationsController extends Controller
 
     }
 
+    public function update_status_notification()
+    {
+        $user_id = $this->request->id;
+        if ($user_id) {
+            $followers = User::find($user_id)->following;
+            foreach ($followers as $follower) {
+                $notify = new Notification();
+                $notify->user_id = $user_id;
+                $notify->user_to_notify = $follower->id;
+                $notify->type = 'status';
+                $notify->data = $this->request->message;
+                $notify->read = 0;
+                $notify->date = Carbon::now()->format("Y-m-d");
+                $notify->redirect_url = route('profile', auth()->user()->username);
+                $notify->save();
+            }
+            return response()->json(['status' => 'success']);
+        }
+    }
+
+    public function update_follow_notification()
+    {
+        $user_id = $this->request->id;
+        $follow_id = $this->request->follow_id;
+        if ($user_id) {
+            $check = Notification::where('date', '=', Carbon::today())->where('type', 'follow')
+                ->where('user_id', '=', $user_id)
+                ->where('user_to_notify', '=', $follow_id)->count();
+            if (!$check > 0) {
+                $user = User::where('id', $user_id)->first();
+                $notify = new Notification();
+                $notify->user_id = $user_id;
+                $notify->user_to_notify = $follow_id;
+                $notify->type = 'follow';
+                $notify->data = 'Followed you';
+                $notify->read = 0;
+                $notify->date = Carbon::now()->format("Y-m-d");
+                $notify->redirect_url = route('profile', $user->username);
+                $notify->save();
+                return response()->json(['status' => 'success']);
+            }
+        }
+    }
+    public function page_like_notification()
+    {
+        $user_id = $this->request->id;
+        $notify_id = $this->request->notify_id;
+        if ($user_id) {
+            $check = Notification::where('date', '=', Carbon::today())->where('type', 'page_like')->where('user_id', '=', $user_id)->where('user_to_notify', '=', $notify_id)->count();
+            if (!$check > 0) {
+                $user = User::where('id', $user_id)->first();
+                $notify = new Notification();
+                $notify->user_id = $user_id;
+                $notify->user_to_notify = $notify_id;
+                $notify->type = 'page_like';
+                $notify->data = 'Liked your page';
+                $notify->read = 0;
+                $notify->date = Carbon::now()->format("Y-m-d");
+                $notify->redirect_url = route('profile', $user->username);
+                $notify->save();
+                return response()->json(['status' => 'success']);
+            }
+        }
+    }
+    public function photo_like_notification()
+    {
+        $photo_id = $this->request->photo_id;
+        $user_id = $this->request->user_id;
+        $auth_id = auth()->user()->id;
+        if ($user_id !== $auth_id && $photo_id) {
+            $check = Notification::where('date', '=', Carbon::today())
+                ->where('type', 'likes')->where('user_id', '=', $auth_id)
+                ->where('data', '=', $photo_id)
+                ->count();
+            if (!$check > 0) {
+                $user = User::where('id', $user_id)->select('id', 'birthday')->with(['photos' => function ($q) use ($photo_id) {
+                    $q->where('id', $photo_id);
+                }])->first();
+
+                $notify = new Notification();
+                $notify->user_id = $auth_id;
+                $notify->user_to_notify = $user_id;
+                $notify->type = 'likes';
+                $notify->data = $photo_id;
+                $notify->read = 0;
+                $notify->date = Carbon::now()->format("Y-m-d");
+                $notify->redirect_url = $user->photos[0]->file;
+                $notify->save();
+                return response()->json(['status' => 'success']);
+            } else {
+                return response()->json(['status' => 'error']);
+            }
+        }
+    }
+
+    public function photo_comment_notification()
+    {
+        $photo_id = $this->request->photo_id;
+        $user_id = $this->request->user_id;
+        $auth_id = auth()->user()->id;
+        if ($user_id !== $auth_id && $photo_id) {
+            $check = Notification::where('date', '=', Carbon::today())
+                ->where('type', 'comment')->where('user_id', '=', $auth_id)
+                ->where('data', '=', $photo_id)
+                ->count();
+            if (!$check > 0) {
+                $user = User::where('id', $user_id)->select('id', 'birthday')->with(['photos' => function ($q) use ($photo_id) {
+                    $q->where('id', $photo_id);
+                }])->first();
+
+                $notify = new Notification();
+                $notify->user_id = $auth_id;
+                $notify->user_to_notify = $user_id;
+                $notify->type = 'comment';
+                $notify->data = $photo_id;
+                $notify->read = 0;
+                $notify->date = Carbon::now()->format("Y-m-d");
+                $notify->redirect_url = $user->photos[0]->file;
+                $notify->save();
+                return response()->json(['status' => 'success']);
+            } else {
+                return response()->json(['status' => 'error']);
+            }
+        }
+    }
 }
