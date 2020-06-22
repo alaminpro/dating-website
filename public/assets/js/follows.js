@@ -113,7 +113,7 @@ $(document).ready(function() {
                         var id= $(this).data('id'); 
                         var btn = $(this);
                         $.ajax({
-                            url: ajax_url_notification,  
+                            url: ajax_url_follow,  
                             data: {action: "follow_following", id: id, _token: token},
                             dataType: 'JSON',
                             type: 'POST',
@@ -123,7 +123,7 @@ $(document).ready(function() {
                                     btn.html(res.data)
                                     if(res.data === 'Following'){  
                                         $.ajax({
-                                            url: ajax_url_follow,  
+                                            url: ajax_url_notification ,
                                             data: {action: "update_follow_notification", id: logged_id, follow_id: id, _token: token},
                                             dataType: 'JSON',
                                             type: 'POST',

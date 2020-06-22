@@ -29,20 +29,23 @@
             @if(auth()->user()->photos()->count())
            
             <div class="sidebar__featured">
-                <h1 class="title">Get Featured here</h1>
-                <div class="featured__item_main"> 
-                    @foreach(auth()->user()->photos()->orderBy('created_at','DESC')->inRandomOrder()->get()->take(6) as $photo) 
-                        <div data-id="{!! $photo->id !!}" data-url="{!! url($photo->file) !!}" class="photo-item view-photo featured__item"> 
-                            <img src="{!! url($photo->thumb) !!}" alt="image">
-                        </div>
-                    @endforeach 
+                <h1 class="title" >Get Featured here</h1>
+                <div class="feature__area">
+                    <ul class="feature__ul p-0 m-0"> 
+                        <li class="feature__auth_li" >
+                            <img   class="feature__user_image" src="http://127.0.0.1:8000/uploads/photos/31/3c0c8b07acb6be3da40b44be9bfacf5d1586785741.jpg" alt="Feature User">
+                            <div class="add__feature_btn"><i class="fas fa-plus"></i></div>
+                        </li>
+                        <li data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                            <img class="feature__user_image" src="http://127.0.0.1:8000/uploads/photos/31/3c0c8b07acb6be3da40b44be9bfacf5d1586785741.jpg" alt="Feature User">
+                        </li> 
+                    </ul>
                 </div>
             </div>
-         @endif
-           
-       </h1>
+         
+         @endif 
     @else
-        <div class="text-center text-black p-3">
+        <div class="text-center text-black p-3 sidebar__main">
             <p class="text-capitalize font-weight-bold">Create an account</p>
             <form action="{!! route('quick_reg') !!}" method="post" id="formQuick">
                 {{ csrf_field() }}

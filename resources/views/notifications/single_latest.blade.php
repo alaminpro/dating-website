@@ -1,13 +1,13 @@
 <li  class="{{ $notification->read === 0 ? 'notification__active' : '' }}"> 
                      
     <div class="d-flex align-items-start">
-        @if($notification->type !== 'likes' ||$notification->type !== 'comment' )
-        <a href="javascript:void(0)" class="notification__link" data-id="{{ $notification->id }}">
+        @if($notification->type == 'likes' || $notification->type == 'comment')
+        <div class="notification__likes view-photo" data-id="{{ $notification->data }}" data-url="{{ asset($notification->redirect_url) }}">
             @else
-                <div class="notification__likes view-photo" data-id="{{ $notification->data }}" data-url="{{ asset($notification->redirect_url) }}">
+            <a href="javascript:void(0)" class="notification__link" data-id="{{ $notification->id }}">
             @endif
             <div class="photo__side">
-                <img src="{{  asset($notification->notify_user->avatar)  }}" class="rounded-circle">
+                <img src="{{  avatar($notification->notify_user->avatar, $notification->notify_user->gender)   }}" class="rounded-circle">
             </div>
             <div class="content__side"> 
                 @if($notification->type == 'status')
@@ -47,10 +47,10 @@
                
            
             </div>
-            @if($notification->type !== 'likes' ||$notification->type !== 'comment' )
-                 </a>
+            @if($notification->type == 'likes' || $notification->type == 'comment')
+        </div>
             @else
-                </div>
+        </a>
             @endif
         @if($notification->type == 'page_like')
             <button  class="btn-love active mr-2 mt-2"><i class="fas fa-heart"></i></button>

@@ -90,6 +90,9 @@
     .right__sidebar_active{
         display: block !important;
     }
+    .custom__photo_middle { 
+        align-items: center !important;
+    }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
     .datev2__navbar .datev2__navbar_brand img {

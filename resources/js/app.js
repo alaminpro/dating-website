@@ -17,10 +17,16 @@ $(function(){
     $('.sidebar__main').slimScroll({
 		height: '90vh'
 	});
+    $('.feature__content').slimScroll({
+		height: '400px'
+	});
     $('.notification__data .notification__ul_nav').slimScroll({
 		height: '400px'
     });
-   
+    $('.feature__ul li').hover(function(){
+        $(this).tooltip('toggle')
+    })
+
     
     $('.datev2__trands .notification__ul').slimScroll({
 		height: '150px'
@@ -66,8 +72,9 @@ $(function(){
         $(".main").removeClass("toggle__main");  
     })
      // start coding for notifications   
-    notification__count()
+  
     if(logged_id){
+        notification__count()
         socket.on('notifications', function(){
             notification__count()
             latest_single_notification()
@@ -115,7 +122,10 @@ $(function(){
             }
         });
     }
-    load_notifications()
+    if(logged_id){
+        load_notifications()
+    }
+   
     function load_notifications(){
         var loader = $('.notifications__page_loader');
         var contents = $('.notification__page_ul_nav');
@@ -211,7 +221,10 @@ $(function(){
             })
         })
     }
-    all__markasread();
+    if(logged_id){
+        all__markasread();
+    }
+
     function all__markasread(){ 
         var all__markasread = $('.all__markasread'); 
         all__markasread.on('click', function(){  
@@ -380,6 +393,119 @@ $(function(){
                     $('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div id="loader"></div>').appendTo(loader);  
                 },
                 data: {action: 'main__search', keyword: value, _token: token},
+                dataType: 'JSON',
+                type: 'POST',
+                context: this,
+                success: function (res) {
+                    if(res.status === 'success'){  
+                        if($.isEmptyObject(res.datas) ){
+                            $('<div class="text-center text-danger w-100 py-5"></div>').html('Result not found!').appendTo(search_item); 
+                        }     
+                        $('<div class="row m-0"></div>').html(res.html).appendTo(search_item);  
+                    }
+                },
+                complete: function(){
+                    loader.empty();
+                }
+        }); 
+       }
+    }
+    /**
+     * start coding for users featrue area
+     */
+    
+   
+    $('.feature__auth_li').on('click',function(){
+        $('#modal__feature_user').modal('show');
+        get__feature_ajax()
+    })
+ 
+    const get__feature_ajax = () => { 
+        let loader = $('.feature__search_loader');
+        let contents = $('.feature__content');
+        return  $.ajax({
+            url: ajax_url, 
+            beforeSend: function(){
+                contents.empty()
+                $('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div id="loader"></div>').appendTo(loader);  
+            },
+            data: {action: 'get__feature', _token: token},
+            dataType: 'JSON',
+            type: 'POST',
+            context: this,
+            success: function (res) {
+                if(res.status === 'success'){  
+                    if($.isEmptyObject(res.datas) ){
+                        $('<div class="text-center text-danger w-100 my-5"></div>').html('No follower found!').appendTo(contents); 
+                    }    
+                  
+                    contents.append(res.html); 
+                    select_feature_user()
+                    submit__feature_user()
+                    feature_user_search()
+                } 
+            },
+            complete: function(){
+                loader.empty();
+            }
+        });
+    }
+    const select_feature_user = () => { 
+        $('.feature__users_main').click(function(){
+            $(this).toggleClass('select__feature_user'); 
+            let selected_users = $('.select__feature_user');
+            let users = Array.from(selected_users)
+            const users_id = users.map((val) => $(val).data('id')) 
+            $('.selected__count').html(users_id.length) 
+        })  
+    }
+ 
+    const submit__feature_user = () => { 
+        const submit__btn  = $('.users__feature_btn');
+        submit__btn.click(function(){
+            let selected_users = $('.select__feature_user');
+            let users = Array.from(selected_users)
+            const users_id = users.map((val) => $(val).data('id')) 
+           console.log(users_id);
+           
+        })  
+    }
+    function feature_user_search(){
+        var content = $('.feature__content');
+        var search_item = $('.feature__search_content');
+        var search = $('.feature__search_input');
+        var loader = $('.feature__search_loader'); 
+        var val = search.val();
+        if(val){ 
+            content.css('display','none');
+            ajax__search(val, loader, search_item);
+        }else{
+            content.css('display','block'); 
+            search_item.css('display','none');
+        }
+        search.on('keyup',function(){
+            var value = $(this).val();
+            loader.empty()
+            search_item.empty()
+            if(value){
+                content.css('display','none'); 
+                search_item.css('display','block');
+                ajax__search(value, loader, search_item);
+            }else{ 
+                content.css('display','block');
+                search_item.css('display','none');
+            }
+        })
+
+
+       function ajax__search(value, loader, search_item){
+            $.ajax({
+                url: ajax_url, 
+                beforeSend: function(){ 
+                    search_item.empty();
+                    $('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div id="loader"></div>').appendTo(loader);  
+                },
+                data: {action: 'feature_users__search', keyword: value, _token: token},
                 dataType: 'JSON',
                 type: 'POST',
                 context: this,

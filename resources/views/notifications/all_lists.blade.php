@@ -5,13 +5,13 @@
                     <li  class="{{ $data->read === 0 ? 'notification__active' : '' }}"> 
                      
                         <div class="d-flex align-items-start">
-                            @if($data->type !== 'likes' ||$data->type !== 'comment' )
-                            <a href="javascript:void(0)" class="notification__link" data-id="{{ $data->id }}">
+                            @if($data->type == 'likes' || $data->type == 'comment')
+                            <div class="notification__likes view-photo" data-id="{{ $data->data }}" data-url="{{ asset($data->redirect_url) }}">
                                 @else
-                                    <div class="notification__likes view-photo" data-id="{{ $data->data }}" data-url="{{ asset($data->redirect_url) }}">
+                                <a href="javascript:void(0)" class="notification__link" data-id="{{ $data->id }}">
                                 @endif
                                 <div class="photo__side">
-                                    <img src="{{  asset($data->notify_user->avatar)  }}" class="rounded-circle">
+                                    <img src="{{  avatar($data->notify_user->avatar,$data->notify_user->gender)   }}" class="rounded-circle">
                                 </div>
                                 <div class="content__side"> 
                                     @if($data->type == 'status')
@@ -51,10 +51,10 @@
                                    
                                
                                 </div>
-                                @if($data->type !== 'likes' ||$data->type !== 'comment' )
-                                     </a>
+                                @if($data->type == 'likes' || $data->type == 'comment')
+                            </div>
                                 @else
-                                    </div>
+                            </a>
                                 @endif
                             @if($data->type == 'page_like')
                                 <button  class="btn-love active mr-2 mt-2"><i class="fas fa-heart"></i></button>

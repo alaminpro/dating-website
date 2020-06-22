@@ -738,5 +738,54 @@ class AjaxController extends Controller
         }
         return response()->json(['status' => 'error']);
     }
+    /**
+     *
+     * start coding for siderbar users feature area
+     */
+    public function get__feature()
+    {
+        $auth_id = auth()->user()->id;
+        $users = User::where('id', $auth_id)
+            ->select('id', 'birthday')
+            ->with('following')->first();
+
+        $collection = collect($users->following);
+        $users = $collection->take(10);
+        $users->all();
+        if ($users) {
+            $html = view('feature.get__feature', compact('users'))->render();
+            return response()->json(['status' => 'success', 'html' => $html, 'datas' => $users]);
+        }
+    }
+    public function feature_users__search()
+    {
+        if ($this->request->keyword) {
+            $keywords = explode(',', $this->request->keyword);
+            $terms = array_map('trim', $keywords);
+            $auth_id = auth()->user()->id;
+            $users = User::where('id', $auth_id)
+                ->select('id', 'birthday')
+                ->with('following')->first();
+
+            $collection = collect($users->following);
+            foreach ($keywords as $keyword) {
+                $collection->where(function ($query) use ($terms) {
+                    // foreach ($terms as $term) {
+                    //     $query->where('username', 'LIKE', '%' . $term . '%');
+                    //     $query->orWhereHas('interests', function ($query) use ($term) {
+                    //         $query->where('text', 'LIKE', "%$term%");
+                    //     });
+                    // }
+                });
+            }
+
+        }
+        return $users = $collection->all();
+        // if ($users) {
+        //     $html = view('search.index', compact('users'))->render();
+        //     return response()->json(['status' => 'success', 'html' => $html, 'datas' => $users]);
+        // }
+
+    }
 
 }

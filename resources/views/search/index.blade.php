@@ -2,11 +2,11 @@
         <div class="col-lg-4 col-sm-6">
             <div class="search__users"> 
                 <div class="img-div m-0">
-                    <a href="{!! route('profile',['username'=> $user->username]) !!}?type=about" class="profile__photo">
+                    <a href="{{ route('profile',['username'=> $user->username]) }}?type=about" class="profile__photo">
                           @if($user->isOnline())
                            <span class="online-class"></span>
                           @endif
-                          <img width="200" src="{!! asset($user->avatar) !!}" class="border rounded-circle img-responsive">
+                          <img width="200" src="{{ avatar($user->avatar, $user->gender) }}" class="border rounded-circle img-responsive">
                       </a>
                 </div>
                 <div class="user__info m-0 d-flex align-items-center flex-column">

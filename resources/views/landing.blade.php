@@ -59,11 +59,11 @@ $seo_website_description = setting('website_description');
                 <div class="filter">
                     <strong class="d-block">I am a&nbsp;</strong>
                     <div class="custom-control  custom-checkbox custom-control-inline" >
-                        <input {!! request()->get('gender') == 'male' || (auth()->check() && auth()->user()->gender == '1') || !auth()->check()?' checked':'' !!} type="radio" value="male" id="gender-filter-male" name="gender" class="custom-control-input">
+                        <input {{  request()->get('gender') == 'male' || (auth()->check() && auth()->user()->gender == '1') || !auth()->check()?' checked':''  }} type="radio" value="male" id="gender-filter-male" name="gender" class="custom-control-input">
                         <label class="custom-control-label" for="gender-filter-male">Male</label>
                     </div>
                     <div class="custom-control  custom-checkbox custom-control-inline" >
-                        <input {!! request()->get('gender') == 'female' || auth()->check() && auth()->user()->gender == '2' ?' checked':'' !!} type="radio" value="female" id="gender-filter-female" name="gender" class="custom-control-input">
+                        <input {{  request()->get('gender') == 'female' || auth()->check() && auth()->user()->gender == '2' ?' checked':''  }} type="radio" value="female" id="gender-filter-female" name="gender" class="custom-control-input">
                         <label class="custom-control-label" for="gender-filter-female">Female</label>
                     </div>
                 </div>
@@ -127,14 +127,19 @@ $seo_website_description = setting('website_description');
         @if(count($users))
             <div class="row mb-3 ml-1 mr-1">
             @foreach($users as $user)
-                <div class="col-xs-12 col-lg-6  col-xl-4 ipad-col">
-                    <a href="{!! route('profile',['username'=>strtolower($user->username)]) !!}">
-                        <div class="user-item shadow-sm rounded effect" style="background-image: url('{!! avatar($user->avatar, $user->gender) !!}') ">
+                @auth
+                <div class="col-xs-12 col-lg-6  col-xl-4 ipad-col"> 
+                    @endauth
+                    @guest
+                    <div class="col-xs-12 col-lg-6  col-xl-3 ipad-col"> 
+                    @endguest
+                    <a href="{{ route('profile',['username'=>strtolower($user->username)]) }}">
+                        <div class="user-item shadow-sm rounded effect" style="background-image: url('{{  avatar($user->avatar, $user->gender) }}') ">
                             <div class="photo__main_content">
                                 <div class="photos_status">
                                     <span class="photos">
                                         <i class="fas fa-camera"></i>
-                                       {!! $user->photos()->count() !!}</span>
+                                       {{  $user->photos()->count()  }}</span>
                                         @if($user->isOnline())
                                             <span class="online">
                                                 <div class="badge__video_online">Live</div>
@@ -142,8 +147,8 @@ $seo_website_description = setting('website_description');
                                         @endif
                                 </div>
                                 <div class="users__address">
-                                    <p class="fullname m-0">{!! fullname($user->firstname, $user->lastname, $user->username) !!}</p>
-                                    <p class="address m-0">{!! fulladdress($user->address, $user->country) !!}</p>
+                                    <p class="fullname m-0">{{  fullname($user->firstname, $user->lastname, $user->username)  }}</p>
+                                    <p class="address m-0">{{  fulladdress($user->address, $user->country)  }}</p>
                                 </div>
                             </div>
                         </div>

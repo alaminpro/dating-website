@@ -24,15 +24,20 @@
             @else
             <main>
             @endif 
+            @auth
                <div class="main-pages">
+                   @endauth
                     <div class="main-content_loader"></div>
                     <div class="main__search_item"></div>
                     @yield('content') 
                     @include('partials.footer')
+                    @auth
                </div>
-               @if((Route::current()->getName() != 'home') && (Route::current()->getName() != 'register') && (Route::current()->getName() != 'forget'))
+                @if((Route::current()->getName() != 'home') && (Route::current()->getName() != 'register') && (Route::current()->getName() != 'forget'))
                     @include('partials.right-sidebar')   
                 @endif
+               @endauth
+              
             </main>   
         </div> 
     </div>

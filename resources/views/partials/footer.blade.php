@@ -59,6 +59,35 @@
     </div>
 </div>
 
+<div class="modal" id="modal__feature_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="search__feature_users">
+                    <h2>Search users:</h2>
+                    <input type="text" class="feature__search_input" placeholder="Search by username, interest">
+                    <div class="clear__field  mr-1"><i class="far fa-times-circle"></i> Clear filter</div>
+                    <div class="border-left ml-1 pl-2 font-weight-bold">Selected: <span class="selected__count">0</span></div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="feature__search_content"></div>
+                <div class="feature__search_loader"></div>
+                <div class="feature__content row"></div>
+            </div>
+            <div class="modal-footer"> 
+                <button type="button" class="users__feature_cancel" data-dismiss="modal" aria-label="Close">
+                    Cancel
+                </button>
+                <button class="users__feature_btn" type="button">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
  
 

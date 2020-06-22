@@ -586,6 +586,131 @@ ul.notification__ul{
     display: none !important;
 }
 
+/**
+* 
+* start coding for feature area
+*/
+.feature__area{
+    .feature__ul{
+        list-style: none; 
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap; 
+        margin: 0 auto; 
+        .feature__user_image{
+            width: 70px;
+            border-radius: 15px;
+        } 
+        .feature__auth_li{
+            position: relative;
+            cursor: pointer;
+           .add__feature_btn {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                width: 25px;
+                height: 25px;
+                background: #ff007c;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50px;
+                i{
+                    font-size: 14px;
+                    color: white;
+                }
+            }
+        }
+       
+    }
+}
+.feature__ul li:nth-child(3n+1), .feature__ul li:nth-child(3n+2) {
+    margin-right: 16px;
+}
+.feature__ul li:nth-child(n+4) {
+    margin-top: 16px;
+} 
+.search__feature_users{
+    h2{
+        margin: 0;
+        padding: 0;
+        color: #595959;
+    }
+    display: flex;
+	align-items: center;
+    .feature__search_input {
+        width: 250px;
+        margin-left: 15px;
+        border: 1px solid #ccc;
+        padding: 5px 11px;
+        border-radius: 5px;
+        color: #8a8686;
+    }
+    .clear__field{
+        margin-left: 15px;
+        color: #8a8686;
+        cursor: pointer;
+        &:hover{
+            text-decoration: underline;
+        }
+    }
+}
+.users__feature_btn {
+	background: rgb(254, 55, 111);
+	padding: 5px 25px;
+	color: white;
+	border-radius: 50px;
+	border: none;
+}
+.users__feature_cancel {
+	background: rgb(96, 96, 96);
+	padding: 5px 25px;
+	color: white;
+	border-radius: 50px;
+	border: none;
+}
+.feature__users_main {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+    border: 1px solid #d5d5d5;
+	padding: 15px;
+    position: relative;
+    cursor: pointer;
+    h2{
+        font-size: 18px;
+        text-transform: capitalize;
+        margin-top: 5px;
+    }
+}
+.select__icon{
+    display: none;
+}
+.select__feature_user{ 
+    border: 1px solid rgb(254, 55, 111);;
+     .select__icon {
+        display: block;
+        position: absolute;
+        right: 5px;
+        top: 1px;
+        i{
+            color: rgb(254, 55, 111);
+        }
+    }
+}
+ 
+.feature__content .col-lg-4:nth-child(n+4){
+    margin-top: 15px;
+}
+
+
+
+
+
+
+
 
 
 @import 'base/responsive';

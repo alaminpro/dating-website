@@ -1,8 +1,8 @@
 <li  class="{{ $follow->read === 0 ? 'notification__active' : '' }}">
     <div class="d-flex align-items-start">
         <a href="javascript:void(0)" class="notification__link" data-id="{{ $follow->id }}">
-            <div class="photo__side">
-                <img src="{{  asset($follow->avatar)  }}" class="rounded-circle">
+            <div class="photo__side"> 
+                <img src="{{  avatar($follow->avatar,$follow->gender)   }}" class="rounded-circle">
             </div>
             <div class="content__side"> 
                 <div class="notify__username">{{  $follow->username  }}</div> 
