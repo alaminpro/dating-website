@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Conversation;
+use App\Feature;
 use App\Helpers\General\CollectionHelper;
 use App\Interest;
 use App\Message;
 use App\Photo;
 use App\User;
 use App\VideoCall;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -762,30 +764,61 @@ class AjaxController extends Controller
         if ($this->request->keyword) {
             $keywords = explode(',', $this->request->keyword);
             $terms = array_map('trim', $keywords);
+            // $request = $this->request->keyword;
+
             $auth_id = auth()->user()->id;
-            $users = User::where('id', $auth_id)
+            $user = User::where('id', $auth_id)
                 ->select('id', 'birthday')
                 ->with('following')->first();
-
-            $collection = collect($users->following);
-            foreach ($keywords as $keyword) {
-                $collection->where(function ($query) use ($terms) {
-                    // foreach ($terms as $term) {
-                    //     $query->where('username', 'LIKE', '%' . $term . '%');
-                    //     $query->orWhereHas('interests', function ($query) use ($term) {
-                    //         $query->where('text', 'LIKE', "%$term%");
-                    //     });
-                    // }
-                });
-            }
-
+            $user->load([
+                'following' => function ($query) use ($terms) {
+                    foreach ($terms as $term) {
+                        $query->where('username', 'LIKE', '%' . $term . '%');
+                        $query->orWhereHas('interests', function ($query) use ($term) {
+                            $query->where('text', 'LIKE', "%$term%");
+                        });
+                    }
+                },
+            ]);
         }
-        return $users = $collection->all();
-        // if ($users) {
-        //     $html = view('search.index', compact('users'))->render();
-        //     return response()->json(['status' => 'success', 'html' => $html, 'datas' => $users]);
-        // }
+        if ($user) {
+            $html = view('feature.search_feature', compact('user'))->render();
+            return response()->json(['status' => 'success', 'html' => $html, 'datas' => $user->following]);
+        }
 
+    }
+    public function add__feature_list()
+    {
+        $auth_id = auth()->user()->id;
+        foreach ($this->request->datas as $data) {
+            $feature_check = Feature::where('logged_id', $auth_id)
+                ->where('user_id', $data['user_id'])->first();
+            if ($feature_check) {
+                $feature_update = Feature::where('logged_id', $auth_id)
+                    ->where('user_id', $feature_check->user_id)
+                    ->update(['finished_date' => $data['finished_date']]);
+            } else {
+                $feature_update = new Feature();
+                $feature_update->user_id = $data['user_id'];
+                $feature_update->logged_id = $data['logged_id'];
+                $feature_update->finished_date = $data['finished_date'];
+                $feature_update->save();
+            }
+        }
+
+        return response()->json(['status' => 'success']);
+
+    }
+    public function load_sidebar()
+    {
+        $features = Feature::with(['feature_user' => function ($q) {
+            $q->select('id', 'username', 'birthday', 'avatar', 'gender');
+        }])
+            ->where('logged_id', auth()->user()->id)
+            ->where('finished_date', '>', Carbon::now()->format('Y-m-d H:i:s'))->get();
+
+        $html = view('feature.load_sidebar_feature', compact('features'))->render();
+        return response()->json(['status' => 'success', 'html' => $html]);
     }
 
 }

@@ -17,8 +17,7 @@ class CreateFeaturesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id')->unsigned();
             $table->integer('logged_id');
-            $table->time('finished_time');
-            $table->date('finished_date');
+            $table->dateTime('finished_date');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });

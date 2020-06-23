@@ -1,3 +1,26 @@
+@media only screen and  (max-width: 1024px) {
+    .toggle__main,.toggle__main_right{  
+        transition: all .3s ease;
+        &::after{ 
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 30, 30, 0.762);
+            left: 0;
+            top: 0;
+        }
+    } 
+    .feature__content .col-lg-4:nth-child(n+3){
+        margin-top: 20px;
+    }
+    .search__feature_users h2 {
+        display: none;
+    }
+    .search__feature_users .feature__search_input {
+        width: 200px;
+    }
+}
 @media only screen and (max-width: 440px) {
     .datev2__navbar .datev2__navbar_brand img {
         height: 18px;
@@ -26,6 +49,16 @@
     .notification__dropdown_menu {
         min-width: 22rem;
     }
+    .search__feature_users {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        .border-left{
+            margin-top: 5px;
+            border-left: 0 !important;
+
+        }
+    }
 }
 @media only screen and (max-width: 560px) {
     .datev2__right_side .datev2__ul .notification__dropdown_menu {
@@ -46,6 +79,17 @@
     .datev2__right_side .datev2__search_main .datev2__search_input { 
         width: 100%;
     }
+    .feature__content .col-lg-4:nth-child(n+2){
+        margin-top: 20px;
+    }
+ 
+    .search__feature_users .feature__search_input {
+        width: 150px;
+    }
+    .search__feature_users .clear__field {
+        margin-left: 5px; 
+    }
+    
 }
   /* phones */
 @media only screen and (max-width: 767px) {
@@ -93,6 +137,7 @@
     .custom__photo_middle { 
         align-items: center !important;
     }
+  
 }
 @media (min-width: 768px) and (max-width: 1024px) {
     .datev2__navbar .datev2__navbar_brand img {
@@ -104,21 +149,9 @@
     .datev2__right_side {
         width: 75%; 
     }
+ 
 }
-@media only screen and  (max-width: 1024px) {
-    .toggle__main,.toggle__main_right{  
-        transition: all .3s ease;
-        &::after{ 
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(30, 30, 30, 0.762);
-            left: 0;
-            top: 0;
-        }
-    } 
-}
+
 
   /* tablets and desktop */
 @media only screen and (min-width: 768px) {

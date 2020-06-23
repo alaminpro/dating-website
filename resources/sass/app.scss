@@ -4,6 +4,7 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import '~jquery-datetimepicker/jquery.datetimepicker.css';
 // for app js
 @import 'base/custom';
 
@@ -26,7 +27,7 @@
             display: flex;
         }
         img{
-            height: 30px;
+            height: 26px;
         }
         .sidebar__hide_icon{
             position: absolute;
@@ -656,7 +657,8 @@ ul.notification__ul{
         }
     }
 }
-.users__feature_btn {
+.users__feature_btn ,
+.users__feature_date_time{
 	background: rgb(254, 55, 111);
 	padding: 5px 25px;
 	color: white;
@@ -914,4 +916,4 @@ ul.notification__ul{
   [tooltip][flow^="left"]:hover::after{
     animation: tooltips-horz 200ms ease-out forwards;
   }
-  
+ 

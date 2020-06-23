@@ -542,6 +542,7 @@ a {
     border-bottom: 1px solid #ddd;
     padding-right: 20px;
     background: #ffffff;
+    font-weight: bold;
 }
 
 .page-title h2{
@@ -1053,7 +1054,7 @@ textarea.edit-comment {
 }
 
 .view-photo-right .comments ul {
-    max-height: 250px;
+    max-height: 350px;
     height: calc(100% - 86px);
 }
 

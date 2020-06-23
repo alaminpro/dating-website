@@ -2,7 +2,7 @@
                      
     <div class="d-flex align-items-start">
         @if($notification->type == 'likes' || $notification->type == 'comment')
-        <div class="notification__likes view-photo" data-id="{{ $notification->data }}" data-url="{{ asset($notification->redirect_url) }}">
+        <div class="notification__likes view-photo"  data-notify_id="{{ $notification->id }}" data-id="{{ $notification->data }}" data-url="{{ asset($notification->redirect_url) }}">
             @else
             <a href="javascript:void(0)" class="notification__link" data-id="{{ $notification->id }}">
             @endif

@@ -7,7 +7,7 @@
                      
                         <div class="d-flex align-items-start">
                             @if($data->type == 'likes' || $data->type == 'comment')
-                            <div class="notification__likes view-photo" data-id="{{ $data->data }}" data-url="{{ asset($data->redirect_url) }}">
+                            <div class="notification__likes view-photo" data-notify_id="{{ $data->id }}" data-id="{{ $data->data }}" data-url="{{ asset($data->redirect_url) }}">
                                 @else
                                 <a href="javascript:void(0)" class="notification__link" data-id="{{ $data->id }}">
                                 @endif
@@ -102,7 +102,7 @@
                      
                         <div class="d-flex align-items-start">
                             @if($data->type == 'likes' || $data->type == 'comment')
-                            <div class="notification__likes view-photo" data-id="{{ $data->data }}" data-url="{{ asset($data->redirect_url) }}">
+                            <div class="notification__likes view-photo" data-notify_id="{{ $data->id }}" data-id="{{ $data->data }}" data-url="{{ asset($data->redirect_url) }}">
                             @else
                             <a href="javascript:void(0)" class="notification__link" data-id="{{ $data->id }}">
                                 @endif

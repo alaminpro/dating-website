@@ -73,16 +73,39 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="feature__search_content"></div>
+            <div class="modal-body feature__modal_scrool">
                 <div class="feature__search_loader"></div>
-                <div class="feature__content row"></div>
+                <div class="feature__search_content"></div>
+                <div class="feature__content"></div>
             </div>
             <div class="modal-footer"> 
                 <button type="button" class="users__feature_cancel" data-dismiss="modal" aria-label="Close">
                     Cancel
                 </button>
                 <button class="users__feature_btn" type="button">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modal__feature_date_time" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="search__feature_users">
+                    <h2>For how many days</h2> 
+                </div>
+                <button type="button" class="close date__time_modal_cencel">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex justify-content-center">
+                <input type="text" id="feature__date_time"/> 
+            </div>
+            <div class="modal-footer"> 
+                <button type="button" class="users__feature_cancel date__time_modal_cencel" >
+                    Cancel
+                </button>
+                <button class="users__feature_date_time" type="button">ok</button>
             </div>
         </div>
     </div>

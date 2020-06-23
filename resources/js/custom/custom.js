@@ -265,7 +265,7 @@ jQuery(document).ready(function ($) {
                     success: function (res) {
                         if(res.status === 'success'){
 
-                            $('.view-photo-right .comments ul .mCSB_container ').append(res.html);
+                            $('.view-photo-right .comments ul .mCSB_container').append(res.html);
                             $(".view-photo-right .comments ul").mCustomScrollbar("update");
                                 setTimeout(function(){
                                     $(".view-photo-right .comments ul").mCustomScrollbar("scrollTo","bottom");
@@ -350,8 +350,8 @@ jQuery(document).ready(function ($) {
     $(document).on('click','.view-photo', function (e) {
         var el = $(e.currentTarget);
         var photo_id = el.attr('data-id');
-        var url = el.attr('data-url');
-        // alert(url);
+        var url = el.attr('data-url'); 
+        var notify_id = $(this).data('notify_id');
         var modalBody = $('#modalPhoto .modal-body');
         modalBody.empty();
         $.ajax({
@@ -360,12 +360,19 @@ jQuery(document).ready(function ($) {
             dataType: 'JSON',
             type: 'POST',
             success: function (res) {
-                if(res.status == 'success') {
+                if(res.status == 'success') {  
+                    if(logged_id && notify_id){  
+                        $.ajax({
+                            url: ajax_url_notification,
+                            data: {action: 'notification_view', id:notify_id, _token: token},
+                            dataType: 'JSON',
+                            type: 'POST', 
+                        }) 
+                        notification__count()
+                    }
                     modalBody.append(res.html);
-                    $('#modalPhoto').modal('show').css({opacity: 0});
-                    // $('.view-photo-right .content-photo').mCustomScrollbar();
-                    $('.view-photo-right .comments ul').mCustomScrollbar().mCustomScrollbar("scrollTo","bottom",{scrollInertia:0});
-
+                    $('#modalPhoto').modal('show').css({opacity: 0}); 
+                    $('.view-photo-right .comments ul').mCustomScrollbar().mCustomScrollbar("scrollTo","bottom",{scrollInertia:0}); 
                     var image_box_width = modalBody.find('.full_photo').width();
                     $('.view-photo-right .content-photo').mCustomScrollbar('scrollTo', '100%');
                     $('#modalPhoto').css({opacity: 1});
@@ -373,7 +380,27 @@ jQuery(document).ready(function ($) {
             }
         });
     });
-
+      /**
+     * start coding for notification count
+     */
+    function notification__count(){ 
+        $.ajax({
+            url: ajax_url_notification,
+            data: {action: 'notification_count', _token: token},
+            dataType: 'JSON',
+            type: 'POST',
+            success: function (res) {
+                if(res.status === 'success'){
+                    $('.notification').removeClass('clicked');
+                    if(res.data != 0){
+                        $('#update__badge').html(res.data)
+                    } else{
+                        $('#update__badge').empty()
+                    }
+                } 
+            }
+        })
+    }
     $(document).on('click','.edit-delete-content-photo', function (e) {
         $('.show-delete-btn').toggleClass('showing');
         $('.show-edit-delete-btn').toggleClass('option-showing');

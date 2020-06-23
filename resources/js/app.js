@@ -1,6 +1,7 @@
 require('./bootstrap'); 
 require('jquery-ui');
 require('jquery-slimscroll');
+require('jquery-datetimepicker');
  
 
  
@@ -17,7 +18,7 @@ $(function(){
     $('.sidebar__main').slimScroll({
 		height: '90vh'
 	});
-    $('.feature__content').slimScroll({
+    $('.feature__modal_scrool').slimScroll({
 		height: '400px'
 	});
     $('.notification__data .notification__ul_nav').slimScroll({
@@ -311,8 +312,7 @@ $(function(){
                     } 
                 }
             })
-        })
-       
+        }) 
     }
     /**
      * start coding for Who to follow
@@ -413,10 +413,11 @@ $(function(){
     /**
      * start coding for users featrue area
      */
-    
-   
+    if(logged_id){
+        
     $('.feature__auth_li').on('click',function(){
-        $('#modal__feature_user').modal('show');
+        $('#modal__feature_user').modal({backdrop: 'static', keyboard: false});
+        $('.feature__search_input').val('')
         get__feature_ajax()
     })
  
@@ -438,8 +439,7 @@ $(function(){
                     if($.isEmptyObject(res.datas) ){
                         $('<div class="text-center text-danger w-100 my-5"></div>').html('No follower found!').appendTo(contents); 
                     }    
-                  
-                    contents.append(res.html); 
+                    $('<div class="row m-0"></div>').html(res.html).appendTo(contents);   
                     select_feature_user()
                     submit__feature_user()
                     feature_user_search()
@@ -451,76 +451,162 @@ $(function(){
         });
     }
     const select_feature_user = () => { 
-        $('.feature__users_main').click(function(){
-            $(this).toggleClass('select__feature_user'); 
-            let selected_users = $('.select__feature_user');
-            let users = Array.from(selected_users)
-            const users_id = users.map((val) => $(val).data('id')) 
-            $('.selected__count').html(users_id.length) 
+        $('.feature__users_main').unbind().click(function(){
+            $(this).addClass('select__feature_user'); 
+            select__user_count();
+            cancel_modal($(this))
+            submit_datetime_modal($(this))
+            $('#feature__date_time').datetimepicker({ 
+                inline:true,
+                format:'Y-m-d H:i:s',  
+            }); 
+            
+            $('#modal__feature_date_time').modal({backdrop: 'static', keyboard: false});
         })  
     }
+
+    const select__user_count = () =>{
+        let selected_users = $('.select__feature_user');
+        let users = Array.from(selected_users)
+        const users_id = users.map((val) => $(val).data('id')) 
+        $('.selected__count').html(users_id.length) 
+    } 
+
+    /**
+     * for date time modal
+     */
+ const cancel_modal = (id) => {
+    $('.date__time_modal_cencel').unbind().click(()=>{
+        $('#modal__feature_date_time').modal('hide') 
+        if(id.hasClass('select__feature_user')){
+            $(id).removeClass('select__feature_user'); 
+            select__user_count(); 
+            $('#feature__date_time').datetimepicker('reset')
+        } 
+    }) 
+ }
+
  
-    const submit__feature_user = () => { 
-        const submit__btn  = $('.users__feature_btn');
-        submit__btn.click(function(){
-            let selected_users = $('.select__feature_user');
-            let users = Array.from(selected_users)
-            const users_id = users.map((val) => $(val).data('id')) 
-           console.log(users_id);
-           
-        })  
-    }
-    function feature_user_search(){
-        var content = $('.feature__content');
-        var search_item = $('.feature__search_content');
-        var search = $('.feature__search_input');
-        var loader = $('.feature__search_loader'); 
-        var val = search.val();
-        if(val){ 
-            content.css('display','none');
-            ajax__search(val, loader, search_item);
+const submit_datetime_modal = (selector) =>{
+    $('.users__feature_date_time').unbind().on('click', ()=>{
+        var value =  $('#feature__date_time').val(); 
+        if(value !== ''){
+            $(selector).attr( "data-datetime", value)
+            $('#modal__feature_date_time').modal('hide');
         }else{
-            content.css('display','block'); 
-            search_item.css('display','none');
-        }
-        search.on('keyup',function(){
-            var value = $(this).val();
-            loader.empty()
-            search_item.empty()
-            if(value){
-                content.css('display','none'); 
-                search_item.css('display','block');
-                ajax__search(value, loader, search_item);
-            }else{ 
-                content.css('display','block');
-                search_item.css('display','none');
-            }
-        })
+            alert('Please select datetime!')
+        }  
+    })
+}
 
 
-       function ajax__search(value, loader, search_item){
+const submit__feature_user = () => { 
+    const submit__btn  = $('.users__feature_btn');
+    submit__btn.unbind().click(function(){
+        let selected_users = $('.select__feature_user');
+        let users = Array.from(selected_users)
+        if(users.length > 0 ){
+            const users_id_datetime = users.map((val) =>  {
+                return {
+                    user_id: $(val).attr('data-id'), 
+                    logged_id: logged_id,
+                    finished_date: $(val).attr('data-datetime')
+                }
+            } ); 
+            const ids = users.map((val) =>  $(val).data('id'));
             $.ajax({
-                url: ajax_url, 
+                url: ajax_url,
                 beforeSend: function(){ 
-                    search_item.empty();
-                    $('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div id="loader"></div>').appendTo(loader);  
+                    $('.users__feature_btn').html('Submit...');  
                 },
-                data: {action: 'feature_users__search', keyword: value, _token: token},
+                data: {action: 'add__feature_list', datas:users_id_datetime, ids: ids,  _token: token},
                 dataType: 'JSON',
                 type: 'POST',
-                context: this,
                 success: function (res) {
-                    if(res.status === 'success'){  
-                        if($.isEmptyObject(res.datas) ){
-                            $('<div class="text-center text-danger w-100 py-5"></div>').html('Result not found!').appendTo(search_item); 
-                        }     
-                        $('<div class="row m-0"></div>').html(res.html).appendTo(search_item);  
-                    }
+                    if(res.status === 'success'){
+                        load_sidbar();
+                        $('#modal__feature_user').modal('hide');
+                    } 
                 },
                 complete: function(){
-                    loader.empty();
+                    $('.users__feature_btn').html('Submit');  
                 }
-        }); 
-       }
+            })
+        }else{
+            alert('Please select at least one item!')
+        }
+    })  
+}
+
+const load_sidbar = () =>{
+
+    $.ajax({
+        url: ajax_url, 
+        data: {action: 'load_sidebar',  _token: token},
+        dataType: 'JSON',
+        type: 'POST',
+        success: function (res) {
+            if(res.status === 'success'){
+                $('.feature__ul li').not('li:first').remove(); 
+                $('.feature__ul').append(res.html);
+            } 
+        } 
+    })
+} 
+     
+const feature_user_search = () =>{
+    var content = $('.feature__content');
+    var search_item = $('.feature__search_content');
+    var search = $('.feature__search_input');
+    var loader = $('.feature__search_loader');  
+    search.on('keyup',function(){
+        var value = $(this).val();
+        loader.empty()
+        search_item.empty()
+        if(value){
+            content.css('display','none'); 
+            search_item.css('display','block');
+            ajax__search(value, loader, search_item);
+        }else{ 
+            content.css('display','block');
+            search_item.css('display','none');
+        }
+    })
+
+    $('.clear__field').click(()=>{
+        $('.feature__search_input').val('')
+        content.css('display','block');
+        search_item.css('display','none');
+    })
+
+    const ajax__search = (value, loader, search_item) =>{ 
+        $.ajax({
+            url: ajax_url, 
+            beforeSend: function(){ 
+                search_item.empty();
+                $('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div id="loader"></div>').appendTo(loader);  
+            },
+            data: {action: 'feature_users__search', keyword: value, _token: token},
+            dataType: 'JSON',
+            type: 'POST',
+            context: this,
+            success: function (res) {
+                if(res.status === 'success'){  
+                    if($.isEmptyObject(res.datas) ){
+                        search_item.empty();
+                        $('<div class="text-center text-danger w-100 py-5"></div>').html('Result not found!').appendTo(search_item); 
+                    }else{
+                        search_item.empty();
+                        $('<div class="row m-0"></div>').html(res.html).appendTo(search_item);  
+                    }   
+                }
+            },
+            complete: function(){
+                loader.empty();
+            }
+    }); 
+   }
+}
+
     }
 }); 

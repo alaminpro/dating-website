@@ -33,12 +33,14 @@
                 <div class="feature__area">
                     <ul class="feature__ul p-0 m-0"> 
                         <li class="feature__auth_li" >
-                            <img   class="feature__user_image" src="http://127.0.0.1:8000/uploads/photos/31/3c0c8b07acb6be3da40b44be9bfacf5d1586785741.jpg" alt="Feature User">
+                            <img   class="feature__user_image" src="{{  avatar(auth()->user()->avatar, auth()->user()->gender)   }}" alt="Feature User">
                             <div class="add__feature_btn"><i class="fas fa-plus"></i></div>
                         </li>
-                        <li data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-                            <img class="feature__user_image" src="http://127.0.0.1:8000/uploads/photos/31/3c0c8b07acb6be3da40b44be9bfacf5d1586785741.jpg" alt="Feature User">
-                        </li> 
+                        @foreach($feature_users as $feature)
+                        <li data-toggle="tooltip" data-placement="top" title="{{ $feature->feature_user->username }}">
+                            <img class="feature__user_image" src="{{  avatar($feature->feature_user->avatar,$feature->feature_user->gender)   }}" alt="Feature User">
+                        </li>  
+                        @endforeach
                     </ul>
                 </div>
             </div>
