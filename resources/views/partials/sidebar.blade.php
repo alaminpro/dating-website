@@ -26,8 +26,7 @@
                 <!-- <li><a class="{!! Illuminate\Support\Facades\Route::is('Custome')?'active':'' !!}" href="{!! route('custome') !!}">Custome Page <i class="fa fa-file"></i></a></li> -->
                 <li><a href="{!! route('logout') !!}">Logout <i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
-            @if(auth()->user()->photos()->count())
-           
+           @auth
             <div class="sidebar__featured">
                 <h1 class="title" >Get Featured here</h1>
                 <div class="feature__area">
@@ -38,14 +37,18 @@
                         </li>
                         @foreach($feature_users as $feature)
                         <li data-toggle="tooltip" data-placement="top" title="{{ $feature->feature_user->username }}">
-                            <img class="feature__user_image" src="{{  avatar($feature->feature_user->avatar,$feature->feature_user->gender)   }}" alt="Feature User">
+                            <div class="delete__feature_user" data-id="{{ $feature->id }}">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <a href="{{ route('profile',$feature->feature_user->username) }}" class="p-0">
+                                <img class="feature__user_image" src="{{  avatar($feature->feature_user->avatar,$feature->feature_user->gender)   }}" alt="Feature User">
+                            </a>
                         </li>  
                         @endforeach
                     </ul>
                 </div>
             </div>
-         
-         @endif 
+           @endauth
     @else
         <div class="text-center text-black p-3 sidebar__main">
             <p class="text-capitalize font-weight-bold">Create an account</p>

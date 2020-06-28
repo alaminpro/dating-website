@@ -1,1 +1,462 @@
-var token=$("meta[name=csrf_token]").attr("content");$(document).ready(function(){var t=io(socket_url,{path:"/node/socket.io",transports:["polling","websocket"]}),e=$("#main__user_id").data("id"),a=$(".loader"),s=$(".follow__followers"),l=$(".follow__following"),o=$(".contents"),i=$(".not_found");(location.search||n("?tab=followers"),"followers"===d()||"following"===d())&&("followers"===d()?c("get_followers"):u("get_following"));function n(t){var e=window.location.protocol+"//"+window.location.host+window.location.pathname+t;return window.history.pushState({path:e},"",e)}function d(){var t={};return $.each(document.location.search.substr(1).split("&"),function(e,a){var s=a.split("=");t[s[0].toString()]=s[1].toString()}),t.tab}function c(e){return $.ajax({url:ajax_url_follow,beforeSend:function(){$('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div class="LoaderBalls mt-5"><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div></div>').appendTo(a),o.empty()},data:{action:e,id:logged_id,_token:token},dataType:"JSON",type:"POST",context:this,success:function(e){if("success"===e.status){$.isEmptyObject(e.datas)&&$('<div class="text-center text-danger w-100"></div>').html("You have no followers at the moment").appendTo(o),$.map(e.datas,function(t){t.avatar?$('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+t.id+'">                                <a href="/u/'+t.username+'" >                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >                                        <img src="/'+t.avatar+'" alt="'+t.username+'" class="img-fluid rounded-circle" width="100">                                    </div>                                </a>                                <div class="d-flex justify-content-center align-items-center flex-column">                                    <a href="/u/'+t.username+'" ><p class="follo__user_name">'+t.username+'</p></a>                                    <button type="button" class="follow__btn" data-id="'+t.id+'">                                            <div class="btn_text">'+t.follow+'</div>                                            <div class="loading"></div>                                        </button>                                </div>                            </div>').appendTo(o):$('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+t.id+'">                                <a href="/u/'+t.username+'" >                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >                                        <img src="assets/images/1.jpg" alt="'+t.username+'" class="img-fluid rounded-circle" width="100">                                    </div>                                </a>                                <div class="d-flex justify-content-center align-items-center flex-column">                                    <a href="/u/'+t.username+'" ><p class="follo__user_name">'+t.username+'</p></a>                                    <button type="button" class="follow__btn" data-id="'+t.id+'">                                            <div class="btn_text">'+t.follow+'</div>                                            <div class="loading"></div>                                        </button>                                </div>                            </div>').appendTo(o)});$(".btn_text"),$(".loading");$(".follow__btn").on("click",function(){var e=$(this).data("id"),a=$(this);$.ajax({url:ajax_url_follow,data:{action:"follow_following",id:e,_token:token},dataType:"JSON",type:"POST",context:this,success:function(s){"success"===s.status&&(a.html(s.data),"Following"===s.data&&$.ajax({url:ajax_url_notification,data:{action:"update_follow_notification",id:logged_id,follow_id:e,_token:token},dataType:"JSON",type:"POST",context:this,success:function(e){"success"===e.status&&t.emit("notifications","status")}}))}})});var s=[];$(".follow__content").each(function(){s.push($(this).data("id"))});var l=$("#load__more_main");s.length>=10?$('<button class="custom__load_more_btn  mb-4" id="load__more"></button>').html("Load more").appendTo(l):l.empty(),$("#load__more").on("click",function(){var t=[];$(".follow__content").each(function(){t.push($(this).data("id"))});$.ajax({url:ajax_url_follow,beforeSend:function(){$('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div class="LoaderBalls mt-5"><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div></div>').appendTo(a)},data:{action:"get_followers",id:logged_id,data_id:t,item:10,_token:token},dataType:"JSON",type:"POST",context:this,success:function(t){i.empty(),"success"===t.status&&($.isEmptyObject(t.datas)&&$('<div class="text-center text-danger"></div>').html("No data found!").appendTo(i),$.map(t.datas,function(t){t.avatar?$('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+t.id+'">                                                <a href="/u/'+t.username+'" >                                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >                                                        <img src="/'+t.avatar+'" alt="'+t.username+'" class="img-fluid rounded-circle" width="100">                                                    </div>                                                </a>                                                <div class="d-flex justify-content-center align-items-center flex-column">                                                    <a href="/u/'+t.username+'" ><p class="follo__user_name">'+t.username+'</p></a>                                                    <button type="button" class="follow__btn" data-id="'+t.id+'">                                                            <div class="btn_text">'+t.follow+'</div>                                                            <div class="loading"></div>                                                        </button>                                                </div>                                            </div>').appendTo(o):$('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+t.id+'">                                                <a href="/u/'+t.username+'" >                                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >                                                        <img src="assets/images/1.jpg" alt="'+t.username+'" class="img-fluid rounded-circle" width="100">                                                    </div>                                                </a>                                                <div class="d-flex justify-content-center align-items-center flex-column">                                                    <a href="/u/'+t.username+'" ><p class="follo__user_name">'+t.username+'</p></a>                                                    <button type="button" class="follow__btn" data-id="'+t.id+'">                                                            <div class="btn_text">'+t.follow+'</div>                                                            <div class="loading"></div>                                                        </button>                                                </div>                                            </div>').appendTo(o)}))},complete:function(){a.empty()}})})}},complete:function(){a.empty()}})}function u(t){return $.ajax({url:ajax_url_follow,beforeSend:function(){$('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div class="LoaderBalls mt-5"><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div></div>').appendTo(a),o.empty()},data:{action:t,id:logged_id,_token:token},dataType:"JSON",type:"POST",context:this,success:function(t){if("success"===t.status){$.isEmptyObject(t.datas)&&$('<div class="text-center text-danger w-100"></div>').html("You follow no one at the moment!").appendTo(o),$.map(t.datas,function(t){t.avatar?$('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+t.id+'">                                <a href="/u/'+t.username+'" >                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >                                        <img src="'+t.avatar+'" alt="'+t.username+'" class="img-fluid rounded-circle" width="100">                                    </div>                                </a>                                <div class="d-flex justify-content-center align-items-center flex-column">                                    <a href="/u/'+t.username+'" ><p class="follo__user_name">'+t.username+'</p></a>                                    <button type="button" class="following__btn" data-id="'+t.id+'">                                            <div class="btn_text">'+t.follow+'</div>                                            <div class="loading"></div>                                        </button>                                </div>                            </div>').appendTo(o):$('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+t.id+'">                                <a href="/u/'+t.username+'" >                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >                                        <img src="assets/images/1.jpg" alt="'+t.username+'" class="img-fluid rounded-circle" width="100">                                    </div>                                </a>                                <div class="d-flex justify-content-center align-items-center flex-column">                                    <a href="/u/'+t.username+'" ><p class="follo__user_name">'+t.username+'</p></a>                                    <button type="button" class="following__btn" data-id="'+t.id+'">                                            <div class="btn_text">'+t.follow+'</div>                                            <div class="loading"></div>                                        </button>                                </div>                            </div>').appendTo(o)});$(".btn_text"),$(".loading");$(".contents").delegate(".following__btn","click",function(){var t=$(this).data("id"),e=$(this);$.ajax({url:ajax_url_follow,data:{action:"unfollowing",id:t,_token:token},dataType:"JSON",type:"POST",context:this,success:function(t){"success"===t.status&&(e.html(t.data),e.closest(".col-lg-3").remove())}})});var e=[];$(".follow__content").each(function(){e.push($(this).data("id"))});var s=$("#load__more_main");e.length>=10?$('<button class="custom__load_more_btn  mb-4" id="load__more"></button>').html("Load more").appendTo(s):s.empty(),$("#load__more").on("click",function(){var t=[];$(".follow__content").each(function(){t.push($(this).data("id"))});$.ajax({url:ajax_url_follow,beforeSend:function(){$('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div class="LoaderBalls mt-5"><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div></div>').appendTo(a)},data:{action:"get_following",id:logged_id,data_id:t,item:10,_token:token},dataType:"JSON",type:"POST",context:this,success:function(t){i.empty(),"success"===t.status&&($.isEmptyObject(t.datas)&&$('<div class="text-center text-danger"></div>').html("Thats it!").appendTo(i),$.map(t.datas,function(t){t.avatar?$('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+t.id+'">                                                <a href="/u/'+t.username+'" >                                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >                                                        <img src="/'+t.avatar+'" alt="'+t.username+'" class="img-fluid rounded-circle" width="100">                                                    </div>                                                </a>                                                <div class="d-flex justify-content-center align-items-center flex-column">                                                    <a href="/u/'+t.username+'" ><p class="follo__user_name">'+t.username+'</p></a>                                                    <button type="button" class="following__btn" data-id="'+t.id+'">                                                            <div class="btn_text">'+t.follow+'</div>                                                            <div class="loading"></div>                                                        </button>                                                </div>                                            </div>').appendTo(o):$('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+t.id+'">                                                <a href="/u/'+t.username+'" >                                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >                                                        <img src="assets/images/1.jpg" alt="'+t.username+'" class="img-fluid rounded-circle" width="100">                                                    </div>                                                </a>                                                <div class="d-flex justify-content-center align-items-center flex-column">                                                    <a href="/u/'+t.username+'" ><p class="follo__user_name">'+t.username+'</p></a>                                                    <button type="button" class="following__btn" data-id="'+t.id+'">                                                            <div class="btn_text">'+t.follow+'</div>                                                            <div class="loading"></div>                                                        </button>                                                </div>                                            </div>').appendTo(o)}))},complete:function(){a.empty()}})})}},complete:function(){a.empty()}})}"followers"===d()?(s.addClass("follow__tab_active"),l.removeClass("follow__tab_active")):(l.addClass("follow__tab_active"),s.removeClass("follow__tab_active")),s.off("click").on("click",function(){$(this).addClass("follow__tab_active"),l.removeClass("follow__tab_active"),n("?tab=followers"),c("get_followers"),i.empty()}),l.off("click").on("click",function(){$(this).addClass("follow__tab_active"),s.removeClass("follow__tab_active"),n("?tab=following"),u("get_following"),i.empty()}),$(".status__btn").on("click",function(a){var s=$("#status__input").val();$.ajax({url:ajax_url_follow,data:{action:"updateStatus",id:e,status:s,_token:token},dataType:"JSON",type:"POST",context:this,success:function(a){"success"===a.status&&$.ajax({url:ajax_url_notification,data:{action:"update_status_notification",id:e,message:a.user.user_status,_token:token},dataType:"JSON",type:"POST",context:this,success:function(e){"success"===e.status&&(t.emit("notifications","status"),setTimeout(()=>{$("#status__input").val(""),function(t,e,a){var s="; max-age="+a;document.cookie=encodeURI(t)+"="+encodeURI(e)+s}("update-status","status",5),window.location.href="/u/"+a.user.username},500))}})}})})});
+var token = $('meta[name=csrf_token]').attr('content');
+$(document).ready(function() { 
+    var socket = io(socket_url, {
+        path: '/node/socket.io',
+        transports: ['polling','websocket']
+    });
+    var user_id = $('#main__user_id').data('id');
+    var loader = $('.loader')
+    var followers = $('.follow__followers');
+    var following = $('.follow__following');
+    var contents = $('.contents');
+    var not_found = $('.not_found');
+
+    if(!location.search){
+        queryParams('?tab=trending');
+    } 
+    if(getQueryParams() === 'trending'|| getQueryParams() === 'followers' || getQueryParams() === 'following' || getQueryParams() === 'whotofollow' ||getQueryParams() === 'notifications'){
+        var queryparams = getQueryParams();
+        if(queryparams === 'trending'){
+   
+        }else if(queryparams === 'followers'){ 
+            ajax_follow('get_followers')
+        }  
+        else if(queryparams === 'following'){
+            ajax_following('get_following'); 
+        }  
+        else if(queryparams === 'whotofollow'){
+             
+        }  
+        else if(queryparams === 'notifications'){ 
+
+        }  
+    }
+
+    var tabs = $('.follow__tab .tab_heading'); 
+    Array.from(tabs).forEach(function(tab){ 
+        var current_tab = $(tab).data('tab'); 
+        if(getQueryParams() == current_tab){ 
+            $(tab).addClass('follow__tab_active');  
+        }
+    }) 
+ 
+    $('.follow__tab .tab_heading').off('click').click(function(){ 
+        if(!$(this).hasClass('follow__tab_active')){
+            var tab_id = $(this).attr('data-tab');  
+            $('.follow__tab .tab_heading').removeClass('follow__tab_active');  
+            $(this).addClass('follow__tab_active');
+            queryParams('?tab='+tab_id) 
+                var queryparams = getQueryParams();
+                if(queryparams === 'trending'){
+        
+                }else if(queryparams === 'followers'){ 
+                    ajax_follow('get_followers')
+                }  
+                else if(queryparams === 'following'){
+                    ajax_following('get_following'); 
+                }  
+                else if(queryparams === 'whotofollow'){
+                    
+                }  
+                else if(queryparams === 'notifications'){ 
+    
+                }  
+        }
+    })
+   
+    function queryParams(query){
+        var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + query;
+       return window.history.pushState({ path: newurl }, '', newurl);
+    }
+
+    function getQueryParams(){
+        var queries = {};
+        $.each(document.location.search.substr(1).split('&'),function(c,q){
+            var i = q.split('=');
+            queries[i[0].toString()] = i[1].toString();
+        });
+        return queries.tab
+    }
+
+    function ajax_trending(){
+      return  $.ajax({
+            url: ajax_url_follow, 
+            beforeSend: function(){
+                $('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div class="LoaderBalls mt-5"><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div></div>').appendTo(loader);
+                contents.empty()
+            },
+            data: {action: method, id: logged_id, _token: token},
+            dataType: 'JSON',
+            type: 'POST',
+            context: this,
+            success: function (res) {
+                if(res.status === 'success'){ 
+                    if($.isEmptyObject(res.datas)){
+                        $('<div class="text-center text-danger w-100"></div>').html('You have no followers at the moment').appendTo(contents);
+                    }   
+
+                } 
+            },
+            complete: function(){
+                    loader.empty();
+                }
+        });
+    }
+    function ajax_follow(method){
+      return  $.ajax({
+            url: ajax_url_follow, 
+            beforeSend: function(){
+                $('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div class="LoaderBalls mt-5"><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div></div>').appendTo(loader);
+                contents.empty()
+            },
+            data: {action: method, id: logged_id, _token: token},
+            dataType: 'JSON',
+            type: 'POST',
+            context: this,
+            success: function (res) {
+                if(res.status === 'success'){ 
+                    if($.isEmptyObject(res.datas)){
+                        $('<div class="text-center text-danger w-100"></div>').html('You have no followers at the moment').appendTo(contents);
+                    }  
+                    $.map(res.datas, function(data) {
+                        if(data.avatar){
+                            $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
+                                <a href="/u/'+data.username +'" >\
+                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
+                                        <img src="/'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
+                                    </div>\
+                                </a>\
+                                <div class="d-flex justify-content-center align-items-center flex-column">\
+                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
+                                    <button type="button" class="follow__btn" data-id="'+ data.id +'">\
+                                            <div class="btn_text">'+ data.follow +'</div>\
+                                            <div class="loading"></div>\
+                                        </button>\
+                                </div>\
+                            </div>').appendTo(contents);
+                        }else{
+                            $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
+                                <a href="/u/'+data.username +'" >\
+                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
+                                        <img src="assets/images/1.jpg" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
+                                    </div>\
+                                </a>\
+                                <div class="d-flex justify-content-center align-items-center flex-column">\
+                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
+                                    <button type="button" class="follow__btn" data-id="'+ data.id +'">\
+                                            <div class="btn_text">'+ data.follow +'</div>\
+                                            <div class="loading"></div>\
+                                        </button>\
+                                </div>\
+                            </div>').appendTo(contents);
+                        }
+                    }) 
+                    var btn_text = $('.btn_text');
+                    var loading = $('.loading');
+                    $('.follow__btn').on('click', function(){
+                        var id= $(this).data('id'); 
+                        var btn = $(this);
+                        $.ajax({
+                            url: ajax_url_follow,  
+                            data: {action: "follow_following", id: id, _token: token},
+                            dataType: 'JSON',
+                            type: 'POST',
+                            context: this,
+                            success: function (res) {
+                                if(res.status === 'success'){  
+                                    btn.html(res.data)
+                                    if(res.data === 'Following'){  
+                                        $.ajax({
+                                            url: ajax_url_notification ,
+                                            data: {action: "update_follow_notification", id: logged_id, follow_id: id, _token: token},
+                                            dataType: 'JSON',
+                                            type: 'POST',
+                                            context: this,
+                                            success: function (response) { 
+                                                if(response.status === 'success'){  
+                                                    socket.emit('notifications', 'status'); 
+                                                }
+                                            }, 
+                                        });  
+                                    }
+                                }
+                            }, 
+                        });
+                    })
+                     /**
+                     *  load more hide and show
+                     * */
+                    var count = [];
+                    $( ".follow__content" ).each(function() {
+                        count.push($( this ).data('id'));
+                    }); 
+                    var load = $('#load__more_main'); 
+                    if(count.length >= 10){ 
+                        $('<button class="custom__load_more_btn  mb-4" id="load__more"></button>').html('Load more').appendTo(load);
+                    }else{
+                        load.empty();
+                    }
+                     /**
+                     *  load more 
+                     * */
+                    $('#load__more').on('click',function(){
+                        var data_id = []
+                        $( ".follow__content" ).each(function() {
+                            data_id.push($( this ).data('id'));
+                        }); 
+                        var item = 10;
+                        $.ajax({
+                            url: ajax_url_follow, 
+                            beforeSend: function(){
+                                $('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div class="LoaderBalls mt-5"><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div></div>').appendTo(loader); 
+                            },
+                            data: {action: 'get_followers', id: logged_id, data_id: data_id, item: item, _token: token},
+                            dataType: 'JSON',
+                            type: 'POST',
+                            context: this,
+                            success: function (res) {
+                                not_found.empty();
+                                if(res.status === 'success'){ 
+                                    if($.isEmptyObject(res.datas)){
+                                        $('<div class="text-center text-danger"></div>').html('No data found!').appendTo(not_found);
+                                    }  
+                                    $.map(res.datas, function(data) {
+                                        if(data.avatar){
+                                            $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
+                                                <a href="/u/'+data.username +'" >\
+                                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
+                                                        <img src="/'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
+                                                    </div>\
+                                                </a>\
+                                                <div class="d-flex justify-content-center align-items-center flex-column">\
+                                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
+                                                    <button type="button" class="follow__btn" data-id="'+ data.id +'">\
+                                                            <div class="btn_text">'+ data.follow +'</div>\
+                                                            <div class="loading"></div>\
+                                                        </button>\
+                                                </div>\
+                                            </div>').appendTo(contents);
+                                        }else{
+                                            $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
+                                                <a href="/u/'+data.username +'" >\
+                                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
+                                                        <img src="assets/images/1.jpg" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
+                                                    </div>\
+                                                </a>\
+                                                <div class="d-flex justify-content-center align-items-center flex-column">\
+                                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
+                                                    <button type="button" class="follow__btn" data-id="'+ data.id +'">\
+                                                            <div class="btn_text">'+ data.follow +'</div>\
+                                                            <div class="loading"></div>\
+                                                        </button>\
+                                                </div>\
+                                            </div>').appendTo(contents);
+                                        }
+                                       
+                                    }) 
+                                }
+                            },
+                            complete: function(){
+                                loader.empty();
+                            }
+                        });
+                    })
+
+                } 
+            },
+            complete: function(){
+                    loader.empty();
+                }
+        });
+    }
+    function ajax_following(method){
+      return  $.ajax({
+            url: ajax_url_follow, 
+            beforeSend: function(){
+                $('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div class="LoaderBalls mt-5"><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div></div>').appendTo(loader);
+                contents.empty()
+            },
+            data: {action: method, id: logged_id, _token: token},
+            dataType: 'JSON',
+            type: 'POST',
+            context: this,
+            success: function (res) {
+                if(res.status === 'success'){ 
+                    if($.isEmptyObject(res.datas)){
+                        $('<div class="text-center text-danger w-100"></div>').html('You follow no one at the moment!').appendTo(contents);
+                    }  
+                    $.map(res.datas, function(data) {
+                        if(data.avatar){
+                            $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
+                                <a href="/u/'+data.username +'" >\
+                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
+                                        <img src="'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
+                                    </div>\
+                                </a>\
+                                <div class="d-flex justify-content-center align-items-center flex-column">\
+                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
+                                    <button type="button" class="following__btn" data-id="'+ data.id +'">\
+                                            <div class="btn_text">'+ data.follow +'</div>\
+                                            <div class="loading"></div>\
+                                        </button>\
+                                </div>\
+                            </div>').appendTo(contents);
+                        }else{
+                            $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
+                                <a href="/u/'+data.username +'" >\
+                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
+                                        <img src="assets/images/1.jpg" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
+                                    </div>\
+                                </a>\
+                                <div class="d-flex justify-content-center align-items-center flex-column">\
+                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
+                                    <button type="button" class="following__btn" data-id="'+ data.id +'">\
+                                            <div class="btn_text">'+ data.follow +'</div>\
+                                            <div class="loading"></div>\
+                                        </button>\
+                                </div>\
+                            </div>').appendTo(contents);
+                        }
+                    }) 
+                    var btn_text = $('.btn_text');
+                    var loading = $('.loading');
+                    $('.contents').delegate('.following__btn','click', function(){
+                        var id= $(this).data('id'); 
+                        var btn = $(this);
+                        $.ajax({
+                            url: ajax_url_follow,  
+                            data: {action: "unfollowing", id: id, _token: token},
+                            dataType: 'JSON',
+                            type: 'POST',
+                            context: this,
+                            success: function (res) {
+                                if(res.status === 'success'){ 
+                                    btn.html(res.data)
+                                    btn.closest(".col-lg-3").remove()
+                                }
+                            }, 
+                        });
+                    })
+                     /**
+                     *  load more hide and show
+                     * */
+                    var count = [];
+                    $( ".follow__content" ).each(function() {
+                        count.push($( this ).data('id'));
+                    }); 
+                    var load = $('#load__more_main'); 
+                    if(count.length >= 10){ 
+                        $('<button class="custom__load_more_btn  mb-4" id="load__more"></button>').html('Load more').appendTo(load);
+                    }else{
+                        load.empty();
+                    }
+                     /**
+                     *  load more 
+                     * */
+                    $('#load__more').on('click',function(){
+                        var data_id = []
+                        $( ".follow__content" ).each(function() {
+                            data_id.push($( this ).data('id'));
+                        }); 
+                        var item = 10;
+                        $.ajax({
+                            url: ajax_url_follow, 
+                            beforeSend: function(){
+                                $('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div class="LoaderBalls mt-5"><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div></div>').appendTo(loader); 
+                            },
+                            data: {action: 'get_following', id: logged_id, data_id: data_id, item: item, _token: token},
+                            dataType: 'JSON',
+                            type: 'POST',
+                            context: this,
+                            success: function (res) {
+                                not_found.empty();
+                                if(res.status === 'success'){ 
+                                    if($.isEmptyObject(res.datas)){
+                                        $('<div class="text-center text-danger"></div>').html('Thats it!').appendTo(not_found);
+                                    }  
+                                    $.map(res.datas, function(data) {
+                                        if(data.avatar){
+                                            $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
+                                                <a href="/u/'+data.username +'" >\
+                                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
+                                                        <img src="/'+ data.avatar +'" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
+                                                    </div>\
+                                                </a>\
+                                                <div class="d-flex justify-content-center align-items-center flex-column">\
+                                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
+                                                    <button type="button" class="following__btn" data-id="'+ data.id +'">\
+                                                            <div class="btn_text">'+ data.follow +'</div>\
+                                                            <div class="loading"></div>\
+                                                        </button>\
+                                                </div>\
+                                            </div>').appendTo(contents);
+                                        }else{
+                                            $('<div class="col-lg-3 col-sm-4 col-6 mt-4"></div>').html('<div class="follow__content" data-id="'+ data.id +'">\
+                                                <a href="/u/'+data.username +'" >\
+                                                    <div class="d-flex justify-content-center mb-2" style="height: 100px" >\
+                                                        <img src="assets/images/1.jpg" alt="'+ data.username +'" class="img-fluid rounded-circle" width="100">\
+                                                    </div>\
+                                                </a>\
+                                                <div class="d-flex justify-content-center align-items-center flex-column">\
+                                                    <a href="/u/'+data.username +'" ><p class="follo__user_name">'+data.username+'</p></a>\
+                                                    <button type="button" class="following__btn" data-id="'+ data.id +'">\
+                                                            <div class="btn_text">'+ data.follow +'</div>\
+                                                            <div class="loading"></div>\
+                                                        </button>\
+                                                </div>\
+                                            </div>').appendTo(contents);
+                                        }
+                                    }) 
+                                }
+                            },
+                            complete: function(){
+                                loader.empty();
+                            }
+                        });
+                    })
+
+                } 
+            },
+            complete: function(){
+                    loader.empty();
+                }
+        });
+    }
+    
+    function setCookie(name, value, maxAgeSeconds) {
+        var maxAgeSegment = "; max-age=" + maxAgeSeconds;
+        document.cookie = encodeURI(name) + "=" + encodeURI(value) + maxAgeSegment;
+    } 
+    $('.status__btn').on('click',function(e){ 
+            var value = $('#status__input').val(); 
+            $.ajax({
+                url: ajax_url_follow,  
+                data: {action: "updateStatus", id: user_id, status: value, _token: token},
+                dataType: 'JSON',
+                type: 'POST',
+                context: this,
+                success: function (res) {
+                    if(res.status === 'success'){ 
+                        $.ajax({
+                            url: ajax_url_notification,  
+                            data: {action: "update_status_notification", id: user_id, message: res.user.user_status, _token: token},
+                            dataType: 'JSON',
+                            type: 'POST',
+                            context: this,
+                            success: function (response) { 
+                                if(response.status === 'success'){  
+                                    socket.emit('notifications', 'status');  
+                                    setTimeout(() => {
+                                        $('#status__input').val('');  
+                                        setCookie("update-status", "status", 5);
+                                        window.location.href = '/u/'+ res.user.username; 
+                                    }, 500);
+                                }
+                            }, 
+                        }); 
+                       
+                    }
+                }, 
+            }); 
+        })
+}); 

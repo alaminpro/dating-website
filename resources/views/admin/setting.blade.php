@@ -128,6 +128,23 @@
                             <input class="form-control" type="number" name="min_upload" value="{!! setting('min_upload') !!}">
                             <p class="helper"><i class="flaticon-info"></i> Set zero for no limit.</p>
                         </div>
+                        <div class="form-group">
+                            <label><strong>Featured Users UPGRADE OPTIONS</strong></label> 
+                            <p class="helper"><i class="flaticon-info text-uppercase"></i>User Must pay to upgrade or set free all users</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="feature_upgrade" id="free" value="0" {{ setting('feature_upgrade') == 0 ? 'checked': '' }}>
+                                <label class="form-check-label" for="free">Free</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="feature_upgrade" id="premimum" value="1" {{ setting('feature_upgrade') == 1 ? 'checked': '' }}>
+                                <label class="form-check-label" for="premimum">Premimum</label>
+                              </div> 
+                              <div class="form-group mt-2">
+                                <label><strong>Default Coin</strong></label>
+                                <input class="form-control" type="number" name="default_coin" value="{!! setting('default_coin') !!}">
+                                <p class="helper"><i class="flaticon-info"></i> When register new users get coin</p> 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

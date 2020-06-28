@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AdminFeature;
 use App\Comment;
 use App\Conversation;
 use App\Feature;
@@ -744,6 +745,35 @@ class AjaxController extends Controller
      *
      * start coding for siderbar users feature area
      */
+    public function check_feature_free_premium()
+    {
+        $auth_id = auth()->user()->id;
+        if ($auth_id) {
+            $is_featured = setting('feature_upgrade');
+            $coins = 0;
+            if (auth()->user()->coin) {
+                $coins = auth()->user()->coin->coin ? auth()->user()->coin->coin : 0;
+            }
+
+            $min_coin = AdminFeature::where('is_premimum', 1)->select('value')->min('value');
+            if ($is_featured == 1) {
+                if ($coins >= $min_coin) {
+                    $admin_features = AdminFeature::where('is_premimum', 1)->select('text', 'coin', 'value', 'days')->get();
+                    $html = view('feature.premium_feature', compact('admin_features', 'coins'))->render();
+                    return response()->json(['status' => 'success', 'html' => $html, 'coins' => $coins, 'is_featured' => $is_featured, 'min_coin' => $min_coin]);
+                } else {
+                    $html = view('feature.no-coins', compact('coins'))->render();
+                    return response()->json(['status' => 'success', 'html' => $html, 'coins' => $coins, 'is_featured' => $is_featured, 'min_coin' => $min_coin]);
+                }
+            } else {
+                $user = User::where('id', $auth_id)->select('id', 'birthday', 'avatar', 'username', 'gender')->first();
+                $admin_feature = AdminFeature::where('is_premimum', 0)->select('text', 'days')->first();
+                $html = view('feature.free_feature', compact('user', 'admin_feature'))->render();
+                return response()->json(['status' => 'success', 'html' => $html, 'coins' => $coins, 'is_featured' => $is_featured, 'min_coin' => $min_coin]);
+            }
+        }
+    }
+
     public function get__feature()
     {
         $auth_id = auth()->user()->id;
@@ -819,6 +849,14 @@ class AjaxController extends Controller
 
         $html = view('feature.load_sidebar_feature', compact('features'))->render();
         return response()->json(['status' => 'success', 'html' => $html]);
+    }
+
+    public function delete_feature()
+    {
+        $delete = Feature::where('id', $this->request->id)->delete();
+        if ($delete) {
+            return response()->json(['status' => 'success']);
+        }
     }
 
 }

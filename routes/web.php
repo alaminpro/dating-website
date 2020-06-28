@@ -83,6 +83,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('setting', 'Admin\SettingController@main')->name('adminsetting');
     Route::post('setting', 'Admin\SettingController@saveSetting')->name('adminsetting');
     Route::get('interests', 'Admin\SettingController@interests')->name('admininterest');
+    Route::get('interests', 'Admin\CommonController@interests')->name('admininterest');
     Route::get('get_users', 'Admin\HomeController@get_users');
     Route::get('get_users_weekly', 'Admin\HomeController@get_users_weekly');
     Route::get('get_users_monthly', 'Admin\HomeController@get_users_monthly');
@@ -98,6 +99,14 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('page/edit/{id}', 'Admin\HomeController@editPage')->name('editpage');
     Route::post('page/update/{id?}', 'Admin\HomeController@updatePage')->name('updatepage');
     Route::get('page/delete/{id}', 'Admin\HomeController@deletePage')->name('admindeletepage');
+    /*features*/
+    Route::get('features', 'Admin\FeatureController@index')->name('admin_feature');
+    Route::get('feature/add/', 'Admin\FeatureController@create')->name('admin_feature_create');
+    Route::post('feature/add', 'Admin\FeatureController@store')->name('admin_feature_store');
+    Route::get('feature/edit/{id}', 'Admin\FeatureController@edit')->name('admin_feature_edit');
+    Route::post('feature/update/{id}', 'Admin\FeatureController@update')->name('admin_feature_update');
+    Route::get('feature/delete/{id}', 'Admin\FeatureController@delete')->name('admin_feature_delete');
+    Route::post('feature/free/', 'Admin\FeatureController@admin_feature_free_store')->name('admin_feature_free');
 });
 // Route::get('/clear-cache', function() {
 //     $exitCode = Artisan::call('cache:clear');

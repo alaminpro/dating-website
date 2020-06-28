@@ -39,6 +39,7 @@ class HomeController extends Controller
                 $id = $user->id;
                 $input['status'] = 'Online';
                 User::where('id', $id)->update($input, ['video_chat' => 0]);
+                defaultCoin();
                 if ($this->request->has('ref')) {
                     return redirect()->to($this->request->get('ref'));
                 } else {

@@ -270,7 +270,7 @@ select.form-control-sm.form-control+i.fa {
     background: #f8f9fa;
     border-bottom: 1px solid #ddd;
     position: relative;
-    z-index: 99999;
+    z-index: 999;
 }
 
 .welcome,
@@ -449,7 +449,7 @@ a {
     color: #fff;
     border-radius: 4px;
     display: none;
-    z-index: 999;
+    z-index: 990;
     cursor: pointer;
 }
 
@@ -1140,12 +1140,12 @@ textarea.edit-comment {
 
 #profile-header {
     position: relative;
-    z-index: 9999;
+    z-index: 999;
 }
 
 #profile-header-sm {
     position: relative;
-    z-index: 99999;
+    z-index: 9999;
 }
 
 .load_more_photo i {
@@ -2825,30 +2825,33 @@ input:focus {
 }
 
 .follow__tab {
-    width: 60%;
+    width: 100%;
     display: flex;
     border-bottom: 2px solid #cacaca;
+    justify-content: space-around;
 }
 
-.follow__followers {
-    position: relative;
-    width: 100%;
+.tab_heading {
+    position: relative; 
     cursor: pointer;
-    padding: 10px 0px;
+    padding: 10px 25px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .follow__text {
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.tab__text {
+    text-align: center;
+    font-size: 16px;
     font-weight: bold;
 }
 
-.follow__following {
-    position: relative;
-    width: 100%;
-    cursor: pointer;
-    padding: 10px 0px;
-}
+ 
 
 .follow__tab_active::after {
     content: "";
@@ -2911,7 +2914,7 @@ input:focus {
     }
 
     .follow__tab {
-        width: 90%;
+        width: 100%;
     }
 }
 
@@ -3701,7 +3704,7 @@ h2 {
     background: #fafafa;
     position: sticky;
     top: 0;
-    z-index: 9999;
+    z-index: 990;
 }
 .custom-card{
     box-shadow: 0px 9px 20px -10px #dbdbdb;
@@ -4127,7 +4130,7 @@ h2.page__title {
         width: auto;
     }
     .container-fluid .sidebar {  
-        z-index: 9999;
+        z-index: 999;
         margin-left: -300px;
     }
 
@@ -4527,3 +4530,4 @@ h2.page__title {
 
 
 }
+ 

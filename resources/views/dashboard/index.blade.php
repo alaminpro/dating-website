@@ -30,11 +30,20 @@
     <div class="mt-3 col-lg-12">
         <div class="follow__main_tab">
             <div class="follow__tab">
-                <div class="follow__followers "> 
+                <div class="tab_heading" data-tab="trending"> 
+                    <div class="tab__text">What's trending</div>
+                </div>
+                <div class="tab_heading" data-tab="followers"> 
                     <div class="follow__text">Followers</div>
                 </div>
-                <div class="follow__following"> 
+                <div class="tab_heading" data-tab="following"> 
                     <div class="follow__text">Following</div>
+                </div>
+                <div class="tab_heading"  data-tab="whotofollow"> 
+                    <div class="tab__text">Who to follow</div>
+                </div>
+                <div class="tab_heading" data-tab="notifications"> 
+                    <div class="tab__text">Notifications</div>
                 </div>
             </div>
         </div>

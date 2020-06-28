@@ -1,14 +1,14 @@
 {
-    "/assets/js/app.js": "/assets/js/app.js?id=073d200cafed6a258d81",
-    "/assets/css/app.css": "/assets/css/app.css?id=996a6849cee5599f527e",
-    "/assets/js/custom.js": "/assets/js/custom.js?id=b07186bde1b3240bb1b4",
-    "/assets/js/follows.js": "/assets/js/follows.js?id=494a02cca3e95794e903",
-    "/assets/js/profile.js": "/assets/js/profile.js?id=c01507187a0d51c002ea",
-    "/assets/js/setting.js": "/assets/js/setting.js?id=f4aa332531af8ab07be4",
-    "/assets/js/register.js": "/assets/js/register.js?id=37b497d4cbc9335f0469",
-    "/assets/js/socket.js": "/assets/js/socket.js?id=b9735715794ecd899017",
-    "/assets/js/video-all.js": "/assets/js/video-all.js?id=1d47d245fe62bcdd3246",
-    "/assets/js/video.js": "/assets/js/video.js?id=18b908a85ff49717dcf7",
-    "/assets/js/landing.js": "/assets/js/landing.js?id=a113595a93f44f7a7bf5",
-    "/assets/js/map_script.js": "/assets/js/map_script.js?id=f3434b457e498b0bc304"
+    "/assets/js/app.js": "/assets/js/app.js",
+    "/assets/css/app.css": "/assets/css/app.css",
+    "/assets/js/custom.js": "/assets/js/custom.js",
+    "/assets/js/follows.js": "/assets/js/follows.js",
+    "/assets/js/profile.js": "/assets/js/profile.js",
+    "/assets/js/setting.js": "/assets/js/setting.js",
+    "/assets/js/register.js": "/assets/js/register.js",
+    "/assets/js/socket.js": "/assets/js/socket.js",
+    "/assets/js/video-all.js": "/assets/js/video-all.js",
+    "/assets/js/video.js": "/assets/js/video.js",
+    "/assets/js/landing.js": "/assets/js/landing.js",
+    "/assets/js/map_script.js": "/assets/js/map_script.js"
 }

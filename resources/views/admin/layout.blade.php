@@ -28,6 +28,7 @@
             <li<?php echo Illuminate\Support\Facades\Route::is('adminhome')?' class="active"':'';?>><a href="{!! route('adminhome') !!}"><i class="fas fa-home"></i> Dashboard</a></li>
             <li<?php echo Illuminate\Support\Facades\Route::is('adminsetting')?' class="active"':'';?>><a href="{!! route('adminsetting') !!}"><i class="fas fa-cogs"></i> Setting</a></li>
             <li<?php echo Illuminate\Support\Facades\Route::is('admininterest')?' class="active"':'';?>><a href="{!! route('admininterest') !!}"><i class="fas fa-grin-hearts"></i> Interests</a></li>
+            <li<?php echo Illuminate\Support\Facades\Route::is('admin_feature')?' class="active"':'';?>><a href="{!! route('admin_feature') !!}"><i class="fas fa-grin-hearts"></i> Features</a></li>
             <li<?php echo Illuminate\Support\Facades\Route::is('adminad')?' class="active"':'';?>><a href="{!! route('adminusers') !!}"><i class="fas fa-ad"></i> Manage AD</a></li>
             <li<?php echo Illuminate\Support\Facades\Route::is('adminusers') || Illuminate\Support\Facades\Route::is('adminedituser')?' class="active"':'';?>><a href="{!! route('adminusers') !!}"><i class="fas fa-users"></i> Manage Users</a></li>
             <li<?php echo Illuminate\Support\Facades\Route::is('adminlanguage')?' class="active"':'';?>><a href="{!! route('adminusers') !!}"><i class="fas fa-language"></i> Manage Languages</a></li>

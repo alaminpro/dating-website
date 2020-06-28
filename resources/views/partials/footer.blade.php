@@ -59,6 +59,8 @@
     </div>
 </div>
 
+@auth
+
 <div class="modal" id="modal__feature_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-lg" role="document">
         <div class="modal-content">
@@ -67,7 +69,10 @@
                     <h2>Search users:</h2>
                     <input type="text" class="feature__search_input" placeholder="Search by username, interest">
                     <div class="clear__field  mr-1"><i class="far fa-times-circle"></i> Clear filter</div>
-                    <div class="border-left ml-1 pl-2 font-weight-bold">Selected: <span class="selected__count">0</span></div>
+                    @php
+                        $feature = \App\Feature::where('logged_id', auth()->user()->id)->where('finished_date', '>', \Carbon\Carbon::now()->format('Y-m-d H:i:s'))->get();
+                    @endphp
+                    <div class="border-left ml-1 pl-2 font-weight-bold">Selected: <span class="selected__count">{{ count($feature) }}</span></div>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -110,7 +115,23 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modal__free_premium" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered {{ setting('feature_upgrade') == 1   ? 'modal-lg' : 'modal-sm' }}" role="document">
+        <div class="modal-content"> 
+            <div class="modal__free_premium_main"> 
+                <button type="button" class="close modal__free_premium_header" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal__free_premium_body">
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+@endauth
 
  
 

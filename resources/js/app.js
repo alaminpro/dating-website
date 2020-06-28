@@ -415,11 +415,84 @@ $(function(){
      */
     if(logged_id){
         
-    $('.feature__auth_li').on('click',function(){
-        $('#modal__feature_user').modal({backdrop: 'static', keyboard: false});
-        $('.feature__search_input').val('')
-        get__feature_ajax()
+    $('.feature__auth_li').on('click',function(){ 
+        $('.modal__free_premium_body').empty(); 
+        $.ajax({
+            url: ajax_url,  
+            data: {action: 'check_feature_free_premium', _token: token},
+            dataType: 'JSON',
+            type: 'POST',
+            context: this,
+            success: function (res) {  
+                if(res.status === 'success'){ 
+                   let dialog = $('#modal__free_premium .modal-dialog');   
+                    if(res.is_featured == 1){ 
+                        if (res.coins < res.min_coin) {
+                            if(dialog.hasClass('modal-lg')){
+                                dialog.removeClass('modal-lg')
+                                dialog.addClass('modal-sm')
+                            }   
+                        }else{
+                            if(dialog.hasClass('modal-sm')){
+                                dialog.removeClass('modal-sm')
+                                dialog.addClass('modal-lg')
+                            }
+                        }
+                    }else{
+                        if(dialog.hasClass('modal-lg')){
+                            dialog.removeClass('modal-lg')
+                            dialog.addClass('modal-sm')
+                        }
+                    }
+                    $('.modal__free_premium_body').empty();  
+                    $('.modal__free_premium_body').append(res.html);    
+                    $('#modal__free_premium').modal('show');
+                    premium__features(res.coins);
+                    premium__features_btn();
+                } 
+            }, 
+        });
+       
     })
+
+
+    const premium__features = (coin) => {
+        $('.premium__area').click(function(){
+            let current_coin = $(this).attr('data-coin');
+            if(coin >= current_coin){
+                $('.premium__area').removeClass('select__feature')
+                $(this).addClass('select__feature')
+                $('.free__premium_btn').attr('data-coin', $(this).attr('data-coin')) 
+            } else{ 
+                $.toast({
+                    heading: 'Warning',
+                    text: 'Opps! you don\'t have enough coins for this plan.', 
+                    icon: 'warning', 
+                    bgColor : '#E01A31',
+                    position: 'top-right',
+                })
+            }
+        })
+    }
+    const premium__features_btn = () => {
+        $('.free__premium_btn').click(function(){ 
+            let coin = $(this).attr('data-coin');
+            if(coin){
+                console.log(coin)
+            }else{
+                $.toast({
+                    heading: 'Warning',
+                    text: 'Please select at least on plan!', 
+                    icon: 'warning', 
+                    bgColor : '#E01A31',
+                    position: 'top-right',
+                }) 
+            }
+        })
+    }
+
+
+
  
     const get__feature_ajax = () => { 
         let loader = $('.feature__search_loader');
@@ -549,11 +622,33 @@ const load_sidbar = () =>{
             if(res.status === 'success'){
                 $('.feature__ul li').not('li:first').remove(); 
                 $('.feature__ul').append(res.html);
+                delete_feature_user();
             } 
         } 
     })
 } 
-     
+
+
+const delete_feature_user = () =>{
+    $('.delete__feature_user').click(function() { 
+        let id = $(this).attr('data-id'); 
+        if(confirm('Are you sure!')){
+            $.ajax({
+                url: ajax_url, 
+                data: {action: 'delete_feature', id: id,  _token: token},
+                dataType: 'JSON',
+                type: 'POST',
+                context: this,
+                success: function (res) {
+                    if(res.status === 'success'){
+                        $(this).closest('li').remove();
+                    } 
+                } 
+            })
+        }
+    })
+}
+delete_feature_user();
 const feature_user_search = () =>{
     var content = $('.feature__content');
     var search_item = $('.feature__search_content');
@@ -608,5 +703,5 @@ const feature_user_search = () =>{
    }
 }
 
-    }
+}
 }); 

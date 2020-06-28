@@ -1,39 +1,55 @@
 <?php
 
+use App\Coin;
 use App\Setting;
 
-function setting($meta = false){
-    if($meta){
-        $setting = Setting::where('meta', $meta)->orderBy('id','DESC')->first();
-        if(!$setting){
+function setting($meta = false)
+{
+    if ($meta) {
+        $setting = Setting::where('meta', $meta)->orderBy('id', 'DESC')->first();
+        if (!$setting) {
             $setting = new Setting();
             $setting->meta = $meta;
             $setting->save();
             return;
-        }
-        else{
+        } else {
             return $setting->value;
         }
     }
 }
-function fulladdress($address, $country){
+function defaultCoin()
+{
+    $default_coin = Setting::where('meta', 'default_coin')->first()->value;
+    if ($default_coin) {
+        $coin = Coin::where('user_id', auth()->user()->id)->first();
+        if (!$coin) {
+            $coin = new Coin();
+            $coin->coin = setting('default_coin');
+            $coin->user_id = auth()->user()->id;
+            $coin->save();
+        }
+    }
+}
+function fulladdress($address, $country)
+{
     $result = '';
-    if(!empty($address)){
-        $result .= $address.', ';
+    if (!empty($address)) {
+        $result .= $address . ', ';
     }
     $result .= countries($country);
     return $result;
 }
-function avatar($avatar, $gender){
-    if(!empty($avatar)){
-        return strpos($avatar, 'http://') !== false || strpos($avatar, 'https://') ? $avatar: url($avatar);
-    }
-    else{
-        return url('assets/images/'.$gender.'.jpg');
+function avatar($avatar, $gender)
+{
+    if (!empty($avatar)) {
+        return strpos($avatar, 'http://') !== false || strpos($avatar, 'https://') ? $avatar : url($avatar);
+    } else {
+        return url('assets/images/' . $gender . '.jpg');
     }
 }
 
-function countries($code = false){
+function countries($code = false)
+{
     $countries = array(
         "AF" => "Afghanistan",
         "AX" => "Aland Islands",
@@ -283,16 +299,16 @@ function countries($code = false){
         "EH" => "Western Sahara",
         "YE" => "Yemen",
         "ZM" => "Zambia",
-        "ZW" => "Zimbabwe"
+        "ZW" => "Zimbabwe",
     );
-    if($code){
-        return isset($countries[$code])?$countries[$code]:'';
-    }
-    else{
+    if ($code) {
+        return isset($countries[$code]) ? $countries[$code] : '';
+    } else {
         return $countries;
     }
 }
-function months(){
+function months()
+{
     return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 }
 
@@ -300,76 +316,77 @@ function compress_image($source, $destination, $quality, $width = 1000)
 {
     $info = getimagesize($source);
 
-
-    if ($info['mime'] == 'image/jpeg')
-        $img = imagecreatefromjpeg( $source );
-    elseif ($info['mime'] == 'image/gif')
-        $img = imagecreatefromgif( $source );
-    elseif ($info['mime'] == 'image/png')
-        $img = imagecreatefrompng( $source );
+    if ($info['mime'] == 'image/jpeg') {
+        $img = imagecreatefromjpeg($source);
+    } elseif ($info['mime'] == 'image/gif') {
+        $img = imagecreatefromgif($source);
+    } elseif ($info['mime'] == 'image/png') {
+        $img = imagecreatefrompng($source);
+    }
 
     $thumbWidth = $width;
 
     // Create the thumbnail
-    $width = imagesx( $img );
-    $height = imagesy( $img );
+    $width = imagesx($img);
+    $height = imagesy($img);
 
     // calculate thumbnail size
     $new_width = $thumbWidth;
-    $new_height = floor( $height * ( $thumbWidth / $width ) );
+    $new_height = floor($height * ($thumbWidth / $width));
 
     // create a new temporary image
-    $tmp_img = imagecreatetruecolor( $new_width, $new_height );
+    $tmp_img = imagecreatetruecolor($new_width, $new_height);
 
     // copy and resize old image into new image
-    imagecopyresized( $tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
+    imagecopyresized($tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 
     // save thumbnail into a file
-    imagejpeg( $tmp_img, $destination, $quality );
+    imagejpeg($tmp_img, $destination, $quality);
 
     return $destination;
 }
-function fullname($firstname, $lastname, $username){
-    if(empty($firstname)){
+function fullname($firstname, $lastname, $username)
+{
+    if (empty($firstname)) {
         return $username;
-    }
-    elseif(empty($lastname)){
+    } elseif (empty($lastname)) {
         return $firstname;
-    }
-    else{
-        return $firstname.' '.$lastname;
+    } else {
+        return $firstname . ' ' . $lastname;
     }
 }
-function geoIP2(){
+function geoIP2()
+{
     $record = geoip(request()->ip());
     return [
-        'country'=> $record['country'],
+        'country' => $record['country'],
         'iso_code' => $record['iso_code'],
         'state' => $record['state_name'],
         'city' => $record['city'],
         'lat' => $record['lat'],
-        'lng' => $record['lon']
+        'lng' => $record['lon'],
     ];
 }
 
 function create_folder($id)
 {
-    $path = base_path('../').DIRECTORY_SEPARATOR.'uploads';
-    if(!realpath($path)){
-        mkdir($path,0777);
-    }
-    $path .= DIRECTORY_SEPARATOR.'photos';
-    if(!realpath($path)){
+    $path = base_path('../') . DIRECTORY_SEPARATOR . 'uploads';
+    if (!realpath($path)) {
         mkdir($path, 0777);
     }
-    $path .= DIRECTORY_SEPARATOR.$id;
-    if(!realpath($path)){
+    $path .= DIRECTORY_SEPARATOR . 'photos';
+    if (!realpath($path)) {
+        mkdir($path, 0777);
+    }
+    $path .= DIRECTORY_SEPARATOR . $id;
+    if (!realpath($path)) {
         mkdir($path, 0777);
     }
     return $path;
 }
 
-function emojis(){
+function emojis()
+{
     return array(
         '😁',
         '😂',
@@ -402,13 +419,14 @@ function emojis(){
         '💩',
         '🕐',
         '😈',
-        '😴'
+        '😴',
     );
 }
-function isHTML($string){
-    if($string != strip_tags($string)){
+function isHTML($string)
+{
+    if ($string != strip_tags($string)) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }

@@ -10,39 +10,59 @@ $(document).ready(function() {
     var following = $('.follow__following');
     var contents = $('.contents');
     var not_found = $('.not_found');
+
     if(!location.search){
-        queryParams('?tab=followers');
+        queryParams('?tab=trending');
     } 
-    if(getQueryParams() === 'followers' || getQueryParams() === 'following'){
-        var follow = getQueryParams();
-        if(follow === 'followers'){
-            ajax_follow('get_followers')
-        }else{
-            ajax_following('get_following')
-        } 
-    }
-    if(getQueryParams() === 'followers'){
-        followers.addClass('follow__tab_active');
-        following.removeClass('follow__tab_active'); 
-    }else{
-        following.addClass('follow__tab_active'); 
-        followers.removeClass('follow__tab_active') ;
-    }
-    followers.off('click').on('click',function(){
-        $(this).addClass('follow__tab_active');
-        following.removeClass('follow__tab_active'); 
-        queryParams('?tab=followers')
-        ajax_follow('get_followers')
-        not_found.empty();
-    })
-    following.off('click').on('click',function(){
-        $(this).addClass('follow__tab_active');
-        followers.removeClass('follow__tab_active') ; 
-        queryParams('?tab=following')
-        ajax_following('get_following')
-        not_found.empty();
-    })
+    if(getQueryParams() === 'trending'|| getQueryParams() === 'followers' || getQueryParams() === 'following' || getQueryParams() === 'whotofollow' ||getQueryParams() === 'notifications'){
+        var queryparams = getQueryParams();
+        if(queryparams === 'trending'){
    
+        }else if(queryparams === 'followers'){ 
+            ajax_follow('get_followers')
+        }  
+        else if(queryparams === 'following'){
+            ajax_following('get_following'); 
+        }  
+        else if(queryparams === 'whotofollow'){
+             
+        }  
+        else if(queryparams === 'notifications'){ 
+
+        }  
+    }
+
+    var tabs = $('.follow__tab .tab_heading'); 
+    Array.from(tabs).forEach(function(tab){ 
+        var current_tab = $(tab).data('tab'); 
+        if(getQueryParams() == current_tab){ 
+            $(tab).addClass('follow__tab_active');  
+        }
+    }) 
+ 
+    $('.follow__tab .tab_heading').off('click').click(function(){ 
+        if(!$(this).hasClass('follow__tab_active')){
+            var tab_id = $(this).attr('data-tab');  
+            $('.follow__tab .tab_heading').removeClass('follow__tab_active');  
+            $(this).addClass('follow__tab_active');
+            queryParams('?tab='+tab_id) 
+                var queryparams = getQueryParams();
+                if(queryparams === 'trending'){
+        
+                }else if(queryparams === 'followers'){ 
+                    ajax_follow('get_followers')
+                }  
+                else if(queryparams === 'following'){
+                    ajax_following('get_following'); 
+                }  
+                else if(queryparams === 'whotofollow'){
+                    
+                }  
+                else if(queryparams === 'notifications'){ 
+    
+                }  
+        }
+    })
    
     function queryParams(query){
         var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + query;
@@ -58,6 +78,30 @@ $(document).ready(function() {
         return queries.tab
     }
 
+    function ajax_trending(){
+      return  $.ajax({
+            url: ajax_url_follow, 
+            beforeSend: function(){
+                $('<div class="w-100 d-flex justify-content-center align-items-center"></div>').html('<div class="LoaderBalls mt-5"><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div><div class="LoaderBalls__item"></div></div>').appendTo(loader);
+                contents.empty()
+            },
+            data: {action: method, id: logged_id, _token: token},
+            dataType: 'JSON',
+            type: 'POST',
+            context: this,
+            success: function (res) {
+                if(res.status === 'success'){ 
+                    if($.isEmptyObject(res.datas)){
+                        $('<div class="text-center text-danger w-100"></div>').html('You have no followers at the moment').appendTo(contents);
+                    }   
+
+                } 
+            },
+            complete: function(){
+                    loader.empty();
+                }
+        });
+    }
     function ajax_follow(method){
       return  $.ajax({
             url: ajax_url_follow, 
@@ -382,27 +426,7 @@ $(document).ready(function() {
     function setCookie(name, value, maxAgeSeconds) {
         var maxAgeSegment = "; max-age=" + maxAgeSeconds;
         document.cookie = encodeURI(name) + "=" + encodeURI(value) + maxAgeSegment;
-    }
-//    $('#status__input').on('keypress',function(e){
-//         if(e.which === 13){
-//             var value = $(e.currentTarget).val(); 
-//             $.ajax({
-//                 url: ajax_url_follow,  
-//                 data: {action: "updateStatus", id: user_id, status: value, _token: token},
-//                 dataType: 'JSON',
-//                 type: 'POST',
-//                 context: this,
-//                 success: function (res) {
-//                     if(res.status === 'success'){ 
-//                         socket.emit('notifications', res.user.username); 
-//                         $('#status__input').val('');  
-//                         setCookie("update-status", "status", 5);
-//                         window.location.href = '/u/'+ res.user.username; 
-//                     }
-//                 }, 
-//             });
-//         }
-//    })
+    } 
     $('.status__btn').on('click',function(e){ 
             var value = $('#status__input').val(); 
             $.ajax({
